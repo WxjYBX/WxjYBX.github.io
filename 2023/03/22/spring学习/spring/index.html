@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha256-/4UQcSmErDzPCMAiuOiWPVVsNN2s3ZY/NsmXNcj0IFc=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="这是spring框架开始的地方">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spring学习">
+<meta property="og:url" content="http://example.com/2023/03/22/spring%E5%AD%A6%E4%B9%A0/spring/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="这是spring框架开始的地方">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-03-22T09:46:44.617Z">
+<meta property="article:modified_time" content="2023-03-22T14:05:34.782Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2023/03/22/spring%E5%AD%A6%E4%B9%A0/spring/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/03/22/spring%E5%AD%A6%E4%B9%A0/spring/","path":"2023/03/22/spring学习/spring/","title":"spring学习"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>spring学习 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring"><span class="nav-number">1.</span> <span class="nav-text">Spring</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%BE%9D%E8%B5%96"><span class="nav-number">1.1.</span> <span class="nav-text">1. 依赖</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/22/spring%E5%AD%A6%E4%B9%A0/spring/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="spring学习 | Hexo">
+      <meta itemprop="description" content="这是spring框架开始的地方">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          spring学习
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2023-03-22 17:46:44 / Modified: 22:05:34" itemprop="dateCreated datePublished" datetime="2023-03-22T17:46:44+08:00">2023-03-22</time>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">这是spring框架开始的地方</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h1><p><strong>一些重要的事情</strong></p>
+<ul>
+<li><p>spring官网:<a target="_blank" rel="noopener" href="https://spring.io/projects/spring-framework#learn">Spring Framework</a></p>
+</li>
+<li><p>spring下载地址:<a target="_blank" rel="noopener" href="https://repo.spring.io/ui/native/release/org/springframework/spring">repo.spring.io</a></p>
+</li>
+<li><p>spring-github地址:<a target="_blank" rel="noopener" href="https://github.com/spring-projects/spring-framework">spring-projects&#x2F;spring-framework: Spring Framework (github.com)</a></p>
+</li>
+<li><p>spring-maven地址:<a target="_blank" rel="noopener" href="https://mvnrepository.com/tags/spring">Maven Repository: spring (mvnrepository.com)</a></p>
+</li>
+<li><p>学习思路:spring-&gt;springMVC-&gt;springboot-&gt;springcloud-&gt;springclouddataflow</p>
+</li>
+</ul>
+<h2 id="1-依赖"><a href="#1-依赖" class="headerlink" title="1. 依赖"></a>1. 依赖</h2><ul>
+<li><pre><code class="xml">&lt;!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;
+    &lt;version&gt;6.0.7&lt;/version&gt;
+&lt;/dependency&gt;
+
+&lt;!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-jdbc&lt;/artifactId&gt;
+    &lt;version&gt;6.0.7&lt;/version&gt;
+&lt;/dependency&gt;
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 2. IOC(控制反转)</span><br><span class="line"></span><br><span class="line">***简单总结：对象由Spring创建、管理、装配！***</span><br><span class="line"></span><br><span class="line">- 主函数</span><br><span class="line"></span><br><span class="line">  - ```java</span><br><span class="line">    // 只有正确配置pom.xml之后才能正确运行这段话</span><br><span class="line">    ApplicationContext context = new ClassPathXmlApplicationContext(&quot;services.xml&quot;, &quot;daos.xml&quot;);</span><br><span class="line">    UserServiceImpl userServiceImpl = (UserServiceImpl) context.getBean(&quot;userServiceImpl&quot;);</span><br><span class="line">    userServiceImpl.getUser();</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+<li><p>注意事项</p>
+<ul>
+<li><p>一定要先在pom.xml导入依赖后，才能正常运行程序</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-webmvc<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>6.0.7<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>getBean运行之后，会直接创建所有Bean并调用构造函数初始化，不管这些Bean在接下来是否会被使用</p>
+</li>
+</ul>
+</li>
+<li><p>依赖注入(DI)：IOC的一种实现方式</p>
+<ul>
+<li><p>applicationContext.xml &#x3D; daos.xml + services.xml(<strong>一定要放在resources目录下</strong>)</p>
+<ul>
+<li><p>daos.xml</p>
+</li>
+<li><p>&#96;&#96;&#96;xml</p>
+<?xml version="1.0" encoding="UTF-8"?>
+<p><beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans
+    https://www.springframework.org/schema/beans/spring-beans.xsd"><br><br><bean id="userDaoImpl" class="com.example.dao.UserDaoImpl"><br></bean><br><br><bean id="userDaoMysqlImpl" class="com.example.dao.UserDaoMysqlImpl"><br></bean><br><br><bean id="userDaoOracleImpl" class="com.example.dao.UserDaoOracleImpl"><br></bean></p>
+</beans>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- services.xml</span><br><span class="line"></span><br><span class="line">- ```xml</span><br><span class="line">  &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">  &lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">         xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans</span><br><span class="line">          https://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;</span><br><span class="line">  </span><br><span class="line">      &lt;bean id=&quot;userServiceImpl&quot; class=&quot;com.example.service.UserServiceImpl&quot;&gt;</span><br><span class="line">          &lt;!--</span><br><span class="line">              ref: 引用容器中创建好的对象;</span><br><span class="line">              value: 具体的值，基本数据类型</span><br><span class="line">           --&gt;</span><br><span class="line">          &lt;property name=&quot;userDao&quot; ref=&quot;userDaoMysqlImpl&quot; /&gt;</span><br><span class="line">      &lt;/bean&gt;</span><br><span class="line">  </span><br><span class="line">  &lt;/beans&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>构造器注入</p>
+<ul>
+<li><p>默认使用无参构造创建对象，一旦用有参构造覆盖掉无参构造就会报错！</p>
+</li>
+<li><p>如果想要使用有参构造方式创建对象</p>
+<ul>
+<li><pre><code class="xml">&lt;!-- 参数名赋值，简单明了 --&gt;
+&lt;beans&gt;
+    &lt;bean id=&quot;exampleBean&quot; class=&quot;examples.ExampleBean&quot;&gt;
+        &lt;constructor-arg name=&quot;years&quot; value=&quot;75000&quot;/&gt;
+        &lt;constructor-arg name=&quot;ultimateAnswer&quot; value=&quot;42&quot;/&gt;
+    &lt;/bean&gt;
+&lt;/beans&gt;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- ```xml</span><br><span class="line">  &lt;!-- 类型赋值，有缺陷，每种类型只能有一个参数 --&gt;</span><br><span class="line">  &lt;bean id=&quot;exampleBean&quot; class=&quot;examples.ExampleBean&quot;&gt;</span><br><span class="line">      &lt;constructor-arg type=&quot;int&quot; value=&quot;7500000&quot;/&gt;</span><br><span class="line">      &lt;constructor-arg type=&quot;java.lang.String&quot; value=&quot;42&quot;/&gt;</span><br><span class="line">  &lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+<li><pre><code class="xml">&lt;!-- 下标赋值(构造函数有两个参数的情况下) --&gt;
+&lt;bean id=&quot;exampleBean&quot; class=&quot;examples.ExampleBean&quot;&gt;
+    &lt;constructor-arg index=&quot;0&quot; value=&quot;7500&quot;/&gt;
+    &lt;constructor-arg index=&quot;1&quot; value=&quot;75000&quot;/&gt;
+&lt;/bean&gt;
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/03/21/jsp%E5%AD%A6%E4%B9%A0/%E7%9F%A5%E8%AF%86%E7%82%B9/" rel="prev" title="jsp学习">
+                  <i class="fa fa-chevron-left"></i> jsp学习
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://example.com/2023/03/22/spring%E5%AD%A6%E4%B9%A0/spring/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>
