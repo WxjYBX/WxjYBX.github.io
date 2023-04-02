@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha256-/4UQcSmErDzPCMAiuOiWPVVsNN2s3ZY/NsmXNcj0IFc=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="spring+springMVC+mybatis整合小案例">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ssm框架整合">
+<meta property="og:url" content="http://example.com/2023/04/02/spring%E5%AD%A6%E4%B9%A0/ssm%E6%A1%86%E6%9E%B6%E6%95%B4%E5%90%88/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="spring+springMVC+mybatis整合小案例">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-04-02T12:43:06.818Z">
+<meta property="article:modified_time" content="2023-04-02T14:18:49.504Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2023/04/02/spring%E5%AD%A6%E4%B9%A0/ssm%E6%A1%86%E6%9E%B6%E6%95%B4%E5%90%88/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/04/02/spring%E5%AD%A6%E4%B9%A0/ssm%E6%A1%86%E6%9E%B6%E6%95%B4%E5%90%88/","path":"2023/04/02/spring学习/ssm框架整合/","title":"ssm框架整合"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>ssm框架整合 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SSM%E6%A1%86%E6%9E%B6%E6%A1%88%E4%BE%8B"><span class="nav-number">1.</span> <span class="nav-text">SSM框架案例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.</span> <span class="nav-text">1. 环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5"><span class="nav-number">1.1.1.</span> <span class="nav-text">1. 依赖注入</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E6%9E%9C%E4%BD%BF%E7%94%A8%E7%9A%84%E6%98%AFmysql8-0-%EF%BC%8C%E5%BF%85%E9%A1%BB%E8%A6%81%E5%A2%9E%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%97%B6%E5%8C%BA%E7%9A%84%E9%85%8D%E7%BD%AE%E5%8D%B3%E5%A2%9E%E5%8A%A0-amp-serverTimeZone-x3D-Asia-x2F-Shanghai"><span class="nav-number">2.</span> <span class="nav-text">如果使用的是mysql8.0+，必须要增加一个时区的配置即增加&amp;serverTimeZone&#x3D;Asia&#x2F;Shanghai</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/02/spring%E5%AD%A6%E4%B9%A0/ssm%E6%A1%86%E6%9E%B6%E6%95%B4%E5%90%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="ssm框架整合 | Hexo">
+      <meta itemprop="description" content="spring+springMVC+mybatis整合小案例">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ssm框架整合
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2023-04-02 20:43:06 / Modified: 22:18:49" itemprop="dateCreated datePublished" datetime="2023-04-02T20:43:06+08:00">2023-04-02</time>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">spring+springMVC+mybatis整合小案例</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="SSM框架案例"><a href="#SSM框架案例" class="headerlink" title="SSM框架案例"></a>SSM框架案例</h1><h2 id="1-环境配置"><a href="#1-环境配置" class="headerlink" title="1. 环境配置"></a>1. 环境配置</h2><h3 id="1-依赖注入"><a href="#1-依赖注入" class="headerlink" title="1. 依赖注入"></a>1. 依赖注入</h3><ul>
+<li><p>pom.xml</p>
+<ul>
+<li><pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;
+         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+    &lt;groupId&gt;com.example&lt;/groupId&gt;
+    &lt;artifactId&gt;ssmbuild&lt;/artifactId&gt;
+    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+
+    &lt;properties&gt;
+        &lt;maven.compiler.source&gt;17&lt;/maven.compiler.source&gt;
+        &lt;maven.compiler.target&gt;17&lt;/maven.compiler.target&gt;
+        &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+    &lt;/properties&gt;
+
+&lt;!--    依赖: junit, 数据库驱动， 连接池， servlet， jsp， mybatis， mybatis-spring， spring--&gt;
+    &lt;dependencies&gt;
+&lt;!--        junit--&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;junit&lt;/groupId&gt;
+            &lt;artifactId&gt;junit&lt;/artifactId&gt;
+            &lt;version&gt;4.13.2&lt;/version&gt;
+        &lt;/dependency&gt;
+&lt;!--        数据库驱动--&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;mysql&lt;/groupId&gt;
+            &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+            &lt;version&gt;8.0.32&lt;/version&gt;
+        &lt;/dependency&gt;
+&lt;!--        数据库连接池--&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.mchange&lt;/groupId&gt;
+            &lt;artifactId&gt;c3p0&lt;/artifactId&gt;
+            &lt;version&gt;0.9.5.5&lt;/version&gt;
+        &lt;/dependency&gt;
+&lt;!--        Servlet - jsp--&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;javax.servlet&lt;/groupId&gt;
+            &lt;artifactId&gt;servlet-api&lt;/artifactId&gt;
+            &lt;version&gt;2.5&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;javax.servlet.jsp&lt;/groupId&gt;
+            &lt;artifactId&gt;jsp-api&lt;/artifactId&gt;
+            &lt;version&gt;2.2&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;javax.servlet&lt;/groupId&gt;
+            &lt;artifactId&gt;jstl&lt;/artifactId&gt;
+            &lt;version&gt;1.2&lt;/version&gt;
+        &lt;/dependency&gt;
+&lt;!--        mybatis--&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.mybatis&lt;/groupId&gt;
+            &lt;artifactId&gt;mybatis&lt;/artifactId&gt;
+            &lt;version&gt;3.5.13&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.mybatis&lt;/groupId&gt;
+            &lt;artifactId&gt;mybatis-spring&lt;/artifactId&gt;
+            &lt;version&gt;3.0.1&lt;/version&gt;
+        &lt;/dependency&gt;
+&lt;!--        spring--&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;
+            &lt;version&gt;5.3.26&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-jdbc&lt;/artifactId&gt;
+            &lt;version&gt;5.3.26&lt;/version&gt;
+        &lt;/dependency&gt;
+&lt;!--        lombok--&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
+            &lt;artifactId&gt;lombok&lt;/artifactId&gt;
+            &lt;version&gt;1.18.26&lt;/version&gt;
+        &lt;/dependency&gt;
+
+    &lt;/dependencies&gt;
+
+
+&lt;!--    静态资源导出--&gt;
+    &lt;!-- 为了能够找到mapper.xml和config.xml增加这个，默认不用改动直接用就行 --&gt;
+    &lt;build&gt;
+        &lt;resources&gt;
+            &lt;resource&gt;
+                &lt;directory&gt;src/main/java&lt;/directory&gt;
+                &lt;includes&gt;
+                    &lt;include&gt;**/*.xml&lt;/include&gt;
+                    &lt;include&gt;**/*.properties&lt;/include&gt;
+                &lt;/includes&gt;
+            &lt;/resource&gt;
+
+            &lt;resource&gt;
+                &lt;directory&gt;src/main/resources&lt;/directory&gt;
+                &lt;includes&gt;
+                    &lt;include&gt;**/*.xml&lt;/include&gt;
+                    &lt;include&gt;**/*.properties&lt;/include&gt;
+                &lt;/includes&gt;
+            &lt;/resource&gt;
+        &lt;/resources&gt;
+    &lt;/build&gt;
+&lt;/project&gt;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">    </span><br><span class="line"></span><br><span class="line">### 2. mybatis层配置</span><br><span class="line"></span><br><span class="line">- resources</span><br><span class="line"></span><br><span class="line">  - applicationContext.xml</span><br><span class="line"></span><br><span class="line">    - ```xml</span><br><span class="line">      &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">      &lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">             xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">             xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans</span><br><span class="line">              https://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;</span><br><span class="line">      </span><br><span class="line">      &lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+<li><p>database.properties</p>
+<ul>
+<li>&#96;&#96;&#96;xml<br>jdbc.driver&#x3D;com.mysql.jdbc.Driver<h1 id="如果使用的是mysql8-0-，必须要增加一个时区的配置即增加-amp-serverTimeZone-x3D-Asia-x2F-Shanghai"><a href="#如果使用的是mysql8-0-，必须要增加一个时区的配置即增加-amp-serverTimeZone-x3D-Asia-x2F-Shanghai" class="headerlink" title="如果使用的是mysql8.0+，必须要增加一个时区的配置即增加&amp;serverTimeZone&#x3D;Asia&#x2F;Shanghai"></a>如果使用的是mysql8.0+，必须要增加一个时区的配置即增加&amp;serverTimeZone&#x3D;Asia&#x2F;Shanghai</h1>jdbc.url&#x3D;jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;ssmbuild?useSSL&#x3D;true&amp;useUnicode&#x3D;true&amp;characterEncoding&#x3D;utf8<br>jdbc.username&#x3D;root<br>jdbc.password&#x3D;123456<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- springmvc-mybatis.xml</span><br><span class="line"></span><br><span class="line">  - ```xml</span><br><span class="line">    &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span><br><span class="line">    &lt;!DOCTYPE configuration</span><br><span class="line">            PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;</span><br><span class="line">            &quot;https://mybatis.org/dtd/mybatis-3-config.dtd&quot;&gt;</span><br><span class="line">    &lt;configuration&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;!--    配置数据源，在ssm中交给spring去完成--&gt;</span><br><span class="line">        &lt;typeAliases&gt;</span><br><span class="line">            &lt;package name=&quot;com.example.pojo&quot;/&gt;</span><br><span class="line">        &lt;/typeAliases&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;!--    mapper配置--&gt;</span><br><span class="line">        &lt;mappers&gt;</span><br><span class="line">            &lt;mapper class=&quot;com.example.dao.BookMapper&quot; /&gt;</span><br><span class="line">        &lt;/mappers&gt;</span><br><span class="line">    &lt;/configuration&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>dao</p>
+<ul>
+<li><p>BookMapper(Interface)</p>
+<ul>
+<li>&#96;&#96;&#96;java<br>public interface BookMapper {<br>int addBook(Books books);<br>int deleteBook(@Param(“bookId”) int id);<br>int updateBook(Books books);<br>Books queryBookById(@Param(“bookId”) int id);<br>List<Books> queryAllBook();<br>}<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- BookMapper.xml</span><br><span class="line"></span><br><span class="line">  - ```xml</span><br><span class="line">    &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span><br><span class="line">    &lt;!DOCTYPE mapper</span><br><span class="line">            PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;</span><br><span class="line">            &quot;https://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;</span><br><span class="line">    &lt;mapper namespace=&quot;com.example.dao.BookMapper&quot;&gt;</span><br><span class="line">        &lt;insert id=&quot;addBook&quot; parameterType=&quot;Books&quot;&gt;</span><br><span class="line">            insert into ssmbuild.books (bookName, bookCounts, detail)</span><br><span class="line">            values (#&#123;bookName&#125;, #&#123;bookCounts&#125;, #&#123;detail&#125;);</span><br><span class="line">        &lt;/insert&gt;</span><br><span class="line">    </span><br><span class="line">        &lt;delete id=&quot;deleteBookById&quot; parameterType=&quot;int&quot;&gt;</span><br><span class="line">            delete from ssmbuild.books</span><br><span class="line">            where bookID = #&#123;bookId&#125;;</span><br><span class="line">        &lt;/delete&gt;</span><br><span class="line">    </span><br><span class="line">        &lt;update id=&quot;updateBook&quot; parameterType=&quot;Books&quot;&gt;</span><br><span class="line">            update ssmbuild.books</span><br><span class="line">            set bookName=#&#123;bookName&#125;, bookCounts=#&#123;bookCounts&#125;, detail=#&#123;detail&#125;</span><br><span class="line">            where bookID=#&#123;bookId&#125;;</span><br><span class="line">        &lt;/update&gt;</span><br><span class="line">    </span><br><span class="line">        &lt;select id=&quot;queryBookById&quot; parameterType=&quot;Books&quot;&gt;</span><br><span class="line">            select * from ssmbuild.books</span><br><span class="line">            where bookID=#&#123;bookId&#125;;</span><br><span class="line">        &lt;/select&gt;</span><br><span class="line">    </span><br><span class="line">        &lt;select id=&quot;queryAllBook&quot; parameterType=&quot;Books&quot;&gt;</span><br><span class="line">            select * from ssmbuild.books;</span><br><span class="line">        &lt;/select&gt;</span><br><span class="line">    &lt;/mapper&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>pojo</p>
+<ul>
+<li><p>Books</p>
+<ul>
+<li><p>&#96;&#96;&#96;java<br>@Data<br>@AllArgsConstructor<br>@NoArgsConstructor<br>public class Books {</p>
+<pre><code>private int bookID;
+private String bookName;
+private int bookCounts;
+private String detail;
+</code></pre>
+<p>}</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- service</span><br><span class="line"></span><br><span class="line">  - BookService(Interface)</span><br><span class="line"></span><br><span class="line">    - ```java</span><br><span class="line">      public interface BookService &#123;</span><br><span class="line">          int addBook(Books books);</span><br><span class="line">          int deleteBook(int id);</span><br><span class="line">          int updateBook(Books books);</span><br><span class="line">          Books queryBookById(int id);</span><br><span class="line">          List&lt;Books&gt; queryAllBook();</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>BookServiceImpl</p>
+<ul>
+<li><pre><code class="java">public class BookServiceImpl implements BookService&#123;
+
+    // service层调dao层: 组合Dao
+    private BookMapper bookMapper;
+
+    public void setBookMapper(BookMapper bookMapper) &#123;
+        this.bookMapper = bookMapper;
+    &#125;
+
+    @Override
+    public int addBook(Books books) &#123;
+        return bookMapper.addBook(books);
+    &#125;
+
+    @Override
+    public int deleteBook(int id) &#123;
+        return bookMapper.deleteBook(id);
+    &#125;
+
+    @Override
+    public int updateBook(Books books) &#123;
+        return bookMapper.updateBook(books);
+    &#125;
+
+    @Override
+    public Books queryBookById(int id) &#123;
+        return bookMapper.queryBookById(id);
+    &#125;
+
+    @Override
+    public List&lt;Books&gt; queryAllBook() &#123;
+        return bookMapper.queryAllBook();
+    &#125;
+&#125;
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/03/28/spring%E5%AD%A6%E4%B9%A0/springMVC/" rel="prev" title="springMVC学习">
+                  <i class="fa fa-chevron-left"></i> springMVC学习
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://example.com/2023/04/02/spring%E5%AD%A6%E4%B9%A0/ssm%E6%A1%86%E6%9E%B6%E6%95%B4%E5%90%88/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>
