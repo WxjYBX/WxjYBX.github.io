@@ -27,7 +27,7 @@
 <meta property="og:description" content="spring+springMVC+mybatis整合小案例">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-04-02T12:43:06.818Z">
-<meta property="article:modified_time" content="2023-04-02T14:18:49.504Z">
+<meta property="article:modified_time" content="2023-04-04T13:43:57.277Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 
@@ -104,7 +104,9 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SSM%E6%A1%86%E6%9E%B6%E6%A1%88%E4%BE%8B"><span class="nav-number">1.</span> <span class="nav-text">SSM框架案例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.</span> <span class="nav-text">1. 环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5"><span class="nav-number">1.1.1.</span> <span class="nav-text">1. 依赖注入</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E6%9E%9C%E4%BD%BF%E7%94%A8%E7%9A%84%E6%98%AFmysql8-0-%EF%BC%8C%E5%BF%85%E9%A1%BB%E8%A6%81%E5%A2%9E%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%97%B6%E5%8C%BA%E7%9A%84%E9%85%8D%E7%BD%AE%E5%8D%B3%E5%A2%9E%E5%8A%A0-amp-serverTimeZone-x3D-Asia-x2F-Shanghai"><span class="nav-number">2.</span> <span class="nav-text">如果使用的是mysql8.0+，必须要增加一个时区的配置即增加&amp;serverTimeZone&#x3D;Asia&#x2F;Shanghai</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SSM%E6%A1%86%E6%9E%B6%E6%A1%88%E4%BE%8B"><span class="nav-number">1.</span> <span class="nav-text">SSM框架案例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.</span> <span class="nav-text">1. 环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5"><span class="nav-number">1.1.1.</span> <span class="nav-text">1. 依赖注入</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E6%9E%9C%E4%BD%BF%E7%94%A8%E7%9A%84%E6%98%AFmysql8-0-%EF%BC%8C%E5%BF%85%E9%A1%BB%E8%A6%81%E5%A2%9E%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%97%B6%E5%8C%BA%E7%9A%84%E9%85%8D%E7%BD%AE%E5%8D%B3%E5%A2%9E%E5%8A%A0-amp-serverTimeZone-x3D-Asia-x2F-Shanghai"><span class="nav-number">2.</span> <span class="nav-text">如果使用的是mysql8.0+，必须要增加一个时区的配置即增加&amp;serverTimeZone&#x3D;Asia&#x2F;Shanghai</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%8A%9F%E8%83%BD%E6%95%B4%E5%90%88"><span class="nav-number">2.1.</span> <span class="nav-text">3. 功能整合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%9F%A5%E8%AF%A2%E6%89%80%E6%9C%89%E4%B9%A6%E7%B1%8D"><span class="nav-number">2.1.1.</span> <span class="nav-text">1. 查询所有书籍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.1.2.</span> <span class="nav-text">
+    进入书籍展示页面
+  </span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">新增书籍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%BF%AE%E6%94%B9%E5%88%A0%E9%99%A4"><span class="nav-number">3.0.1.</span> <span class="nav-text">3. 修改删除</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -117,7 +119,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -173,9 +175,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2023-04-02 20:43:06 / Modified: 22:18:49" itemprop="dateCreated datePublished" datetime="2023-04-02T20:43:06+08:00">2023-04-02</time>
+      <time title="Created: 2023-04-02 20:43:06" itemprop="dateCreated datePublished" datetime="2023-04-02T20:43:06+08:00">2023-04-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-04-04 21:43:57" itemprop="dateModified" datetime="2023-04-04T21:43:57+08:00">2023-04-04</time>
     </span>
 
   
@@ -266,6 +274,11 @@
             &lt;artifactId&gt;spring-jdbc&lt;/artifactId&gt;
             &lt;version&gt;5.3.26&lt;/version&gt;
         &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.aspectj&lt;/groupId&gt;
+            &lt;artifactId&gt;aspectjweaver&lt;/artifactId&gt;
+            &lt;version&gt;1.9.19&lt;/version&gt;
+        &lt;/dependency&gt;
 &lt;!--        lombok--&gt;
         &lt;dependency&gt;
             &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
@@ -298,12 +311,12 @@
         &lt;/resources&gt;
     &lt;/build&gt;
 &lt;/project&gt;
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">    </span><br><span class="line"></span><br><span class="line">### 2. mybatis层配置</span><br><span class="line"></span><br><span class="line">- resources</span><br><span class="line"></span><br><span class="line">  - applicationContext.xml</span><br><span class="line"></span><br><span class="line">    - ```xml</span><br><span class="line">      &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">      &lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">             xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">             xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans</span><br><span class="line">              https://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;</span><br><span class="line">      </span><br><span class="line">      &lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">    </span><br><span class="line"></span><br><span class="line">### 2. mybatis层配置</span><br><span class="line"></span><br><span class="line">- resources</span><br><span class="line"></span><br><span class="line">  - applicationContext.xml</span><br><span class="line"></span><br><span class="line">    - ```xml</span><br><span class="line">      &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">      &lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">             xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">             xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans</span><br><span class="line">              https://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;</span><br><span class="line">      </span><br><span class="line">          &lt;import resource=&quot;spring-mvc.xml&quot; /&gt;</span><br><span class="line">          &lt;import resource=&quot;spring-dao.xml&quot; /&gt;</span><br><span class="line">          &lt;import resource=&quot;spring-service.xml&quot; /&gt;</span><br><span class="line">      </span><br><span class="line">      &lt;/beans&gt;</span><br></pre></td></tr></table></figure>
 </code></pre>
 </li>
 <li><p>database.properties</p>
 <ul>
-<li>&#96;&#96;&#96;xml<br>jdbc.driver&#x3D;com.mysql.jdbc.Driver<h1 id="如果使用的是mysql8-0-，必须要增加一个时区的配置即增加-amp-serverTimeZone-x3D-Asia-x2F-Shanghai"><a href="#如果使用的是mysql8-0-，必须要增加一个时区的配置即增加-amp-serverTimeZone-x3D-Asia-x2F-Shanghai" class="headerlink" title="如果使用的是mysql8.0+，必须要增加一个时区的配置即增加&amp;serverTimeZone&#x3D;Asia&#x2F;Shanghai"></a>如果使用的是mysql8.0+，必须要增加一个时区的配置即增加&amp;serverTimeZone&#x3D;Asia&#x2F;Shanghai</h1>jdbc.url&#x3D;jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;ssmbuild?useSSL&#x3D;true&amp;useUnicode&#x3D;true&amp;characterEncoding&#x3D;utf8<br>jdbc.username&#x3D;root<br>jdbc.password&#x3D;123456<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- springmvc-mybatis.xml</span><br><span class="line"></span><br><span class="line">  - ```xml</span><br><span class="line">    &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span><br><span class="line">    &lt;!DOCTYPE configuration</span><br><span class="line">            PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;</span><br><span class="line">            &quot;https://mybatis.org/dtd/mybatis-3-config.dtd&quot;&gt;</span><br><span class="line">    &lt;configuration&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;!--    配置数据源，在ssm中交给spring去完成--&gt;</span><br><span class="line">        &lt;typeAliases&gt;</span><br><span class="line">            &lt;package name=&quot;com.example.pojo&quot;/&gt;</span><br><span class="line">        &lt;/typeAliases&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;!--    mapper配置--&gt;</span><br><span class="line">        &lt;mappers&gt;</span><br><span class="line">            &lt;mapper class=&quot;com.example.dao.BookMapper&quot; /&gt;</span><br><span class="line">        &lt;/mappers&gt;</span><br><span class="line">    &lt;/configuration&gt;</span><br></pre></td></tr></table></figure></li>
+<li>&#96;&#96;&#96;xml<br>jdbc.driver&#x3D;com.mysql.jdbc.Driver<h1 id="如果使用的是mysql8-0-，必须要增加一个时区的配置即增加-amp-serverTimeZone-x3D-Asia-x2F-Shanghai"><a href="#如果使用的是mysql8-0-，必须要增加一个时区的配置即增加-amp-serverTimeZone-x3D-Asia-x2F-Shanghai" class="headerlink" title="如果使用的是mysql8.0+，必须要增加一个时区的配置即增加&amp;serverTimeZone&#x3D;Asia&#x2F;Shanghai"></a>如果使用的是mysql8.0+，必须要增加一个时区的配置即增加&amp;serverTimeZone&#x3D;Asia&#x2F;Shanghai</h1>jdbc.url&#x3D;jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;ssmbuild?useSSL&#x3D;true&amp;useUnicode&#x3D;true&amp;characterEncoding&#x3D;utf8<br>jdbc.username&#x3D;root<br>jdbc.password&#x3D;123456<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- mybatis-config.xml</span><br><span class="line"></span><br><span class="line">  - ```xml</span><br><span class="line">    &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span><br><span class="line">    &lt;!DOCTYPE configuration</span><br><span class="line">            PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;</span><br><span class="line">            &quot;https://mybatis.org/dtd/mybatis-3-config.dtd&quot;&gt;</span><br><span class="line">    &lt;configuration&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;!--    配置数据源，在ssm中交给spring去完成--&gt;</span><br><span class="line">        &lt;typeAliases&gt;</span><br><span class="line">            &lt;package name=&quot;com.example.pojo&quot;/&gt;</span><br><span class="line">        &lt;/typeAliases&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;!--    mapper配置--&gt;</span><br><span class="line">        &lt;mappers&gt;</span><br><span class="line">            &lt;mapper class=&quot;com.example.dao.BookMapper&quot; /&gt;</span><br><span class="line">        &lt;/mappers&gt;</span><br><span class="line">    &lt;/configuration&gt;</span><br></pre></td></tr></table></figure></li>
 </ul>
 </li>
 </ul>
@@ -312,7 +325,7 @@
 <ul>
 <li><p>BookMapper(Interface)</p>
 <ul>
-<li>&#96;&#96;&#96;java<br>public interface BookMapper {<br>int addBook(Books books);<br>int deleteBook(@Param(“bookId”) int id);<br>int updateBook(Books books);<br>Books queryBookById(@Param(“bookId”) int id);<br>List<Books> queryAllBook();<br>}<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- BookMapper.xml</span><br><span class="line"></span><br><span class="line">  - ```xml</span><br><span class="line">    &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span><br><span class="line">    &lt;!DOCTYPE mapper</span><br><span class="line">            PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;</span><br><span class="line">            &quot;https://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;</span><br><span class="line">    &lt;mapper namespace=&quot;com.example.dao.BookMapper&quot;&gt;</span><br><span class="line">        &lt;insert id=&quot;addBook&quot; parameterType=&quot;Books&quot;&gt;</span><br><span class="line">            insert into ssmbuild.books (bookName, bookCounts, detail)</span><br><span class="line">            values (#&#123;bookName&#125;, #&#123;bookCounts&#125;, #&#123;detail&#125;);</span><br><span class="line">        &lt;/insert&gt;</span><br><span class="line">    </span><br><span class="line">        &lt;delete id=&quot;deleteBookById&quot; parameterType=&quot;int&quot;&gt;</span><br><span class="line">            delete from ssmbuild.books</span><br><span class="line">            where bookID = #&#123;bookId&#125;;</span><br><span class="line">        &lt;/delete&gt;</span><br><span class="line">    </span><br><span class="line">        &lt;update id=&quot;updateBook&quot; parameterType=&quot;Books&quot;&gt;</span><br><span class="line">            update ssmbuild.books</span><br><span class="line">            set bookName=#&#123;bookName&#125;, bookCounts=#&#123;bookCounts&#125;, detail=#&#123;detail&#125;</span><br><span class="line">            where bookID=#&#123;bookId&#125;;</span><br><span class="line">        &lt;/update&gt;</span><br><span class="line">    </span><br><span class="line">        &lt;select id=&quot;queryBookById&quot; parameterType=&quot;Books&quot;&gt;</span><br><span class="line">            select * from ssmbuild.books</span><br><span class="line">            where bookID=#&#123;bookId&#125;;</span><br><span class="line">        &lt;/select&gt;</span><br><span class="line">    </span><br><span class="line">        &lt;select id=&quot;queryAllBook&quot; parameterType=&quot;Books&quot;&gt;</span><br><span class="line">            select * from ssmbuild.books;</span><br><span class="line">        &lt;/select&gt;</span><br><span class="line">    &lt;/mapper&gt;</span><br></pre></td></tr></table></figure></li>
+<li>&#96;&#96;&#96;java<br>public interface BookMapper {<br>int addBook(Books books);<br>int deleteBook(@Param(“bookID”) int id);<br>int updateBook(Books books);<br>Books queryBookById(@Param(“bookID”) int id);<br>List<Books> queryAllBook();<br>}<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- BookMapper.xml</span><br><span class="line"></span><br><span class="line">  - ```xml</span><br><span class="line">    &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span><br><span class="line">    &lt;!DOCTYPE mapper</span><br><span class="line">            PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;</span><br><span class="line">            &quot;https://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;</span><br><span class="line">    &lt;mapper namespace=&quot;com.example.dao.BookMapper&quot;&gt;</span><br><span class="line">        &lt;insert id=&quot;addBook&quot; parameterType=&quot;Books&quot;&gt;</span><br><span class="line">            insert into ssmbuild.books (bookName, bookCounts, detail)</span><br><span class="line">            values (#&#123;bookName&#125;, #&#123;bookCounts&#125;, #&#123;detail&#125;);</span><br><span class="line">        &lt;/insert&gt;</span><br><span class="line">    </span><br><span class="line">        &lt;delete id=&quot;deleteBook&quot; parameterType=&quot;int&quot;&gt;</span><br><span class="line">            delete from ssmbuild.books</span><br><span class="line">            where bookID = #&#123;bookID&#125;;</span><br><span class="line">        &lt;/delete&gt;</span><br><span class="line">    </span><br><span class="line">        &lt;update id=&quot;updateBook&quot; parameterType=&quot;Books&quot;&gt;</span><br><span class="line">            update ssmbuild.books</span><br><span class="line">            set bookName=#&#123;bookName&#125;, bookCounts=#&#123;bookCounts&#125;, detail=#&#123;detail&#125;</span><br><span class="line">            where bookID=#&#123;bookID&#125;;</span><br><span class="line">        &lt;/update&gt;</span><br><span class="line">    </span><br><span class="line">        &lt;select id=&quot;queryBookById&quot; parameterType=&quot;Books&quot;&gt;</span><br><span class="line">            select * from ssmbuild.books</span><br><span class="line">            where bookID=#&#123;bookID&#125;;</span><br><span class="line">        &lt;/select&gt;</span><br><span class="line">    </span><br><span class="line">        &lt;select id=&quot;queryAllBook&quot; parameterType=&quot;Books&quot;&gt;</span><br><span class="line">            select * from ssmbuild.books;</span><br><span class="line">        &lt;/select&gt;</span><br><span class="line">    &lt;/mapper&gt;</span><br></pre></td></tr></table></figure></li>
 </ul>
 </li>
 </ul>
@@ -333,42 +346,211 @@ private String detail;
 </li>
 <li><p>BookServiceImpl</p>
 <ul>
-<li><pre><code class="java">public class BookServiceImpl implements BookService&#123;
+<li><p>&#96;&#96;&#96;java<br>public class BookServiceImpl implements BookService{</p>
+<pre><code>// service层调dao层: 组合Dao
+private BookMapper bookMapper;
 
-    // service层调dao层: 组合Dao
-    private BookMapper bookMapper;
+public void setBookMapper(BookMapper bookMapper) &#123;
+    this.bookMapper = bookMapper;
+&#125;
 
-    public void setBookMapper(BookMapper bookMapper) &#123;
-        this.bookMapper = bookMapper;
-    &#125;
+@Override
+public int addBook(Books books) &#123;
+    return bookMapper.addBook(books);
+&#125;
 
-    @Override
-    public int addBook(Books books) &#123;
-        return bookMapper.addBook(books);
-    &#125;
+@Override
+public int deleteBook(int id) &#123;
+    return bookMapper.deleteBook(id);
+&#125;
 
-    @Override
-    public int deleteBook(int id) &#123;
-        return bookMapper.deleteBook(id);
-    &#125;
+@Override
+public int updateBook(Books books) &#123;
+    return bookMapper.updateBook(books);
+&#125;
 
-    @Override
-    public int updateBook(Books books) &#123;
-        return bookMapper.updateBook(books);
-    &#125;
+@Override
+public Books queryBookById(int id) &#123;
+    return bookMapper.queryBookById(id);
+&#125;
 
-    @Override
-    public Books queryBookById(int id) &#123;
-        return bookMapper.queryBookById(id);
-    &#125;
-
-    @Override
-    public List&lt;Books&gt; queryAllBook() &#123;
-        return bookMapper.queryAllBook();
-    &#125;
+@Override
+public List&lt;Books&gt; queryAllBook() &#123;
+    return bookMapper.queryAllBook();
 &#125;
 </code></pre>
+<p>}</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 3. spring层配置</span><br><span class="line"></span><br><span class="line">- resources</span><br><span class="line"></span><br><span class="line">  - spring-dao.xml</span><br><span class="line"></span><br><span class="line">    - ```xml</span><br><span class="line">      &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">      &lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">             xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">             xmlns:context=&quot;http://www.springframework.org/schema/context&quot;</span><br><span class="line">             xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans</span><br><span class="line">              https://www.springframework.org/schema/beans/spring-beans.xsd</span><br><span class="line">              http://www.springframework.org/schema/context</span><br><span class="line">              https://www.springframework.org/schema/context/spring-context.xsd&quot;&gt;</span><br><span class="line">      </span><br><span class="line">          &lt;!-- 1. 关联数据库配置文件 --&gt;</span><br><span class="line">          &lt;context:property-placeholder location=&quot;classpath:database.properties&quot; /&gt;</span><br><span class="line">      </span><br><span class="line">      &lt;!--    2. 连接池--&gt;</span><br><span class="line">      &lt;!--    dbcp: 半自动化操作，不能自动连接--&gt;</span><br><span class="line">      &lt;!--    c3p0：自动化操作，自动化的加载配置文件，自动设置到对象中--&gt;</span><br><span class="line">      &lt;!--    druid： hikari：--&gt;</span><br><span class="line">          &lt;bean id=&quot;dataSource&quot; class=&quot;com.mchange.v2.c3p0.ComboPooledDataSource&quot;&gt;</span><br><span class="line">              &lt;property name=&quot;driverClass&quot; value=&quot;$&#123;jdbc.driver&#125;&quot; /&gt;</span><br><span class="line">              &lt;property name=&quot;jdbcUrl&quot; value=&quot;$&#123;jdbc.url&#125;&quot; /&gt;</span><br><span class="line">              &lt;property name=&quot;user&quot; value=&quot;$&#123;jdbc.username&#125;&quot; /&gt;</span><br><span class="line">              &lt;property name=&quot;password&quot; value=&quot;$&#123;jdbc.password&#125;&quot; /&gt;</span><br><span class="line">      </span><br><span class="line">      &lt;!--        c3p0连接池的私有属性--&gt;</span><br><span class="line">              &lt;property name=&quot;maxPoolSize&quot; value=&quot;30&quot; /&gt;</span><br><span class="line">              &lt;property name=&quot;minPoolSize&quot; value=&quot;10&quot; /&gt;</span><br><span class="line">      &lt;!--        关闭连接后不自动commit--&gt;</span><br><span class="line">              &lt;property name=&quot;autoCommitOnClose&quot; value=&quot;false&quot; /&gt;</span><br><span class="line">      &lt;!--        获取连接超时时间--&gt;</span><br><span class="line">              &lt;property name=&quot;checkoutTimeout&quot; value=&quot;10000&quot; /&gt;</span><br><span class="line">      &lt;!--        当获取连接失败重试次数--&gt;</span><br><span class="line">              &lt;property name=&quot;acquireRetryAttempts&quot; value=&quot;2&quot; /&gt;</span><br><span class="line">          &lt;/bean&gt;</span><br><span class="line">      </span><br><span class="line">      &lt;!--    3. sqlSessionFactory--&gt;</span><br><span class="line">          &lt;bean id=&quot;sqlSessionFactory&quot; class=&quot;org.mybatis.spring.SqlSessionFactoryBean&quot; &gt;</span><br><span class="line">              &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot; /&gt;</span><br><span class="line">      &lt;!--        绑定mybatis配置文件--&gt;</span><br><span class="line">              &lt;property name=&quot;configLocation&quot; value=&quot;classpath:mybatis-config.xml&quot; /&gt;</span><br><span class="line">          &lt;/bean&gt;</span><br><span class="line">      </span><br><span class="line">      &lt;!--    4. 配置dao接口扫描包， 动态实现dao接口注入到Spring--&gt;</span><br><span class="line">          &lt;bean class=&quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot; &gt;</span><br><span class="line">      &lt;!--        注入sqlSessionFactory --&gt;</span><br><span class="line">              &lt;property name=&quot;sqlSessionFactoryBeanName&quot; value=&quot;sqlSessionFactory&quot; /&gt;</span><br><span class="line">      &lt;!--        要扫描的dao包--&gt;</span><br><span class="line">              &lt;property name=&quot;basePackage&quot; value=&quot;com.example.dao&quot; /&gt;</span><br><span class="line">          &lt;/bean&gt;</span><br><span class="line">      </span><br><span class="line">      &lt;/beans&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
 </li>
+<li><p>spring-service.xml</p>
+<ul>
+<li>&#96;&#96;&#96;xml<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:context="http://www.springframework.org/schema/context"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans
+    https://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    https://www.springframework.org/schema/context/spring-context.xsd"><!--    1. 扫描service下的包-->
+<pre><code>&lt;context:component-scan base-package=&quot;com.example.service&quot; /&gt;
+</code></pre>
+<!--    2. 将所有的业务类注入到Spring，可以通过配置或者注解实现-->
+<pre><code>&lt;bean id=&quot;BookServiceImpl&quot; class=&quot;com.example.service.BookServiceImpl&quot; &gt;
+    &lt;property name=&quot;bookMapper&quot; ref=&quot;bookMapper&quot; /&gt;
+&lt;/bean&gt;
+</code></pre>
+<!--    3. 声明式事务配置-->
+<pre><code>&lt;bean id=&quot;transactionManager&quot; class=&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot; &gt;
+</code></pre>
+<!--        注入数据源-->
+<pre><code>    &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot; /&gt;
+&lt;/bean&gt;
+</code></pre>
+<!--    4. aop事务支持-->
+</beans>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 4.springmvc层配置</span><br><span class="line"></span><br><span class="line">- add framework support增加web目录</span><br><span class="line"></span><br><span class="line">- resources</span><br><span class="line"></span><br><span class="line">  - spring-mvc.xml</span><br><span class="line"></span><br><span class="line">    - ```xml</span><br><span class="line">      &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">      &lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">             xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:mvc=&quot;http://www.springframework.org/schema/mvc&quot;</span><br><span class="line">             xmlns:context=&quot;http://www.springframework.org/schema/context&quot;</span><br><span class="line">             xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans</span><br><span class="line">              https://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd&quot;&gt;</span><br><span class="line">      </span><br><span class="line">      &lt;!--    1.注解驱动--&gt;</span><br><span class="line">          &lt;mvc:annotation-driven/&gt;</span><br><span class="line">      &lt;!--    2.静态资源过滤--&gt;</span><br><span class="line">          &lt;mvc:default-servlet-handler/&gt;</span><br><span class="line">      &lt;!--    3.扫描包：controller--&gt;</span><br><span class="line">          &lt;context:component-scan base-package=&quot;com.example.controller&quot;/&gt;</span><br><span class="line">      &lt;!--    4.视图解析器--&gt;</span><br><span class="line">          &lt;bean class=&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;&gt;</span><br><span class="line">              &lt;property name=&quot;prefix&quot; value=&quot;/WEB-INF/jsp/&quot;/&gt;</span><br><span class="line">              &lt;property name=&quot;suffix&quot; value=&quot;.jsp&quot;/&gt;</span><br><span class="line">          &lt;/bean&gt;</span><br><span class="line">      </span><br><span class="line">      &lt;/beans&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>web&#x2F;WEB-INF</p>
+<ul>
+<li><p>web.xml</p>
+<ul>
+<li>&#96;&#96;&#96;xml<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+     version="4.0"><!--    DispatcherServlet-->
+<pre><code>&lt;servlet&gt;
+    &lt;servlet-name&gt;springmvc&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+    &lt;init-param&gt;
+        &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+        &lt;param-value&gt;classpath:applicationContext.xml&lt;/param-value&gt;
+    &lt;/init-param&gt;
+    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+&lt;/servlet&gt;
+&lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;springmvc&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+</code></pre>
+<!--    乱码过滤-->
+<pre><code>&lt;filter&gt;
+    &lt;filter-name&gt;encodingFilter&lt;/filter-name&gt;
+    &lt;filter-class&gt;org.springframework.web.filter.CharacterEncodingFilter&lt;/filter-class&gt;
+    &lt;init-param&gt;
+        &lt;param-name&gt;encoding&lt;/param-name&gt;
+        &lt;param-value&gt;utf-8&lt;/param-value&gt;
+    &lt;/init-param&gt;
+&lt;/filter&gt;
+&lt;filter-mapping&gt;
+    &lt;filter-name&gt;encodingFilter&lt;/filter-name&gt;
+</code></pre>
+<!--        过滤要对所有文件生效，包括jsp文件，所以要加*-->
+<pre><code>    &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+&lt;/filter-mapping&gt;
+</code></pre>
+<!--    Session过期时间-->
+<pre><code>&lt;session-config&gt;
+    &lt;session-timeout&gt;15&lt;/session-timeout&gt;
+&lt;/session-config&gt;
+</code></pre>
+</web-app>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 5. Tomcat部署</span><br><span class="line"></span><br><span class="line">## 2. 运行尝试</span><br><span class="line"></span><br><span class="line">### 1. 错误日志</span><br><span class="line"></span><br><span class="line">#### 1. org.apache.catalina.core.StandardContext.startInternal 一个或多个筛选器启动失败。</span><br><span class="line"></span><br><span class="line">- 解决方法</span><br><span class="line"></span><br><span class="line">  File-&gt;priject structure-&gt;artifacts-&gt;选择当前项目-&gt;WEB-INF下新建lib目录，将所有jar导入</span><br><span class="line"></span><br><span class="line">#### 2. org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name &#x27;bookController&#x27;: Unsatisfied dependency expressed through field &#x27;bookService&#x27;</span><br><span class="line"></span><br><span class="line">- 解决方法</span><br><span class="line"></span><br><span class="line">  web.xml配置文件中的内容出错contextConfigLocation应该设置为包含了所有文件导入的applicationContext.xml</span><br><span class="line"></span><br><span class="line">  ```xml</span><br><span class="line">  &lt;!--正确代码--&gt;</span><br><span class="line">  &lt;init-param&gt;</span><br><span class="line">      &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;</span><br><span class="line">      &lt;param-value&gt;classpath:applicationContext.xml&lt;/param-value&gt;</span><br><span class="line">  &lt;/init-param&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>过程中可能会出现的问题</p>
+<ul>
+<li><p>org.springframework.jdbc.CannotGetJdbcConnectionException: Failed to obtain JDBC Connection</p>
+<ul>
+<li><p>解决方法</p>
+<p>数据库没有开启，开启数据库</p>
+</li>
+</ul>
+</li>
+<li><p>请求的资源**不可用</p>
+<ul>
+<li>解决方法<ul>
+<li>检查Tomcat打开项目的路径配置是否正确</li>
+<li>检查RequestMapping是否设置正确</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-功能整合"><a href="#3-功能整合" class="headerlink" title="3. 功能整合"></a>3. 功能整合</h2><h3 id="1-查询所有书籍"><a href="#1-查询所有书籍" class="headerlink" title="1. 查询所有书籍"></a>1. 查询所有书籍</h3><ul>
+<li><p>controller</p>
+<ul>
+<li><p>bookController</p>
+<ul>
+<li>&#96;&#96;&#96;java<br>@Controller<br>@RequestMapping(“&#x2F;book”)<br>public class BookController {<br>&#x2F;&#x2F; controller调service层<br>@Autowired<br>@Qualifier(“bookServiceImpl”)<br>private BookService bookService;<br><br>&#x2F;&#x2F; 查询全部的书籍并且返回书籍展示页面<br>@RequestMapping(“&#x2F;allBook”)<br>public String list(Model model){<br>    List<Books> list &#x3D; bookService.queryAllBook();<br>    model.addAttribute(“list”, list);<br>    return “allBook”;<br>}<br>}<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- web/WEB-INF/jsp</span><br><span class="line"></span><br><span class="line">  - allBook.jsp</span><br><span class="line"></span><br><span class="line">    - ```jsp</span><br><span class="line">      &lt;%@ taglib prefix=&quot;c&quot; uri=&quot;http://java.sun.com/jsp/jstl/core&quot; %&gt;</span><br><span class="line">      &lt;%@ page contentType=&quot;text/html;charset=UTF-8&quot; language=&quot;java&quot; %&gt;</span><br><span class="line">      &lt;html&gt;</span><br><span class="line">      &lt;head&gt;</span><br><span class="line">          &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">      &lt;/head&gt;</span><br><span class="line">      &lt;body&gt;</span><br><span class="line">      &lt;h1&gt;书籍展示&lt;/h1&gt;</span><br><span class="line">      &lt;%--书籍信息从后端数据库中读取，又从list中获取--%&gt;</span><br><span class="line">      &lt;table&gt;</span><br><span class="line">          &lt;thead&gt;</span><br><span class="line">              &lt;tr&gt;</span><br><span class="line">                  &lt;th&gt;书籍编号&lt;/th&gt;</span><br><span class="line">                  &lt;th&gt;书籍名称&lt;/th&gt;</span><br><span class="line">                  &lt;th&gt;书籍数量&lt;/th&gt;</span><br><span class="line">                  &lt;th&gt;书籍详情&lt;/th&gt;</span><br><span class="line">              &lt;/tr&gt;</span><br><span class="line">          &lt;/thead&gt;</span><br><span class="line">          &lt;tbody&gt;</span><br><span class="line">      &lt;%--        &lt;c:forEach var=&quot;book&quot; items=&quot;$&#123;requestScope.get(&#x27;list&#x27;)&#125;&quot;&gt;--%&gt;</span><br><span class="line">              &lt;c:forEach var=&quot;book&quot; items=&quot;$&#123;list&#125;&quot;&gt;</span><br><span class="line">                  &lt;tr&gt;</span><br><span class="line">                      &lt;td&gt;$&#123;book.bookID&#125;&lt;/td&gt;</span><br><span class="line">                      &lt;td&gt;$&#123;book.bookName&#125;&lt;/td&gt;</span><br><span class="line">                      &lt;td&gt;$&#123;book.bookCounts&#125;&lt;/td&gt;</span><br><span class="line">                      &lt;td&gt;$&#123;book.detail&#125;&lt;/td&gt;</span><br><span class="line">                  &lt;/tr&gt;</span><br><span class="line">              &lt;/c:forEach&gt;</span><br><span class="line">          &lt;/tbody&gt;</span><br><span class="line">      &lt;/table&gt;</span><br><span class="line">      &lt;/body&gt;</span><br><span class="line">      &lt;/html&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>web</p>
+<ul>
+<li><p>index.jsp</p>
+<ul>
+<li>&#96;&#96;&#96;jsp<br>&lt;%@ page contentType&#x3D;”text&#x2F;html;charset&#x3D;UTF-8” language&#x3D;”java” %&gt;<html>
+  <head>
+    <title>首页</title>
+  </head>
+  <body>
+  <h3>
+    <a href="${pageContext.request.contextPath}/book/allBook">进入书籍展示页面</a>
+  </h3>
+  </body>
+</html>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 2. 添加书籍</span><br><span class="line"></span><br><span class="line">- controller</span><br><span class="line"></span><br><span class="line">  - BookController</span><br><span class="line"></span><br><span class="line">    - ```java</span><br><span class="line">      @Controller</span><br><span class="line">      @RequestMapping(&quot;/book&quot;)</span><br><span class="line">      public class BookController &#123;</span><br><span class="line">          // controller调service层</span><br><span class="line">          @Autowired</span><br><span class="line">          @Qualifier(&quot;bookServiceImpl&quot;)</span><br><span class="line">          private BookService bookService;</span><br><span class="line">      </span><br><span class="line">          // 查询全部的书籍并且返回书籍展示页面</span><br><span class="line">          @RequestMapping(&quot;/allBook&quot;)</span><br><span class="line">          public String list(Model model)&#123;</span><br><span class="line">              List&lt;Books&gt; list = bookService.queryAllBook();</span><br><span class="line">              model.addAttribute(&quot;list&quot;, list);</span><br><span class="line">              return &quot;allBook&quot;;</span><br><span class="line">          &#125;</span><br><span class="line">      </span><br><span class="line">          // 展示新增书籍页面</span><br><span class="line">          @RequestMapping(&quot;/toAddBook&quot;)</span><br><span class="line">          public String toAddBook()&#123;</span><br><span class="line">              return &quot;addBook&quot;;</span><br><span class="line">          &#125;</span><br><span class="line">      </span><br><span class="line">          // 新增书籍</span><br><span class="line">          @RequestMapping(&quot;/addBook&quot;)</span><br><span class="line">          public String addBook(Books book)&#123;</span><br><span class="line">              bookService.addBook(book);</span><br><span class="line">              return &quot;redirect:/book/allBook&quot;;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>web&#x2F;WEB-INF&#x2F;jsp</p>
+<ul>
+<li><p>addBook.jsp</p>
+<ul>
+<li>&#96;&#96;&#96;jsp<br>&lt;%@ page contentType&#x3D;”text&#x2F;html;charset&#x3D;UTF-8” language&#x3D;”java” %&gt;<html>
+<head>
+    <title>Title</title>
+</head>
+<body>
+  <h1>新增书籍</h1>
+  <form action="${pageContext.request.contextPath}/book/addBook" method="post" >
+    <label>书籍名称</label>
+    <input type="text" name="bookName" required/>
+    <label>书籍数量</label>
+    <input type="text" name="bookCounts" required/>
+    <label>书籍详情</label>
+    <input type="text" name="detail" required/>
+    <input type="submit" value="提交">
+  </form>
+</body>
+</html>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- allBook.jsp</span><br><span class="line"></span><br><span class="line">  - ```jsp</span><br><span class="line">    &lt;%--新增字段--%&gt;</span><br><span class="line">    &lt;h2&gt;</span><br><span class="line">        &lt;a href=&quot;$&#123;pageContext.request.contextPath&#125;/book/toAddBook&quot; &gt;新增书籍&lt;/a&gt;</span><br><span class="line">    &lt;/h2&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-修改删除"><a href="#3-修改删除" class="headerlink" title="3. 修改删除"></a>3. 修改删除</h3><ul>
+<li><p>controller</p>
+<ul>
+<li><p>BookController</p>
+<ul>
+<li><p>&#96;&#96;&#96;java<br>package com.example.controller;</p>
+<p>import com.example.pojo.Books;<br>import com.example.service.BookService;<br>import org.springframework.beans.factory.annotation.Autowired;<br>import org.springframework.beans.factory.annotation.Qualifier;<br>import org.springframework.stereotype.Controller;<br>import org.springframework.ui.Model;<br>import org.springframework.web.bind.annotation.PathVariable;<br>import org.springframework.web.bind.annotation.RequestMapping;</p>
+<p>import java.util.List;</p>
+<p>@Controller<br>@RequestMapping(“&#x2F;book”)<br>public class BookController {<br>&#x2F;&#x2F; controller调service层<br>@Autowired<br>@Qualifier(“bookServiceImpl”)<br>private BookService bookService;<br><br>&#x2F;&#x2F; 查询全部的书籍并且返回书籍展示页面<br>@RequestMapping(“&#x2F;allBook”)<br>public String list(Model model){<br>    List<Books> list &#x3D; bookService.queryAllBook();<br>    model.addAttribute(“list”, list);<br>    return “allBook”;<br>}<br><br>&#x2F;&#x2F; 展示新增书籍页面<br>@RequestMapping(“&#x2F;toAddBook”)<br>public String toAddBook(){<br>    return “addBook”;<br>}<br><br>&#x2F;&#x2F; 新增书籍<br>@RequestMapping(“&#x2F;addBook”)<br>public String addBook(Books book){<br>    bookService.addBook(book);<br>    return “redirect:&#x2F;book&#x2F;allBook”;<br>}<br><br>&#x2F;&#x2F; 展示修改书籍的界面<br>@RequestMapping(“&#x2F;toUpdateBook”)<br>public String toUpdateBook(int bookID, Model model){<br>    Books book &#x3D; bookService.queryBookById(bookID);<br>    model.addAttribute(“QBook”, book);<br>    return “updateBook”;<br>}<br><br>&#x2F;&#x2F; 修改书籍<br>@RequestMapping(“&#x2F;updateBook”)<br>public String updateBook(Books book){<br>    bookService.updateBook(book);<br>    return “redirect:&#x2F;book&#x2F;allBook”;<br>}<br><br>&#x2F;&#x2F; 删除书籍<br>@RequestMapping(“&#x2F;deleteBook&#x2F;{bookID}”)<br>public String deleteBook(@PathVariable(“bookID”) int bookID){<br>    bookService.deleteBook(bookID);<br>    return “redirect:&#x2F;book&#x2F;allBook”;<br>}<br>}</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- web/WEB-INF/jsp</span><br><span class="line"></span><br><span class="line">  - updateBook.jsp</span><br><span class="line"></span><br><span class="line">    - ```jsp</span><br><span class="line">      &lt;%@ page contentType=&quot;text/html;charset=UTF-8&quot; language=&quot;java&quot; %&gt;</span><br><span class="line">      &lt;html&gt;</span><br><span class="line">      &lt;head&gt;</span><br><span class="line">          &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">      &lt;/head&gt;</span><br><span class="line">      &lt;body&gt;</span><br><span class="line">      &lt;h1&gt;修改书籍&lt;/h1&gt;</span><br><span class="line">      &lt;form action=&quot;$&#123;pageContext.request.contextPath&#125;/book/updateBook&quot; method=&quot;post&quot; &gt;</span><br><span class="line">          &lt;input type=&quot;hidden&quot; name=&quot;bookID&quot; value=&quot;$&#123;QBook.bookID&#125;&quot; /&gt;</span><br><span class="line">          &lt;label&gt;书籍名称&lt;/label&gt;</span><br><span class="line">          &lt;input type=&quot;text&quot; name=&quot;bookName&quot; value=&quot;$&#123;QBook.bookName&#125;&quot; required/&gt;</span><br><span class="line">          &lt;label&gt;书籍数量&lt;/label&gt;</span><br><span class="line">          &lt;input type=&quot;text&quot; name=&quot;bookCounts&quot; value=&quot;$&#123;QBook.bookCounts&#125;&quot; required/&gt;</span><br><span class="line">          &lt;label&gt;书籍详情&lt;/label&gt;</span><br><span class="line">          &lt;input type=&quot;text&quot; name=&quot;detail&quot; value=&quot;$&#123;QBook.detail&#125;&quot; required/&gt;</span><br><span class="line">          &lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;</span><br><span class="line">      &lt;/form&gt;</span><br><span class="line">      &lt;/body&gt;</span><br><span class="line">      &lt;/html&gt;</span><br></pre></td></tr></table></figure></li>
 </ul>
 </li>
 </ul>
@@ -392,6 +574,9 @@ private String detail;
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2023/07/07/C%E5%AD%A6%E4%B9%A0/%E8%AF%AD%E6%B3%95%E5%85%A5%E9%97%A8/" rel="next" title="C语言复习-基础语法">
+                  C语言复习-基础语法 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
