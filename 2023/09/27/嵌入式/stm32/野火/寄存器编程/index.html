@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha256-/4UQcSmErDzPCMAiuOiWPVVsNN2s3ZY/NsmXNcj0IFc=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="1. 寄存器使用123456789101112131415&#x2F;*	1.定义指针变量pointer，消耗内存	2.宏定义pointer2，不消耗内存，文本替换(推荐使用)*&#x2F;&#x2F;&#x2F; 2.宏定义#define pointer2 (volatile unsigned int *)0x40028001int main(void) &amp;#123;	&#x2F;&#x2F; 使用volatile的作用：防止编译器对程序代码进行优化	&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1. 寄存器使用123456789101112131415&#x2F;*	1.定义指针变量pointer，消耗内存	2.宏定义pointer2，不消耗内存，文本替换(推荐使用)*&#x2F;&#x2F;&#x2F; 2.宏定义#define pointer2 (volatile unsigned int *)0x40028001int main(void) &amp;#123;	&#x2F;&#x2F; 使用volatile的作用：防止编译器对程序代码进行优化	&#x2F;">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928092550394.png">
+<meta property="og:image" content="http://example.com/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928121746331.png">
+<meta property="og:image" content="http://example.com/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928121826733.png">
+<meta property="og:image" content="http://example.com/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928125537460.png">
+<meta property="og:image" content="http://example.com/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928125911991.png">
+<meta property="og:image" content="http://example.com/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928130030796.png">
+<meta property="og:image" content="http://example.com/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928130237618.png">
+<meta property="og:image" content="http://example.com/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928130641644.png">
+<meta property="og:image" content="http://example.com/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928130600551.png">
+<meta property="og:image" content="http://example.com/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928144657350.png">
+<meta property="og:image" content="http://example.com/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928144730946.png">
+<meta property="og:image" content="http://example.com/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928144906216.png">
+<meta property="og:image" content="http://example.com/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928144927628.png">
+<meta property="og:image" content="http://example.com/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928145722536.png">
+<meta property="og:image" content="http://example.com/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928145914368.png">
+<meta property="og:image" content="http://example.com/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928145935057.png">
+<meta property="og:image" content="http://example.com/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928150125458.png">
+<meta property="og:image" content="http://example.com/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928150227164.png">
+<meta property="og:image" content="http://example.com/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928144025020.png">
+<meta property="article:published_time" content="2023-09-27T06:51:59.393Z">
+<meta property="article:modified_time" content="2023-10-17T04:16:00.973Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928092550394.png">
+
+
+<link rel="canonical" href="http://example.com/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/","path":"2023/09/27/嵌入式/stm32/野火/寄存器编程/","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title> | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%AF%84%E5%AD%98%E5%99%A8%E4%BD%BF%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">1. 寄存器使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E9%A1%B9%E7%9B%AE%E7%BC%96%E8%AF%91-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">2. 项目编译(环境配置)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E4%BD%BF%E7%94%A8keil5%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. 使用keil5自动配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E6%89%8B%E5%8A%A8%E9%85%8D%E7%BD%AE"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. 手动配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-LED-test%E9%A1%B9%E7%9B%AE"><span class="nav-number">3.</span> <span class="nav-text">3. LED_test项目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-number">3.1.</span> <span class="nav-text">3.1. 前置知识</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-%E6%97%B6%E9%92%9F%E4%BD%BF%E8%83%BD"><span class="nav-number">3.1.1.</span> <span class="nav-text">3.1.1. 时钟使能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-2-GPIO%E7%AB%AF%E5%8F%A3%E9%85%8D%E7%BD%AE"><span class="nav-number">3.1.2.</span> <span class="nav-text">3.1.2. GPIO端口配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E7%BC%96%E7%A0%81%E6%B5%81%E7%A8%8B"><span class="nav-number">3.2.</span> <span class="nav-text">3.2. 编码流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E7%BC%96%E7%A0%81"><span class="nav-number">3.3.</span> <span class="nav-text">3.3. 编码</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-09-27 14:51:59" itemprop="dateCreated datePublished" datetime="2023-09-27T14:51:59+08:00">2023-09-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-17 12:16:00" itemprop="dateModified" datetime="2023-10-17T12:16:00+08:00">2023-10-17</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="1-寄存器使用"><a href="#1-寄存器使用" class="headerlink" title="1. 寄存器使用"></a>1. 寄存器使用</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">	1.定义指针变量pointer，消耗内存</span></span><br><span class="line"><span class="comment">	2.宏定义pointer2，不消耗内存，文本替换(推荐使用)</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2.宏定义</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pointer2 (volatile unsigned int *)0x40028001</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">	<span class="comment">// 使用volatile的作用：防止编译器对程序代码进行优化</span></span><br><span class="line">	<span class="comment">// 1.变量定义</span></span><br><span class="line">	<span class="keyword">volatile</span> <span class="type">unsigned</span> <span class="type">int</span> * pointer = (<span class="type">unsigned</span> <span class="type">int</span> * )<span class="number">0x40028000</span>;</span><br><span class="line">	*pointer = <span class="number">2</span>;</span><br><span class="line">	*pointer2 = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-项目编译-环境配置"><a href="#2-项目编译-环境配置" class="headerlink" title="2. 项目编译(环境配置)"></a>2. 项目编译(环境配置)</h2><img src="/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928092550394.png" class="" title="image-20230928092550394">
+
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Error: L6320W: Ignoring --entry command. Cannot find argument &#x27;Reset_Handler&#x27;.	//找不到启动文件</span><br><span class="line"></span><br><span class="line">Warning: L6320W: Ignoring --first command. Cannot find argument &#x27;__Vectors&#x27;.	//找不到中断向量_____vector的Reset复位中断，单片机一上电就开始读0X0000 0004，找不到就无法复位</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-1-使用keil5自动配置"><a href="#2-1-使用keil5自动配置" class="headerlink" title="2.1. 使用keil5自动配置"></a>2.1. 使用keil5自动配置</h3><img src="/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928121746331.png" class="" title="image-20230928121746331">
+
+<img src="/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928121826733.png" class="" title="image-20230928121826733">
+
+<h3 id="2-2-手动配置"><a href="#2-2-手动配置" class="headerlink" title="2.2. 手动配置"></a>2.2. 手动配置</h3><img src="/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928125537460.png" class="" title="image-20230928125537460">
+
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error:  #5: cannot open source input file &quot;stm32f1xx.h&quot;: No such file or directory	//库文件未加入项目s</span><br></pre></td></tr></table></figure>
+
+<img src="/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928125911991.png" class="" title="image-20230928125911991">
+
+<img src="/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928130030796.png" class="" title="image-20230928130030796">
+
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error:  #35: #error directive: &quot;Please select first the target STM32F1xx device used in your application (in stm32f1xx.h file)&quot;	//请选择一个stm32型号</span><br></pre></td></tr></table></figure>
+
+<img src="/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928130237618.png" class="" title="image-20230928130237618">
+
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">//该步骤等同于添加了一个宏定义</span><br></pre></td></tr></table></figure>
+
+<img src="/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928130641644.png" class="" title="image-20230928130641644">
+
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error:  #5: cannot open source input file &quot;core_cm3.h&quot;: No such file or directory	//缺少库文件</span><br></pre></td></tr></table></figure>
+
+<img src="/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928130600551.png" class="" title="image-20230928130600551">
+
+<h2 id="3-LED-test项目"><a href="#3-LED-test项目" class="headerlink" title="3. LED_test项目"></a>3. LED_test项目</h2><h3 id="3-1-前置知识"><a href="#3-1-前置知识" class="headerlink" title="3.1. 前置知识"></a>3.1. 前置知识</h3><h4 id="3-1-1-时钟使能"><a href="#3-1-1-时钟使能" class="headerlink" title="3.1.1. 时钟使能"></a>3.1.1. 时钟使能</h4><img src="/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928144657350.png" class="" title="image-20230928144657350">
+
+<img src="/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928144730946.png" class="" title="image-20230928144730946">
+
+<img src="/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928144906216.png" class="" title="image-20230928144906216">
+
+<img src="/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928144927628.png" class="" title="image-20230928144927628">
+
+<h4 id="3-1-2-GPIO端口配置"><a href="#3-1-2-GPIO端口配置" class="headerlink" title="3.1.2. GPIO端口配置"></a>3.1.2. GPIO端口配置</h4><img src="/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928145722536.png" class="" title="image-20230928145722536">
+
+<img src="/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928145914368.png" class="" title="image-20230928145914368">
+
+<img src="/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928145935057.png" class="" title="image-20230928145935057">
+
+<img src="/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928150125458.png" class="" title="image-20230928150125458">
+
+<img src="/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928150227164.png" class="" title="image-20230928150227164">
+
+<h3 id="3-2-编码流程"><a href="#3-2-编码流程" class="headerlink" title="3.2. 编码流程"></a>3.2. 编码流程</h3><img src="/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/image-20230928144025020.png" class="" title="image-20230928144025020">
+
+<h3 id="3-3-编码"><a href="#3-3-编码" class="headerlink" title="3.3. 编码"></a>3.3. 编码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> GPIOB_CLK (*(volatile unsigned int * )(0x40021000 + 0x18))	<span class="comment">//总线AHB 外设RCC</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> GPIOB_CRL (*(volatile unsigned int * )(0X40010C00 + 0x00))	<span class="comment">//总线APB2 外设GPIOB</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> GPIOB_ODR (*(volatile unsigned int * )(0X40010C00 + 0x0C))	<span class="comment">//总线APB2 外设GPIOB</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span>&#123;</span><br><span class="line">	<span class="comment">//1. 使能GPIOB的外设时钟</span></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">		1&lt;&lt;3 --&gt; 0x00001000</span></span><br><span class="line"><span class="comment">		GPIOB_CLK |= (1&lt;&lt;3)  --&gt;    将GPIOB_CLK所在地址的内容与0x00001000相或，效果是将第3位修改为1</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line">	GPIOB_CLK |= (<span class="number">1</span>&lt;&lt;<span class="number">3</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//2. GPIOB配置推挽输出模式</span></span><br><span class="line">	<span class="comment">//2.1. 配置CRL寄存器 --&gt; 设置模式为通用推挽输出模式 --&gt; CNF0[1:0]-00	MODE0[1:0]-10</span></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">		0xf&lt;&lt;(4*0) --&gt; 0x0000000f&lt;&lt;0 --&gt; 0x0000000f</span></span><br><span class="line"><span class="comment">		~(0xf&lt;&lt;(4*0)) --&gt; 0xfffffff0</span></span><br><span class="line"><span class="comment">		GPIOB_CRL &amp;= ~(0xf&lt;&lt;(4*0)) --&gt; 将GPIOB_CRL所在地址的内容与0xfffffff0相与，效果是将最低4位修改为0</span></span><br><span class="line"><span class="comment">		2&lt;&lt;0 --&gt; 0x00000010</span></span><br><span class="line"><span class="comment">		GPIOB_CRL |= (2&lt;&lt;0)  --&gt;    将GPIOB_CRL所在地址的内容与0x00000010相或，效果是将第1位修改为1</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line">	GPIOB_CRL &amp;= ~(<span class="number">0xf</span>&lt;&lt;(<span class="number">4</span>*<span class="number">0</span>));</span><br><span class="line">	GPIOB_CRL |= (<span class="number">2</span>&lt;&lt;<span class="number">0</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//2.2. 配置ODR寄存器 --&gt; 设置端口输出为1(高电平)</span></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">		0x1&lt;&lt;(1*0) --&gt; 0x00000001&lt;&lt;0 --&gt; 0x00000001</span></span><br><span class="line"><span class="comment">		~(0x1&lt;&lt;(1*0)) --&gt; 0xfffffffe</span></span><br><span class="line"><span class="comment">		GPIOB_ODR &amp;= ~(0xf&lt;&lt;(1*0)) --&gt; 将GPIOB_ODR所在地址的内容与0xfffffffe相与，效果是将最低1位修改为0</span></span><br><span class="line"><span class="comment">		1&lt;&lt;0 --&gt; 0x00000001</span></span><br><span class="line"><span class="comment">		GPIOB_ODR |= (1&lt;&lt;0)  --&gt;    将GPIOB_ODR所在地址的内容与0x00000001相或，效果是将第1位修改为1</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line">	GPIOB_ODR &amp;= ~(<span class="number">0x1</span>&lt;&lt;(<span class="number">1</span>*<span class="number">0</span>));</span><br><span class="line">	GPIOB_ODR |= (<span class="number">1</span>&lt;&lt;<span class="number">0</span>);	<span class="comment">//当前效果为熄灭，注释掉这一行为亮起</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/09/20/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%85%83%E5%99%A8%E4%BB%B6/%E5%99%A8%E4%BB%B6%E7%9F%A5%E8%AF%86/" rel="prev" title="">
+                  <i class="fa fa-chevron-left"></i> 
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/09/30/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/cubeMX%E6%95%99%E7%A8%8B/" rel="next" title="">
+                   <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://example.com/2023/09/27/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E9%87%8E%E7%81%AB/%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E7%A8%8B/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>

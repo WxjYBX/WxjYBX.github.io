@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha256-/4UQcSmErDzPCMAiuOiWPVVsNN2s3ZY/NsmXNcj0IFc=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="详细解释代码的含义并分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="app_httpd.cpp代码详细解读">
+<meta property="og:url" content="http://example.com/2023/08/09/%E5%B5%8C%E5%85%A5%E5%BC%8F/esp32/arduino/esp32cam/app_httpd%E4%BB%A3%E7%A0%81%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="详细解释代码的含义并分析">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-08-09T08:17:37.536Z">
+<meta property="article:modified_time" content="2023-08-16T09:54:19.069Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2023/08/09/%E5%B5%8C%E5%85%A5%E5%BC%8F/esp32/arduino/esp32cam/app_httpd%E4%BB%A3%E7%A0%81%E8%AF%A6%E8%A7%A3/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/08/09/%E5%B5%8C%E5%85%A5%E5%BC%8F/esp32/arduino/esp32cam/app_httpd%E4%BB%A3%E7%A0%81%E8%AF%A6%E8%A7%A3/","path":"2023/08/09/嵌入式/esp32/arduino/esp32cam/app_httpd代码详解/","title":"app_httpd.cpp代码详细解读"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>app_httpd.cpp代码详细解读 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%A4%B4%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">1. 头文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-esp-http-server-h"><span class="nav-number">1.1.</span> <span class="nav-text">1.1. esp_http_server.h</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-esp-timer-h"><span class="nav-number">1.2.</span> <span class="nav-text">1.2. esp_timer.h</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-esp-camera-h"><span class="nav-number">1.3.</span> <span class="nav-text">1.3. esp_camera.h</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-img-converters-h"><span class="nav-number">1.4.</span> <span class="nav-text">1.4. img_converters.h</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-camera-index-h"><span class="nav-number">1.5.</span> <span class="nav-text">1.5. camera_index.h</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-6-Arduino-h"><span class="nav-number">1.6.</span> <span class="nav-text">1.6. Arduino.h</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-7-fb-gfx-h-%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%9B%B8%E5%85%B3%E5%BA%93"><span class="nav-number">1.7.</span> <span class="nav-text">1.7. fb_gfx.h(人脸识别相关库)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-8-fd-forward-h-%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%9B%B8%E5%85%B3%E5%BA%93"><span class="nav-number">1.8.</span> <span class="nav-text">1.8. fd_forward.h(人脸识别相关库)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-9-fr-forward-h-%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%9B%B8%E5%85%B3%E5%BA%93"><span class="nav-number">1.9.</span> <span class="nav-text">1.9. fr_forward.h(人脸识别相关库)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">2. 数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-size-t"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. size_t</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-httpd-req-t"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. httpd_req_t</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-httpd-handle-t"><span class="nav-number">2.3.</span> <span class="nav-text">2.3. httpd_handle_t</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-mtmn-config-t"><span class="nav-number">2.4.</span> <span class="nav-text">2.4. mtmn_config_t</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5-face-id-list"><span class="nav-number">2.5.</span> <span class="nav-text">2.5. face_id_list</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E7%BB%93%E6%9E%84%E4%BD%93"><span class="nav-number">3.</span> <span class="nav-text">4. 结构体</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F"><span class="nav-number">4.</span> <span class="nav-text">5. 静态变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="nav-number">5.</span> <span class="nav-text">6. 全局变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-%E5%87%BD%E6%95%B0"><span class="nav-number">6.</span> <span class="nav-text">7. 函数</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/08/09/%E5%B5%8C%E5%85%A5%E5%BC%8F/esp32/arduino/esp32cam/app_httpd%E4%BB%A3%E7%A0%81%E8%AF%A6%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="app_httpd.cpp代码详细解读 | Hexo">
+      <meta itemprop="description" content="详细解释代码的含义并分析">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          app_httpd.cpp代码详细解读
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-08-09 16:17:37" itemprop="dateCreated datePublished" datetime="2023-08-09T16:17:37+08:00">2023-08-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-08-16 17:54:19" itemprop="dateModified" datetime="2023-08-16T17:54:19+08:00">2023-08-16</time>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">详细解释代码的含义并分析</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="1-头文件"><a href="#1-头文件" class="headerlink" title="1. 头文件"></a>1. 头文件</h1><h2 id="1-1-esp-http-server-h"><a href="#1-1-esp-http-server-h" class="headerlink" title="1.1. esp_http_server.h"></a>1.1. esp_http_server.h</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">esp_http_server.h是ESP-IDF中的一个库文件，用于实现HTTP服务器功能。</span><br><span class="line">	ESP-IDF是Espressif Systems开发的用于ESP32和ESP32-S2芯片的官方开发框架。</span><br><span class="line"></span><br><span class="line">使用esp_http_server.h库文件，您可以在ESP32或ESP32-S2芯片上创建一个HTTP服务器，以提供Web服务。</span><br><span class="line">    这个库提供了一套API，可以帮助您构建基于HTTP协议的应用程序。</span><br><span class="line"></span><br><span class="line">通过ESP32或ESP32-S2芯片上的HTTP服务器，您可以实现以下功能：</span><br><span class="line">    Web页面：您可以通过HTTP服务器提供HTML、CSS和JavaScript文件，以创建动态或静态的Web页面。这使得您可以在浏览器中访问和控制设备。</span><br><span class="line">    RESTful API：使用HTTP服务器，您可以实现RESTful API，允许其他设备或应用程序通过HTTP请求与设备进行通信。这样，您可以通过GET、POST、PUT和DELETE等HTTP方法来读取、写入和删除设备上的数据。</span><br><span class="line">    文件传输：HTTP服务器还可以用于传输文件。您可以通过HTTP请求将文件上传到设备，或者从设备下载文件。</span><br><span class="line">    WebSocket：ESP32和ESP32-S2的HTTP服务器还支持WebSocket协议，使得设备可以实时地与客户端进行双向通信。</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-2-esp-timer-h"><a href="#1-2-esp-timer-h" class="headerlink" title="1.2. esp_timer.h"></a>1.2. esp_timer.h</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">esp_timer.h是ESP-IDF中的一个库文件，用于实现定时器功能。</span><br><span class="line">    ESP-IDF是Espressif Systems开发的用于ESP32和ESP32-S2芯片的官方开发框架。</span><br><span class="line"></span><br><span class="line">使用esp_timer.h库文件，您可以在ESP32或ESP32-S2芯片上创建和管理定时器，以便在特定的时间间隔或特定的时间点执行某些任务。</span><br><span class="line"></span><br><span class="line">esp_timer.h提供了以下功能：</span><br><span class="line">    创建定时器：您可以使用该库创建一个或多个定时器。每个定时器都有一个唯一的标识符。</span><br><span class="line">    设置定时器周期：您可以为每个定时器设置周期，即定时器启动后，它将在固定的时间间隔内反复触发。</span><br><span class="line">    设置定时器回调函数：您可以为每个定时器设置一个回调函数。当定时器触发时，回调函数将被调用执行。在回调函数中，您可以编写您想要执行的任务代码。</span><br><span class="line">    启动和停止定时器：您可以启动和停止定时器。一旦定时器启动，它将按照设定的周期触发并执行回调函数。停止定时器将暂停定时器的触发。</span><br><span class="line">    定时器事件处理：该库通过事件机制提供定时器相关的事件处理。您可以订阅定时器事件并编写事件处理程序来响应定时器相关的事件。</span><br><span class="line"></span><br><span class="line">这对于需要定时执行任务的应用程序非常有用，例如周期性采集传感器数据、定时发送数据等。</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-3-esp-camera-h"><a href="#1-3-esp-camera-h" class="headerlink" title="1.3. esp_camera.h"></a>1.3. esp_camera.h</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">esp_camera.h是ESP-IDF中的一个库文件，用于在ESP32和ESP32-S2芯片上实现相机功能。</span><br><span class="line">    ESP-IDF是Espressif Systems开发的用于ESP32和ESP32-S2芯片的官方开发框架。</span><br><span class="line"></span><br><span class="line">使用esp_camera.h库文件，您可以将相机模块连接到ESP32或ESP32-S2芯片，并利用其功能进行图像捕捉和处理。</span><br><span class="line">    该库提供了一套API，可以帮助您轻松地初始化相机模块、捕捉图像并进行后处理。</span><br><span class="line"></span><br><span class="line">esp_camera.h库文件适用于以下用途：</span><br><span class="line">    相机初始化：通过使用该库，您可以初始化连接到ESP32或ESP32-S2芯片的相机模块，包括设置分辨率、帧率、曝光等参数。</span><br><span class="line">    图像捕捉：一旦相机初始化完成，您可以使用该库捕捉图像。您可以通过简单的调用函数来捕捉图像，并将其保存到内存中的缓冲区。</span><br><span class="line">    图像处理：捕捉到的图像可以进行各种处理。该库提供了一些图像处理函数，例如调整亮度、对比度、色彩饱和度等。</span><br><span class="line">    图像传输：使用esp_camera.h库，您可以将捕捉到的图像传输到其他设备或服务器。您可以将图像保存为文件，也可以通过网络传输图像。</span><br><span class="line">    人脸识别和物体检测：该库还提供了一些功能，包括人脸识别和物体检测。您可以使用这些功能来检测和识别图像中的人脸或特定的物体。</span><br><span class="line"></span><br><span class="line">这对于需要使用相机进行图像获取和处理的应用程序非常有用，例如智能摄像头、图像识别等。</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-4-img-converters-h"><a href="#1-4-img-converters-h" class="headerlink" title="1.4. img_converters.h"></a>1.4. img_converters.h</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">img_converters.h是ESP-IDF中的一个库文件，用于在ESP32和ESP32-S2芯片上进行图像格式转换。</span><br><span class="line">    ESP-IDF是Espressif Systems开发的用于ESP32和ESP32-S2芯片的官方开发框架。</span><br><span class="line"></span><br><span class="line">使用img_converters.h库文件，您可以执行以下操作：</span><br><span class="line">    图像格式转换：该库提供了函数和工具，使您能够在不同的图像格式之间进行转换。例如，您可以将RGB图像转换为灰度图像，或者将JPEG图像转换为PNG图像等。</span><br><span class="line">    图像缩放：img_converters.h库还提供了图像缩放功能，允许您在不改变图像纵横比的情况下改变图像的大小。您可以按比例缩小或放大图像。</span><br><span class="line">    图像旋转和翻转：通过使用该库，您可以对图像进行旋转和翻转操作。例如，您可以将图像顺时针或逆时针旋转<span class="number">90</span>度、<span class="number">180</span>度或<span class="number">270</span>度，或者将图像水平或垂直翻转。</span><br><span class="line">    图像裁剪：img_converters.h库还提供了图像裁剪功能，允许您从原始图像中选择感兴趣的区域进行裁剪。</span><br><span class="line">    图像格式信息获取：该库还提供了函数，用于获取图像的相关信息，例如图像的宽度、高度、通道数等。</span><br><span class="line"></span><br><span class="line">这对于需要对图像进行处理和转换的应用程序非常有用，例如图像处理、计算机视觉等。</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-5-camera-index-h"><a href="#1-5-camera-index-h" class="headerlink" title="1.5. camera_index.h"></a>1.5. camera_index.h</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">camera_index.h 头文件用于定义图像的 HTML 索引页面。</span><br><span class="line"></span><br><span class="line">具体而言，camera_index.h 文件包含了一个 HTML 字符串，该字符串定义了一个简单的索引页面，用于显示摄像头拍摄的图像。</span><br><span class="line"></span><br><span class="line">在 CameraWebServer 示例项目中，当您使用浏览器访问 esp32 设备的 IP 地址时，会显示一个简单的网页，其中包含最新拍摄的图像和一些控制按钮。camera_index.h 文件定义了这个网页的内容。</span><br><span class="line"></span><br><span class="line">在 camera_index.h 中，您可以找到 HTML 代码片段，其中定义了图像的显示位置、图像的 URL（通常是从服务器获取的图像数据）以及其他相关的 HTML 元素和样式。</span><br><span class="line"></span><br><span class="line">通过修改 camera_index.h 中的 HTML 代码，您可以自定义索引页面的外观和行为，例如更改图像的布局、添加其他 HTML 元素或修改网页中的样式。</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-6-Arduino-h"><a href="#1-6-Arduino-h" class="headerlink" title="1.6. Arduino.h"></a>1.6. Arduino.h</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Arduino.h 是 Arduino 开发平台中的一个核心头文件，它包含了一些常用的函数、宏定义和数据结构，用于简化和加速 Arduino 程序开发。</span><br><span class="line"></span><br><span class="line">Arduino.h 提供了许多功能:</span><br><span class="line">    引脚操作：Arduino.h 中定义了一些函数和宏，使得对引脚进行读写操作更加方便。例如，digitalRead 和 digitalWrite 函数允许您读取和设置数字引脚的状态。</span><br><span class="line">    延时函数：Arduino.h 中的 delay 函数可以暂停程序的执行一段时间，以毫秒为单位。这对于定时任务和简单的时间控制非常有用。</span><br><span class="line">    串口通信：Arduino.h 中定义了与串口通信相关的函数，如 Serial.<span class="built_in">begin</span>() 和 Serial.<span class="built_in">print</span>()，使得与计算机或其他设备进行通信更加容易。</span><br><span class="line">    数字和模拟输入输出：Arduino.h 包含了用于读取和写入模拟信号和数字信号的函数和宏定义。比如 analogRead 和 analogWrite 函数用于处理模拟信号。</span><br><span class="line">    数学计算：该库还提供了一些数学函数，例如随机数生成、幅度映射和三角函数等。</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-7-fb-gfx-h-人脸识别相关库"><a href="#1-7-fb-gfx-h-人脸识别相关库" class="headerlink" title="1.7. fb_gfx.h(人脸识别相关库)"></a>1.7. fb_gfx.h(人脸识别相关库)</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;fb_gfx.h&quot;</span> 是针对嵌入式系统中的帧缓冲（Frame Buffer）图形操作而设计的头文件。</span><br><span class="line">    它提供了一组函数和数据结构，用于在帧缓冲中进行图形绘制、填充和操作。</span><br><span class="line"></span><br><span class="line">具体而言，<span class="string">&quot;fb_gfx.h&quot;</span> 提供了以下功能：</span><br><span class="line">    基本图形绘制：通过使用函数如 drawPixel、drawLine、drawRect、drawCircle 等，您可以在帧缓冲中绘制像素、直线、矩形和圆形等基本图形。</span><br><span class="line">    图像绘制：函数如 drawBitmap可以将位图图像绘制到帧缓冲中。</span><br><span class="line">    文本绘制：通过使用函数如 drawChar、drawString，您可以在帧缓冲中显示字符和字符串。</span><br><span class="line">    颜色和样式设置：您可以使用 setColor、setBackgroundColor、setTextColor 等函数来设置绘制图形和文本所使用的颜色。</span><br><span class="line">    其他操作：<span class="string">&quot;fb_gfx.h&quot;</span> 还提供了一些其他的图形操作函数，比如绘制渐变色、填充区域、旋转和缩放图形等。</span><br><span class="line">    </span><br><span class="line">需要注意的是，<span class="string">&quot;fb_gfx.h&quot;</span> 可能是某个特定平台或库文件自定义的头文件，具体功能可能会因平台和库的不同而有所差异。</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-8-fd-forward-h-人脸识别相关库"><a href="#1-8-fd-forward-h-人脸识别相关库" class="headerlink" title="1.8. fd_forward.h(人脸识别相关库)"></a>1.8. fd_forward.h(人脸识别相关库)</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fd_forward.h 头文件用于进行文件描述符（file descriptor）的转发。</span><br><span class="line"></span><br><span class="line">具体而言，fd_forward.h 提供了一些函数和数据结构，用于实现将文件描述符从一个文件或套接字转发到另一个文件或套接字。</span><br><span class="line">    在这个示例项目中，它可能被用于将图像数据从摄像头读取并转发到网络连接或其他目标。</span><br><span class="line"></span><br><span class="line">通过使用 fd_forward.h 中的函数，您可以创建转发任务并设置源文件描述符和目标文件描述符。</span><br><span class="line">    该任务将会在后台运行，将源文件描述符（如摄像头数据的文件描述符）中的数据读取出来，并将其写入目标文件描述符（如网络连接的文件描述符）中，从而实现数据的转发。</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-9-fr-forward-h-人脸识别相关库"><a href="#1-9-fr-forward-h-人脸识别相关库" class="headerlink" title="1.9. fr_forward.h(人脸识别相关库)"></a>1.9. fr_forward.h(人脸识别相关库)</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fr_forward.h 文件用于实现图像帧的传输和转发。</span><br><span class="line">    具体而言，它提供了一些函数和数据结构，用于处理从摄像头获取的图像数据，并将其传输到客户端（浏览器）上进行显示。</span><br><span class="line"></span><br><span class="line">该文件可能实现了以下功能：</span><br><span class="line">    图像数据处理：fr_forward.h 可能定义了处理图像数据的函数，例如对图像进行压缩、处理和转换等操作。</span><br><span class="line">    图像传输：通过使用函数如 forward_jpeg_data，可以将处理后的图像数据传输到客户端，并通过 HTTP 响应将图像数据发送给浏览器进行显示。</span><br><span class="line">    HTTP 响应处理：fr_forward.h 可能定义了处理 HTTP 请求和响应的函数，包括处理图像传输请求和构建 HTTP 响应头部等。</span><br></pre></td></tr></table></figure>
+
+<h1 id="2-数据类型"><a href="#2-数据类型" class="headerlink" title="2. 数据类型"></a>2. 数据类型</h1><h2 id="2-1-size-t"><a href="#2-1-size-t" class="headerlink" title="2.1. size_t"></a>2.1. size_t</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">size_t</span> 是一种无符号整数类型，通常用于表示内存大小和对象的大小。</span><br><span class="line">    它的具体大小取决于编译器和操作系统，在大多数情况下，<span class="type">size_t</span> 的大小与指针相同，即在<span class="number">32</span>位系统上为<span class="number">4</span>字节，在<span class="number">64</span>位系统上为<span class="number">8</span>字节。</span><br><span class="line">    由于 <span class="type">size_t</span> 是无符号类型，因此它只能表示非负的整数值。</span><br><span class="line">    在C++标准库中，很多与容器和内存操作相关的函数都使用 <span class="type">size_t</span> 作为参数或返回类型，以便能够处理任意大小的数据</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-2-httpd-req-t"><a href="#2-2-httpd-req-t" class="headerlink" title="2.2. httpd_req_t"></a>2.2. httpd_req_t</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">httpd_req_t</span> 是指代ESP32或ESP8266上的简单HTTP服务器的请求对象。</span><br><span class="line">    这个对象包含了来自客户端的HTTP请求的相关信息，比如请求的方法（GET、POST等）、请求的URL、请求头等。通过使用 <span class="type">httpd_req_t</span> 对象，你可以访问和处理收到的HTTP请求的各种属性和数据。</span><br><span class="line">    这在编写基于Arduino的网络应用程序时非常有用，特别是需要与客户端进行Web交互或提供Web服务时。</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-3-httpd-handle-t"><a href="#2-3-httpd-handle-t" class="headerlink" title="2.3. httpd_handle_t"></a>2.3. httpd_handle_t</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">httpd_handle_t</span> 是指代ESP32或ESP8266上的简单HTTP服务器的句柄或处理器对象。</span><br><span class="line">    它表示正在运行的HTTP服务器实例的引用，可以用于执行与服务器相关的操作，如启动、停止、配置等。通过使用 <span class="type">httpd_handle_t</span> 对象，你可以管理和控制HTTP服务器的行为，例如注册URI处理程序、设置服务器选项和处理HTTP请求。</span><br><span class="line">    这个句柄一般是在创建并启动HTTP服务器后返回的，并且可用于后续对服务器进行操作的函数调用中传递。</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-4-mtmn-config-t"><a href="#2-4-mtmn-config-t" class="headerlink" title="2.4. mtmn_config_t"></a>2.4. mtmn_config_t</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">mtmn_config_t</span> 是指代ESP32或ESP8266上的人脸检测模块（MTCNN）配置对象。</span><br><span class="line">    MTCNN是一种用于人脸检测和特征提取的深度学习算法。</span><br><span class="line">    <span class="type">mtmn_config_t</span> 结构体包含了配置参数，用于控制人脸检测的行为和性能。通过设置不同的参数，可以调整人脸检测的灵敏度、检测阈值、IOU（交并比）阈值等，以满足不同应用场景的需求。例如，可以通过调整阈值来平衡准确性和检测速度的权衡。</span><br><span class="line">    使用<span class="type">mtmn_config_t</span> 结构体，你可以对人脸检测模块进行配置和定制，以适应具体的应用需求。</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-5-face-id-list"><a href="#2-5-face-id-list" class="headerlink" title="2.5. face_id_list"></a>2.5. face_id_list</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># <span class="number">3.</span> 宏定义</span><br><span class="line"></span><br><span class="line">```C++</span><br><span class="line"># 确认注册次数和保存人脸ID的数量</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ENROLL_CONFIRM_TIMES 5</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FACE_ID_SAVE_NUMBER 7</span></span><br><span class="line"></span><br><span class="line"># 不同颜色的宏定义，用于绘制人脸识别时的边框颜色</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FACE_COLOR_WHITE  0x00FFFFFF</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FACE_COLOR_BLACK  0x00000000</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FACE_COLOR_RED    0x000000FF</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FACE_COLOR_GREEN  0x0000FF00</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FACE_COLOR_BLUE   0x00FF0000</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FACE_COLOR_YELLOW (FACE_COLOR_RED | FACE_COLOR_GREEN)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FACE_COLOR_CYAN   (FACE_COLOR_BLUE | FACE_COLOR_GREEN)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FACE_COLOR_PURPLE (FACE_COLOR_BLUE | FACE_COLOR_RED)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">	这个字符串常量通常被用作多部分数据的边界标识符。在处理 HTTP 请求或响应中的多部分数据时，多个部分数据之间需要有一个标识符来分隔它们。PART_BOUNDARY 就是这样一个边界标识符。</span></span><br><span class="line"><span class="comment">	具体来说，在使用 HTTP 协议进行多部分数据传输时，请求或响应正文中的不同部分数据会用边界标识符进行分隔。通过定义一个唯一的边界标识符，可以确保各个部分数据之间的正确分割和解析。</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> PART_BOUNDARY <span class="string">&quot;123456789000000000000987654321&quot;</span></span></span><br></pre></td></tr></table></figure>
+
+<h1 id="4-结构体"><a href="#4-结构体" class="headerlink" title="4. 结构体"></a>4. 结构体</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 滤波器结构体，用于滤波处理</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> &#123;</span><br><span class="line">        <span class="type">size_t</span> size; <span class="comment">// 滤波器窗口的大小，即用于滤波的值的数量</span></span><br><span class="line">        <span class="type">size_t</span> index; <span class="comment">// 当前值的索引位置</span></span><br><span class="line">        <span class="type">size_t</span> count; <span class="comment">// 值的数量计数器</span></span><br><span class="line">        <span class="type">int</span> sum;     <span class="comment">// 当前所有值的总和</span></span><br><span class="line">        <span class="type">int</span> * values; <span class="comment">// 用于存储值的数组</span></span><br><span class="line">&#125; <span class="type">ra_filter_t</span>;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    size_t size;：滤波器窗口的大小，表示用于滤波的值的数量。</span></span><br><span class="line"><span class="comment">    size_t index;：当前值的索引位置，用于在滤波器窗口中追踪当前值的位置。</span></span><br><span class="line"><span class="comment">    size_t count;：值的数量计数器，用于记录滤波器窗口中的值的实际数量。</span></span><br><span class="line"><span class="comment">    int sum;：当前所有值的总和，用于计算平均值或其他滤波操作。</span></span><br><span class="line"><span class="comment">    int *values;：用于存储值的动态数组</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 用于处理JPEG图像的分块传输</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> &#123;</span><br><span class="line">        <span class="type">httpd_req_t</span> *req; <span class="comment">// 指向 HTTP 请求对象的指针，用于发送图像数据</span></span><br><span class="line">        <span class="type">size_t</span> len; <span class="comment">// 图像数据的长度</span></span><br><span class="line">&#125; <span class="type">jpg_chunking_t</span>;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    httpd_req_t *req;：指向 httpd_req_t 类型的指针，表示与客户端的 HTTP 请求对象相关联，用于发送图像数据给客户端。</span></span><br><span class="line"><span class="comment">    size_t len;：图像数据的长度，表示要传输的 JPEG 图像数据的总字节数</span></span><br><span class="line"><span class="comment">    该结构体的目的是为了在进行 JPEG 图像的分块传输时存储相关的信息。通过将图像数据的长度和 HTTP 请求对象相关联，可以在适当的时候以分块的方式传输图像数据给客户端</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="5-静态变量"><a href="#5-静态变量" class="headerlink" title="5. 静态变量"></a>5. 静态变量</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"># 这个字符串表示了流式传输的内容类型，其中 <span class="string">&quot;multipart/x-mixed-replace&quot;</span> 表示多部分数据的类型，<span class="string">&quot;boundary=&quot;</span> 后面跟着边界标识符 PART_BOUNDARY，用于分隔每个部分数据。</span><br><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="type">char</span>* _STREAM_CONTENT_TYPE = <span class="string">&quot;multipart/x-mixed-replace;boundary=&quot;</span> PART_BOUNDARY;</span><br><span class="line"># 这个字符串表示流式传输中每个部分数据的边界标识符，其中 <span class="string">&quot;\r\n--&quot;</span> 表示回车换行，然后是边界标识符 PART_BOUNDARY，最后再加上回车换行，用于将每个部分数据隔开。</span><br><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="type">char</span>* _STREAM_BOUNDARY = <span class="string">&quot;\r\n--&quot;</span> PART_BOUNDARY <span class="string">&quot;\r\n&quot;</span>;</span><br><span class="line"># 这个字符串表示流式传输中每个部分数据的头部信息，包括内容类型为 image/jpeg，内容长度为 %u（用于后续的格式化替换），然后是双回车换行，表示头部信息结束，接下来就是实际的图像数据。</span><br><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="type">char</span>* _STREAM_PART = <span class="string">&quot;Content-Type: image/jpeg\r\nContent-Length: %u\r\n\r\n&quot;</span>;</span><br><span class="line"></span><br><span class="line"># 滤波器结构体变量</span><br><span class="line"><span class="type">static</span> <span class="type">ra_filter_t</span> ra_filter;</span><br><span class="line"></span><br><span class="line"># mtmn_config 存储了人脸检测和识别的配置选项。</span><br><span class="line"><span class="type">static</span> <span class="type">mtmn_config_t</span> mtmn_config = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"># detection_enabled 表示人脸检测是否开启，零值表示未开启。</span><br><span class="line"><span class="type">static</span> <span class="type">int8_t</span> detection_enabled = <span class="number">0</span>;</span><br><span class="line"># recognition_enabled 表示人脸识别是否开启，零值表示未开启。</span><br><span class="line"><span class="type">static</span> <span class="type">int8_t</span> recognition_enabled = <span class="number">0</span>;</span><br><span class="line"># is_enrolling 表示是否正在进行人脸注册过程，零值表示没有进行注册。</span><br><span class="line"><span class="type">static</span> <span class="type">int8_t</span> is_enrolling = <span class="number">0</span>;</span><br><span class="line"># id_list 存储了已注册人脸的标识符列表。</span><br><span class="line"><span class="type">static</span> face_id_list id_list = &#123;<span class="number">0</span>&#125;;</span><br></pre></td></tr></table></figure>
+
+<h1 id="6-全局变量"><a href="#6-全局变量" class="headerlink" title="6. 全局变量"></a>6. 全局变量</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># stream_httpd 是一个 HTTP 服务器的句柄，用于处理流式传输相关的 HTTP 请求和响应。</span><br><span class="line"><span class="type">httpd_handle_t</span> stream_httpd = <span class="literal">NULL</span>;</span><br><span class="line"># camera_httpd 是一个 HTTP 服务器的句柄，用于处理与摄像头相关的 HTTP 请求和响应。</span><br><span class="line"><span class="type">httpd_handle_t</span> camera_httpd = <span class="literal">NULL</span>;</span><br></pre></td></tr></table></figure>
+
+<h1 id="7-函数"><a href="#7-函数" class="headerlink" title="7. 函数"></a>7. 函数</h1>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/08/03/zoneminder/zoneminder%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/" rel="prev" title="Zoneminder文件结构">
+                  <i class="fa fa-chevron-left"></i> Zoneminder文件结构
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/08/18/%E5%B5%8C%E5%85%A5%E5%BC%8F/esp32/arduino/%E9%80%9A%E7%94%A8%E4%BB%A3%E7%A0%81/%E8%88%B5%E6%9C%BA%E6%8E%A5%E5%8F%A3/" rel="next" title="">
+                   <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://example.com/2023/08/09/%E5%B5%8C%E5%85%A5%E5%BC%8F/esp32/arduino/esp32cam/app_httpd%E4%BB%A3%E7%A0%81%E8%AF%A6%E8%A7%A3/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>
