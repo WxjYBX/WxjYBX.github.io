@@ -19,15 +19,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="1. xTaskCreate()与xTaskCreatePinnedToCore()与xTaskCreateUniversal()2. xTaskDelay()与xTaskGetTickCount()3. xTimerCreate()与xTimerStart()4. vTaskSuspend()与vTaskResume()与vTaskDelete()5.vTaskPrioritySet()与uxT">
+    <meta name="description" content="使用esp32学习freeRTOS相关知识">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="esp32-freeRTOS">
 <meta property="og:url" content="http://example.com/2023/10/16/%E5%B5%8C%E5%85%A5%E5%BC%8F/esp32/arduino/%E9%80%9A%E7%94%A8%E4%BB%A3%E7%A0%81/freertos/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. xTaskCreate()与xTaskCreatePinnedToCore()与xTaskCreateUniversal()2. xTaskDelay()与xTaskGetTickCount()3. xTimerCreate()与xTimerStart()4. vTaskSuspend()与vTaskResume()与vTaskDelete()5.vTaskPrioritySet()与uxT">
+<meta property="og:description" content="使用esp32学习freeRTOS相关知识">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-10-16T06:47:34.486Z">
-<meta property="article:modified_time" content="2023-10-16T06:55:07.313Z">
+<meta property="article:modified_time" content="2023-10-17T04:31:52.099Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 
@@ -36,10 +36,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/10/16/%E5%B5%8C%E5%85%A5%E5%BC%8F/esp32/arduino/%E9%80%9A%E7%94%A8%E4%BB%A3%E7%A0%81/freertos/","path":"2023/10/16/嵌入式/esp32/arduino/通用代码/freertos/","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/10/16/%E5%B5%8C%E5%85%A5%E5%BC%8F/esp32/arduino/%E9%80%9A%E7%94%A8%E4%BB%A3%E7%A0%81/freertos/","path":"2023/10/16/嵌入式/esp32/arduino/通用代码/freertos/","title":"esp32-freeRTOS"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title> | Hexo</title>
+<title>esp32-freeRTOS | Hexo</title>
   
 
 
@@ -158,12 +158,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="esp32-freeRTOS | Hexo">
+      <meta itemprop="description" content="使用esp32学习freeRTOS相关知识">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          
+          esp32-freeRTOS
         </h1>
 
         <div class="post-meta-container">
@@ -173,14 +173,21 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2023-10-16 14:47:34 / Modified: 14:55:07" itemprop="dateCreated datePublished" datetime="2023-10-16T14:47:34+08:00">2023-10-16</time>
+      <time title="Created: 2023-10-16 14:47:34" itemprop="dateCreated datePublished" datetime="2023-10-16T14:47:34+08:00">2023-10-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-17 12:31:52" itemprop="dateModified" datetime="2023-10-17T12:31:52+08:00">2023-10-17</time>
     </span>
 
   
 </div>
 
+            <div class="post-description">使用esp32学习freeRTOS相关知识</div>
         </div>
       </header>
 
@@ -201,8 +208,8 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023/10/10/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E6%B4%8B%E6%A1%83/%E7%9F%A5%E8%AF%86%E7%82%B9/" rel="prev" title="">
-                  <i class="fa fa-chevron-left"></i> 
+                <a href="/2023/10/10/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E6%B4%8B%E6%A1%83/%E7%9F%A5%E8%AF%86%E7%82%B9/" rel="prev" title="洋桃stm32入门100步-知识点整合">
+                  <i class="fa fa-chevron-left"></i> 洋桃stm32入门100步-知识点整合
                 </a>
             </div>
             <div class="post-nav-item">
