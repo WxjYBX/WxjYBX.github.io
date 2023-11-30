@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha256-/4UQcSmErDzPCMAiuOiWPVVsNN2s3ZY/NsmXNcj0IFc=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="硬件基础补足第一课：模电-续1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="模拟电子技术-b站-电子陈老师">
+<meta property="og:url" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="硬件基础补足第一课：模电-续1">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231123112452220.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231123115512249.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231123115749222.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231123141400141.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231123162050818.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231123162311872.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231123163155664.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231123163432622.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231123163558560.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124140305967.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124140826780.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124141304330.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124154832850.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124142527559.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124142934509.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124142916491.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124143000218.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124143021445.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124145526143.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124212605032.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124215300399.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124220153380.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124220209658.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124220242840.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124221709113.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124221730695.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124221757223.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124221818047.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124221829316.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124222032009.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124222354836.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124222500904.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124222745710.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124222754349.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124222809241.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124222821590.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124223123437.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124223315538.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124225309175.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124230048370.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231125182036020.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231125184700852.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231125184912483.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231127170921500.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231127170808777.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231127172117391.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231127172213439.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231127173140529.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231127173432881.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231127181602051.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231128131252550.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231128132324571.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231128133049316.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231128133105622.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231128133154281.png">
+<meta property="og:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231128155307529.png">
+<meta property="article:published_time" content="2023-11-23T01:39:46.862Z">
+<meta property="article:modified_time" content="2023-11-28T07:54:00.419Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231123112452220.png">
+
+
+<link rel="canonical" href="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/","path":"2023/11/23/嵌入式/硬件基础/模电续1/","title":"模拟电子技术-b站-电子陈老师"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>模拟电子技术-b站-电子陈老师 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF%E7%9A%84%E9%A2%91%E7%8E%87%E5%93%8D%E5%BA%94-%E6%B2%A1%E6%80%8E%E4%B9%88%E5%AD%A6%E6%87%82"><span class="nav-number">1.</span> <span class="nav-text">5. 放大电路的频率响应(没怎么学懂)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-%E9%A2%91%E7%8E%87%E5%93%8D%E5%BA%94"><span class="nav-number">1.1.</span> <span class="nav-text">5.1. 频率响应</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-1-%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.1.</span> <span class="nav-text">5.1.1. 概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-2-RC%E4%BD%8E%E9%80%9A-x2F-%E9%AB%98%E9%80%9A%E7%94%B5%E8%B7%AF%E7%9A%84%E9%A2%91%E7%8E%87%E7%89%B9%E6%80%A7"><span class="nav-number">1.1.2.</span> <span class="nav-text">5.1.2. RC低通&#x2F;高通电路的频率特性</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%8E%E9%80%9A"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">低通</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%AB%98%E9%80%9A"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">高通</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-%E6%99%B6%E4%BD%93%E7%AE%A1%E7%9A%84%E9%AB%98%E9%A2%91%E7%89%A9%E7%90%86%E6%A8%A1%E5%9E%8B-%E6%B7%B7%E5%90%88%CE%A0%E7%AD%89%E6%95%88%E7%94%B5%E8%B7%AF"><span class="nav-number">1.2.</span> <span class="nav-text">5.2. 晶体管的高频物理模型-混合Π等效电路</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-1-%E6%A8%A1%E5%9E%8B%E4%B8%8E%E7%94%B5%E8%B7%AF"><span class="nav-number">1.2.1.</span> <span class="nav-text">5.2.1. 模型与电路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-2-%E6%B7%B7%E5%90%88%CE%A0%E7%AD%89%E6%95%88%E7%94%B5%E8%B7%AF%E7%9A%84%E5%8D%95%E5%90%91%E5%8C%96"><span class="nav-number">1.2.2.</span> <span class="nav-text">5.2.2. 混合Π等效电路的单向化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AF%86%E5%8B%92%E5%AE%9A%E7%90%86"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">密勒定理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B7%B7%E5%90%88%E5%8F%82%E6%95%B0%E4%B8%8EH%E5%8F%82%E6%95%B0"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">混合参数与H参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%CE%B2%E7%9A%84%E9%A2%91%E7%8E%87%E5%93%8D%E5%BA%94"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">β的频率响应</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-3-%E6%99%B6%E4%BD%93%E7%AE%A1%E4%B8%BB%E8%A6%81%E5%8F%82%E6%95%B0"><span class="nav-number">1.2.3.</span> <span class="nav-text">5.2.3. 晶体管主要参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF%E7%9A%84%E9%A2%91%E7%8E%87%E5%93%8D%E5%BA%94-%E5%8D%95%E7%AE%A1-%E5%85%B1%E5%8F%91%E5%B0%84%E6%9E%81"><span class="nav-number">1.3.</span> <span class="nav-text">5.3. 放大电路的频率响应(单管-共发射极)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-1-%E7%A0%94%E7%A9%B6%E6%96%B9%E6%B3%95"><span class="nav-number">1.3.1.</span> <span class="nav-text">5.3.1. 研究方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-2-%E5%88%86%E9%A2%91%E6%AE%B5%E5%88%86%E6%9E%90"><span class="nav-number">1.3.2.</span> <span class="nav-text">5.3.2. 分频段分析</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%AD%E9%A2%91%E5%8C%BA%E7%9A%84%E9%A2%91%E7%8E%87%E5%93%8D%E5%BA%94"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">中频区的频率响应</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%8E%E9%A2%91%E5%8C%BA%E7%9A%84%E9%A2%91%E7%8E%87%E5%93%8D%E5%BA%94"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">低频区的频率响应</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%AB%98%E9%A2%91%E5%8C%BA%E7%9A%84%E9%A2%91%E7%8E%87%E5%93%8D%E5%BA%94"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">高频区的频率响应</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E6%B3%A2%E7%89%B9%E5%9B%BE"><span class="nav-number">1.3.2.4.</span> <span class="nav-text">完整波特图</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-%E9%9B%86%E6%88%90%E8%BF%90%E7%AE%97%E6%94%BE%E5%A4%A7%E5%99%A8%E7%9A%84%E9%AB%98%E9%A2%91%E5%8F%82%E6%95%B0"><span class="nav-number">1.4.</span> <span class="nav-text">5.4. 集成运算放大器的高频参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E5%8F%8D%E9%A6%88%E4%B8%8E%E8%B4%9F%E5%8F%8D%E9%A6%88%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF"><span class="nav-number">2.</span> <span class="nav-text">6. 反馈与负反馈放大电路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-%E5%8F%8D%E9%A6%88%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">2.1.</span> <span class="nav-text">6.1. 反馈的基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#6-1-1-%E6%9C%89%E6%97%A0%E5%8F%8D%E9%A6%88%E7%9A%84%E5%88%A4%E6%96%AD"><span class="nav-number">2.1.1.</span> <span class="nav-text">6.1.1. 有无反馈的判断</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-1-2-%E6%AD%A3%E5%8F%8D%E9%A6%88%E5%92%8C%E8%B4%9F%E5%8F%8D%E9%A6%88"><span class="nav-number">2.1.2.</span> <span class="nav-text">6.1.2. 正反馈和负反馈</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E6%96%B9%E6%B3%95"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">判断方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5"><span class="nav-number">2.1.2.2.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9E%81%E6%80%A7%E5%88%A4%E6%96%AD"><span class="nav-number">2.1.2.3.</span> <span class="nav-text">极性判断</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E4%BE%8B%E5%AD%90"><span class="nav-number">2.1.2.4.</span> <span class="nav-text">判断例子</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-1-3-%E5%B1%80%E9%83%A8%E5%8F%8D%E9%A6%88%E4%B8%8E%E6%9E%81%E9%97%B4%E5%8F%8D%E9%A6%88"><span class="nav-number">2.1.3.</span> <span class="nav-text">6.1.3. 局部反馈与极间反馈</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-1-4-%E8%B4%9F%E5%8F%8D%E9%A6%88%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF%E7%9A%84%E5%9B%9B%E7%A7%8D%E5%9F%BA%E6%9C%AC%E7%BB%84%E6%80%81"><span class="nav-number">2.1.4.</span> <span class="nav-text">6.1.4. 负反馈放大电路的四种基本组态</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-%E5%8F%8D%E9%A6%88%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF"><span class="nav-number">2.2.</span> <span class="nav-text">6.2. 反馈放大电路</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#6-2-1-%E5%8F%8D%E9%A6%88%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF%E7%9A%84%E6%A1%86%E5%9B%BE"><span class="nav-number">2.2.1.</span> <span class="nav-text">6.2.1. 反馈放大电路的框图</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="模拟电子技术-b站-电子陈老师 | Hexo">
+      <meta itemprop="description" content="硬件基础补足第一课：模电-续1">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          模拟电子技术-b站-电子陈老师
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-11-23 09:39:46" itemprop="dateCreated datePublished" datetime="2023-11-23T09:39:46+08:00">2023-11-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-11-28 15:54:00" itemprop="dateModified" datetime="2023-11-28T15:54:00+08:00">2023-11-28</time>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">硬件基础补足第一课：模电-续1</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="5-放大电路的频率响应-没怎么学懂"><a href="#5-放大电路的频率响应-没怎么学懂" class="headerlink" title="5. 放大电路的频率响应(没怎么学懂)"></a>5. 放大电路的频率响应(没怎么学懂)</h2><h3 id="5-1-频率响应"><a href="#5-1-频率响应" class="headerlink" title="5.1. 频率响应"></a>5.1. 频率响应</h3><h4 id="5-1-1-概念"><a href="#5-1-1-概念" class="headerlink" title="5.1.1. 概念"></a>5.1.1. 概念</h4><img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231123112452220.png" class="" title="image-20231123112452220">
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231123115512249.png" class="" title="image-20231123115512249">
+
+
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231123115749222.png" class="" title="image-20231123115749222">
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231123141400141.png" class="" title="image-20231123141400141">
+
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">频带宽度(带宽)BW(BW0.707)=fH-fL</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-1-2-RC低通-x2F-高通电路的频率特性"><a href="#5-1-2-RC低通-x2F-高通电路的频率特性" class="headerlink" title="5.1.2. RC低通&#x2F;高通电路的频率特性"></a>5.1.2. RC低通&#x2F;高通电路的频率特性</h4><h5 id="低通"><a href="#低通" class="headerlink" title="低通"></a>低通</h5><img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231123162050818.png" class="" title="image-20231123162050818">
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231123162311872.png" class="" title="image-20231123162311872">
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231123163155664.png" class="" title="image-20231123163155664">
+
+<h5 id="高通"><a href="#高通" class="headerlink" title="高通"></a>高通</h5><img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231123163432622.png" class="" title="image-20231123163432622">
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231123163558560.png" class="" title="image-20231123163558560">
+
+<h3 id="5-2-晶体管的高频物理模型-混合Π等效电路"><a href="#5-2-晶体管的高频物理模型-混合Π等效电路" class="headerlink" title="5.2. 晶体管的高频物理模型-混合Π等效电路"></a>5.2. 晶体管的高频物理模型-混合Π等效电路</h3><h4 id="5-2-1-模型与电路"><a href="#5-2-1-模型与电路" class="headerlink" title="5.2.1. 模型与电路"></a>5.2.1. 模型与电路</h4><img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124140305967.png" class="" title="image-20231124140305967">
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124140826780.png" class="" title="image-20231124140826780">
+
+<h4 id="5-2-2-混合Π等效电路的单向化"><a href="#5-2-2-混合Π等效电路的单向化" class="headerlink" title="5.2.2. 混合Π等效电路的单向化"></a>5.2.2. 混合Π等效电路的单向化</h4><h5 id="密勒定理"><a href="#密勒定理" class="headerlink" title="密勒定理"></a>密勒定理</h5><img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124141304330.png" class="" title="image-20231124141304330">
+
+<h5 id="混合参数与H参数"><a href="#混合参数与H参数" class="headerlink" title="混合参数与H参数"></a>混合参数与H参数</h5><img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124154832850.png" class="" title="image-20231124154832850">
+
+<h5 id="β的频率响应"><a href="#β的频率响应" class="headerlink" title="β的频率响应"></a>β的频率响应</h5><img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124142527559.png" class="" title="image-20231124142527559">
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124142934509.png" class="" title="image-20231124142934509">
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124142916491.png" class="" title="image-20231124142916491">
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124143000218.png" class="" title="image-20231124143000218">
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124143021445.png" class="" title="image-20231124143021445">
+
+<h4 id="5-2-3-晶体管主要参数"><a href="#5-2-3-晶体管主要参数" class="headerlink" title="5.2.3. 晶体管主要参数"></a>5.2.3. 晶体管主要参数</h4><img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124145526143.png" class="" title="image-20231124145526143">
+
+<h3 id="5-3-放大电路的频率响应-单管-共发射极"><a href="#5-3-放大电路的频率响应-单管-共发射极" class="headerlink" title="5.3. 放大电路的频率响应(单管-共发射极)"></a>5.3. 放大电路的频率响应(单管-共发射极)</h3><h4 id="5-3-1-研究方法"><a href="#5-3-1-研究方法" class="headerlink" title="5.3.1. 研究方法"></a>5.3.1. 研究方法</h4><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1-》静态工作点	IEQ-&gt;rb&#x27;e、gm</span><br><span class="line">2-》画交流通路	耦合电容/旁路电容/极间电容-保留</span><br><span class="line">3-》用晶体三极管的高频小信号模型代替交流通路中的三极管</span><br></pre></td></tr></table></figure>
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124212605032.png" class="" title="image-20231124212605032">
+
+<h4 id="5-3-2-分频段分析"><a href="#5-3-2-分频段分析" class="headerlink" title="5.3.2. 分频段分析"></a>5.3.2. 分频段分析</h4><h5 id="中频区的频率响应"><a href="#中频区的频率响应" class="headerlink" title="中频区的频率响应"></a>中频区的频率响应</h5><img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124215300399.png" class="" title="image-20231124215300399">
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124220153380.png" class="" title="image-20231124220153380">
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124220209658.png" class="" title="image-20231124220209658">
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124220242840.png" class="" title="image-20231124220242840">
+
+<h5 id="低频区的频率响应"><a href="#低频区的频率响应" class="headerlink" title="低频区的频率响应"></a>低频区的频率响应</h5><img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124221709113.png" class="" title="image-20231124221709113">
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124221730695.png" class="" title="image-20231124221730695">
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124221757223.png" class="" title="image-20231124221757223">
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124221818047.png" class="" title="image-20231124221818047">
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124221829316.png" class="" title="image-20231124221829316">
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124222032009.png" class="" title="image-20231124222032009">
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124222354836.png" class="" title="image-20231124222354836">
+
+<h5 id="高频区的频率响应"><a href="#高频区的频率响应" class="headerlink" title="高频区的频率响应"></a>高频区的频率响应</h5><img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124222500904.png" class="" title="image-20231124222500904">
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124222745710.png" class="" title="image-20231124222745710">
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124222754349.png" class="" title="image-20231124222754349">
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124222809241.png" class="" title="image-20231124222809241">
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124222821590.png" class="" title="image-20231124222821590">
+
+<h5 id="完整波特图"><a href="#完整波特图" class="headerlink" title="完整波特图"></a>完整波特图</h5><img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124223123437.png" class="" title="image-20231124223123437">
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124223315538.png" class="" title="image-20231124223315538">
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124225309175.png" class="" title="image-20231124225309175">
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231124230048370.png" class="" title="image-20231124230048370">
+
+<h3 id="5-4-集成运算放大器的高频参数"><a href="#5-4-集成运算放大器的高频参数" class="headerlink" title="5.4. 集成运算放大器的高频参数"></a>5.4. 集成运算放大器的高频参数</h3><img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231125182036020.png" class="" title="image-20231125182036020">
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231125184700852.png" class="" title="image-20231125184700852">
+
+
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231125184912483.png" class="" title="image-20231125184912483">
+
+<h2 id="6-反馈与负反馈放大电路"><a href="#6-反馈与负反馈放大电路" class="headerlink" title="6. 反馈与负反馈放大电路"></a>6. 反馈与负反馈放大电路</h2><h3 id="6-1-反馈的基本概念"><a href="#6-1-反馈的基本概念" class="headerlink" title="6.1. 反馈的基本概念"></a>6.1. 反馈的基本概念</h3><h4 id="6-1-1-有无反馈的判断"><a href="#6-1-1-有无反馈的判断" class="headerlink" title="6.1.1. 有无反馈的判断"></a>6.1.1. 有无反馈的判断</h4><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">找反馈网络-》除基本放大电路之外，如果输出回路与输入回路之间还有其他联系，则有反馈</span><br></pre></td></tr></table></figure>
+
+<h4 id="6-1-2-正反馈和负反馈"><a href="#6-1-2-正反馈和负反馈" class="headerlink" title="6.1.2. 正反馈和负反馈"></a>6.1.2. 正反馈和负反馈</h4><h5 id="判断方法"><a href="#判断方法" class="headerlink" title="判断方法"></a>判断方法</h5><img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231127170921500.png" class="" title="image-20231127170921500">
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231127170808777.png" class="" title="image-20231127170808777">
+
+<h5 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h5><img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231127172117391.png" class="" title="image-20231127172117391">
+
+<h5 id="极性判断"><a href="#极性判断" class="headerlink" title="极性判断"></a>极性判断</h5><img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231127172213439.png" class="" title="image-20231127172213439">
+
+<h5 id="判断例子"><a href="#判断例子" class="headerlink" title="判断例子"></a>判断例子</h5><img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231127173140529.png" class="" title="image-20231127173140529">
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231127173432881.png" class="" title="image-20231127173432881">
+
+<h4 id="6-1-3-局部反馈与极间反馈"><a href="#6-1-3-局部反馈与极间反馈" class="headerlink" title="6.1.3. 局部反馈与极间反馈"></a>6.1.3. 局部反馈与极间反馈</h4><img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231127181602051.png" class="" title="image-20231127181602051">
+
+<h4 id="6-1-4-负反馈放大电路的四种基本组态"><a href="#6-1-4-负反馈放大电路的四种基本组态" class="headerlink" title="6.1.4. 负反馈放大电路的四种基本组态"></a>6.1.4. 负反馈放大电路的四种基本组态</h4><img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231128131252550.png" class="" title="image-20231128131252550">
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231128132324571.png" class="" title="image-20231128132324571">
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231128133049316.png" class="" title="image-20231128133049316">
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231128133105622.png" class="" title="image-20231128133105622">
+
+<img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231128133154281.png" class="" title="image-20231128133154281">
+
+<h3 id="6-2-反馈放大电路"><a href="#6-2-反馈放大电路" class="headerlink" title="6.2. 反馈放大电路"></a>6.2. 反馈放大电路</h3><h4 id="6-2-1-反馈放大电路的框图"><a href="#6-2-1-反馈放大电路的框图" class="headerlink" title="6.2.1. 反馈放大电路的框图"></a>6.2.1. 反馈放大电路的框图</h4><img src="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/image-20231128155307529.png" class="" title="image-20231128155307529">
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/11/10/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5/" rel="prev" title="模拟电子技术-b站-电子陈老师">
+                  <i class="fa fa-chevron-left"></i> 模拟电子技术-b站-电子陈老师
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/11/28/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%B7%A5%E4%BD%9C%E7%9F%A5%E8%AF%86/%E6%80%BB%E7%BA%BF%E5%8D%8F%E8%AE%AE/" rel="next" title="总线协议解析">
+                  总线协议解析 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://example.com/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>
