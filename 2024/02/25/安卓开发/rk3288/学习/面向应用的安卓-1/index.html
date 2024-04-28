@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha256-/4UQcSmErDzPCMAiuOiWPVVsNN2s3ZY/NsmXNcj0IFc=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="熟悉android源码的基本架构，对开机界面的动画、logo、预装程序、安卓开发板配置等内容进行设置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="android开发板应用-1">
+<meta property="og:url" content="http://example.com/2024/02/25/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%AD%A6%E4%B9%A0/%E9%9D%A2%E5%90%91%E5%BA%94%E7%94%A8%E7%9A%84%E5%AE%89%E5%8D%93-1/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="熟悉android源码的基本架构，对开机界面的动画、logo、预装程序、安卓开发板配置等内容进行设置">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-02-25T13:40:13.932Z">
+<meta property="article:modified_time" content="2024-02-27T15:03:24.541Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2024/02/25/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%AD%A6%E4%B9%A0/%E9%9D%A2%E5%90%91%E5%BA%94%E7%94%A8%E7%9A%84%E5%AE%89%E5%8D%93-1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2024/02/25/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%AD%A6%E4%B9%A0/%E9%9D%A2%E5%90%91%E5%BA%94%E7%94%A8%E7%9A%84%E5%AE%89%E5%8D%93-1/","path":"2024/02/25/安卓开发/rk3288/学习/面向应用的安卓-1/","title":"android开发板应用-1"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>android开发板应用-1 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E5%8D%93%E6%BA%90%E7%A0%81%E8%8E%B7%E5%8F%96"><span class="nav-number">1.</span> <span class="nav-text">安卓源码获取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%BC%80%E6%9C%BA%E7%95%8C%E9%9D%A2logo-x2F-%E5%8A%A8%E7%94%BB%E8%B0%83%E6%95%B4"><span class="nav-number">2.</span> <span class="nav-text">1. 开机界面logo&#x2F;动画调整</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%92%99%E7%89%88%E5%9B%BE%E7%89%87%E6%9B%BF%E6%8D%A2-%E5%9C%A8frameworks%E7%9B%AE%E5%BD%95%E4%B8%8B"><span class="nav-number">2.1.</span> <span class="nav-text">蒙版图片替换(在frameworks目录下)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%90%E5%B8%A7%E5%8A%A8%E7%94%BB%E6%9B%BF%E6%8D%A2-%E5%9C%A8device%E7%9B%AE%E5%BD%95%E4%B8%8B"><span class="nav-number">2.2.</span> <span class="nav-text">逐帧动画替换(在device目录下)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E9%A2%84%E8%A3%85%E8%BD%AF%E4%BB%B6%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">2. 预装软件配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BA%E4%BB%B6%E5%8C%85%E9%A2%84%E8%A3%85"><span class="nav-number">3.1.</span> <span class="nav-text">固件包预装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E5%8D%93%E6%BA%90%E7%A0%81%E9%A2%84%E8%A3%85-%E5%9C%A8device%E7%9B%AE%E5%BD%95%E4%B8%8B"><span class="nav-number">3.2.</span> <span class="nav-text">安卓源码预装(在device目录下)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-root%E6%9D%83%E9%99%90%E9%85%8D%E7%BD%AE"><span class="nav-number">4.</span> <span class="nav-text">3. root权限配置</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/02/25/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%AD%A6%E4%B9%A0/%E9%9D%A2%E5%90%91%E5%BA%94%E7%94%A8%E7%9A%84%E5%AE%89%E5%8D%93-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="android开发板应用-1 | Hexo">
+      <meta itemprop="description" content="熟悉android源码的基本架构，对开机界面的动画、logo、预装程序、安卓开发板配置等内容进行设置">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          android开发板应用-1
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-02-25 21:40:13" itemprop="dateCreated datePublished" datetime="2024-02-25T21:40:13+08:00">2024-02-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-02-27 23:03:24" itemprop="dateModified" datetime="2024-02-27T23:03:24+08:00">2024-02-27</time>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">熟悉android源码的基本架构，对开机界面的动画、logo、预装程序、安卓开发板配置等内容进行设置</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="安卓源码获取"><a href="#安卓源码获取" class="headerlink" title="安卓源码获取"></a>安卓源码获取</h2><ol>
+<li>在线浏览<ol>
+<li><a target="_blank" rel="noopener" href="http://aospxref.com/">AOSPXRef</a></li>
+<li><a target="_blank" rel="noopener" href="http://androidxref.com/">AndroidXRef</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.androidos.net.cn/sourcecode">Android OS 在线源代码 - https://www.androidos.net.cn</a></li>
+</ol>
+</li>
+<li>下载获取<ol>
+<li><a target="_blank" rel="noopener" href="https://source.android.google.cn/docs/setup/download/downloading?hl=zh-cn">下载源代码  | Android 开源项目  | Android Open Source Project (google.cn)</a></li>
+</ol>
+</li>
+</ol>
+<h2 id="1-开机界面logo-x2F-动画调整"><a href="#1-开机界面logo-x2F-动画调整" class="headerlink" title="1. 开机界面logo&#x2F;动画调整"></a>1. 开机界面logo&#x2F;动画调整</h2><h3 id="蒙版图片替换-在frameworks目录下"><a href="#蒙版图片替换-在frameworks目录下" class="headerlink" title="蒙版图片替换(在frameworks目录下)"></a>蒙版图片替换(在frameworks目录下)</h3><ol>
+<li><p>mask与shine图片</p>
+<ol>
+<li><p>android-logo-mask.png ：Android默认的前景图片，文字部分镂空，大小256×64</p>
+<p>android-logo-shine.png ：Android默认的背景图片，有动感效果，大小512×64</p>
+</li>
+</ol>
+</li>
+<li><p>图片替换</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cp -raf android-logo-mask.png frameworks/base/core/res/assets/images/</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">防止源码不编译图片，需更新图片时间戳</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">touch</span> 命令将会更新该文件的访问时间和修改时间为当前时间戳，但不会对文件内容做任何更改</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">touch</span> 可以用来创建空白文件，但是主要用于修改文件的时间戳，而不是文件的内容</span></span><br><span class="line">touch frameworks/base/core/res/assets/images/android-logo-mask.png</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将APK文件中META-INF文件夹内的CERT.SF、CERT.RSA两个文件删除，然后用签名工具重新签名</p>
+</li>
+<li><p>再将签名后的APK文件替换掉原先的文件</p>
+</li>
+<li><p>重新编译模块</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">envsetup.sh的作用：</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	设置 PATH 环境变量，以便在命令行中能够直接访问到 Android 开发所需的工具和命令。</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	设置 ANDROID_BUILD_TOP 等关键环境变量，指向 Android 源代码根目录，便于进行编译和构建操作。</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	定义一些便于开发调试的快捷命令和函数，例如编译 Android 系统、启动模拟器等。</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">加载并运行 envsetup.sh 文件，初始化 Android 开发环境</span></span><br><span class="line">source build/envsetup.sh</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置当前编译环境为 rk3288-eng 平台，并进入编译菜单界面以选择要编译的目标，目标一般有以下4种：</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	aosp_arm-eng：这是针对 ARM 架构的 Android Open Source Project（AOSP）工程环境。使用这个目标将会对 ARM 架构进行编译。</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">	aosp_arm64-eng：这是针对 ARM64（AArch64）架构的 AOSP 工程环境。使用这个目标将会对 ARM64 架构进行编译。</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">	aosp_x86-eng：这是针对 x86 架构的 AOSP 工程环境。使用这个目标将会对 x86 架构进行编译。</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">	aosp_x86_64-eng：这是针对 x86_64 架构的 AOSP 工程环境。使用这个目标将会对 x86_64 架构进行编译。</span></span><br><span class="line">lunch rk3288-eng</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">编译系统会进入到 frameworks/base/core/res/ 目录，并根据该目录下的 Android.mk 文件和其他构建配置文件进行编译</span></span><br><span class="line">mmm frameworks/base/core/res/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>生成新的system.img</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">编译整个 Android 源代码，并将编译后的所有系统文件打包成一个镜像文件，通常命名为 system.img</span></span><br><span class="line">make snod</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="逐帧动画替换-在device目录下"><a href="#逐帧动画替换-在device目录下" class="headerlink" title="逐帧动画替换(在device目录下)"></a>逐帧动画替换(在device目录下)</h3><ol>
+<li><p>bootanimation.zip配置文件(路径：frameworks&#x2F;base&#x2F;cmds&#x2F;bootanimation&#x2F;Bootanimation.cpp)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="type">char</span> SYSTEM_BOOTANIMATION_FILE[] = <span class="string">&quot;/system/media/bootanimation.zip&quot;</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>bootanimation.zip压缩文件创建(路径：device&#x2F;rockchip&#x2F;rk3288&#x2F;bootanimation.zip)</p>
+<ol>
+<li><p>结构：</p>
+<ol>
+<li><p>desc.txt：动画属性描述文件</p>
+<ol>
+<li><p>文件内容 – 属性描述格式：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1280	800	15     				解释：1280 800 是分辨率  15是帧数</span><br><span class="line">p		1   0   part0   		解释：1：是循环一次 0：进入该阶段的间隔时间为0（单位为帧数） part0：该阶段图片存放目录</span><br><span class="line">p		0   0   part1   		解释：0：是无限循环 0：进入该阶段的间隔时间为0（单位为帧数） part1：该阶段图片存放目录</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>part0：第一阶段动画图片目录</p>
+<ol>
+<li>按序号命名，图片格式为png&#x2F;jpg</li>
+</ol>
+</li>
+<li><p>part1：第二阶段动画图片目录</p>
+<ol>
+<li>按序号命名，图片格式为png&#x2F;jpg</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>设置逐帧动画播放启用(路径：device&#x2F;rockchip&#x2F;rk3288&#x2F;rk3288.mk)</p>
+<figure class="highlight mk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 在文件中添加，不使用逐帧动画时，用 <span class="comment"># 屏蔽此行即可，使用逐帧动画时，屏蔽蒙版图片</span></span><br><span class="line">PRODUCT_COPY_FILES += device/rockchip/rk3288/bootanimation.zip:system/media/bootanimation.zip</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重新编译生成新的system.img</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">source build/envsetup.sh</span><br><span class="line">lunch rk3288-eng</span><br><span class="line">make snod</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="2-预装软件配置"><a href="#2-预装软件配置" class="headerlink" title="2. 预装软件配置"></a>2. 预装软件配置</h2><h3 id="固件包预装"><a href="#固件包预装" class="headerlink" title="固件包预装"></a>固件包预装</h3><ol>
+<li>主要处理img：system.img</li>
+<li>解包，在system&#x2F;app目录下，对所有系统app进行设置</li>
+<li>个别APK软件需自带的库文件支持才能正常运行，此时将APK文件打开（将.apk后缀改成.zip，然后用压缩软件打开即可），从里边找到后缀为.so的文件，然后放入&#x2F;system&#x2F;lib文件夹下即可</li>
+</ol>
+<h3 id="安卓源码预装-在device目录下"><a href="#安卓源码预装-在device目录下" class="headerlink" title="安卓源码预装(在device目录下)"></a>安卓源码预装(在device目录下)</h3><ol>
+<li>可永久卸载预装apk：device&#x2F;rockchip&#x2F;rk3288&#x2F;preinstall_del_forever</li>
+<li>可卸载预装apk：device&#x2F;rockchip&#x2F;rk3288&#x2F;preinstall_del（preinstall_del目录中的应用，即使用户在使用过程中将其卸载，但在恢复出厂设置后，应用又会自动安装）</li>
+<li>不可卸载预装apk：device&#x2F;rockchip&#x2F;rk3288&#x2F;preinstall</li>
+</ol>
+<h2 id="3-root权限配置"><a href="#3-root权限配置" class="headerlink" title="3. root权限配置"></a>3. root权限配置</h2>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/02/25/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%AD%A6%E4%B9%A0/%E5%AE%89%E5%8D%93framework/" rel="prev" title="安卓framework的解析">
+                  <i class="fa fa-chevron-left"></i> 安卓framework的解析
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/03/10/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E6%AD%A3%E7%82%B9%E5%8E%9F%E5%AD%90/linux/linux%E7%B3%BB%E7%BB%9F%E7%A7%BB%E6%A4%8D1/" rel="next" title="linux系统移植-1">
+                  linux系统移植-1 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://example.com/2024/02/25/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%AD%A6%E4%B9%A0/%E9%9D%A2%E5%90%91%E5%BA%94%E7%94%A8%E7%9A%84%E5%AE%89%E5%8D%93-1/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>

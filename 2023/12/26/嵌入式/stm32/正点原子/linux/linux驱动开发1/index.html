@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha256-/4UQcSmErDzPCMAiuOiWPVVsNN2s3ZY/NsmXNcj0IFc=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="linux的嵌入式开发第四步，学习linux-ARM相关驱动开发，使用MPU为：I.MX6ULL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="嵌入式linux入门(四)：linux-ARM驱动(1)">
+<meta property="og:url" content="http://example.com/2023/12/26/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E6%AD%A3%E7%82%B9%E5%8E%9F%E5%AD%90/linux/linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%911/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="linux的嵌入式开发第四步，学习linux-ARM相关驱动开发，使用MPU为：I.MX6ULL">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-12-26T04:58:01.435Z">
+<meta property="article:modified_time" content="2024-01-16T05:44:45.052Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2023/12/26/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E6%AD%A3%E7%82%B9%E5%8E%9F%E5%AD%90/linux/linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%911/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/12/26/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E6%AD%A3%E7%82%B9%E5%8E%9F%E5%AD%90/linux/linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%911/","path":"2023/12/26/嵌入式/stm32/正点原子/linux/linux驱动开发1/","title":"嵌入式linux入门(四)：linux-ARM驱动(1)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>嵌入式linux入门(四)：linux-ARM驱动(1) | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">1. linux驱动开发基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E7%B1%BB"><span class="nav-number">1.1.</span> <span class="nav-text">分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%8F%91"><span class="nav-number">1.2.</span> <span class="nav-text">开发</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%AD%97%E7%AC%A6%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E5%88%9D%E6%AC%A1%E7%BC%96%E5%86%99"><span class="nav-number">2.</span> <span class="nav-text">2. 字符设备驱动初次编写</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E9%97%AE%E9%A2%981"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. 问题1</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8E%9F%E5%A7%8B%E4%BB%A3%E7%A0%81"><span class="nav-number">2.1.1.</span> <span class="nav-text">原始代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%A4%B1%E8%B4%A5"><span class="nav-number">2.1.2.</span> <span class="nav-text">编译失败</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%901"><span class="nav-number">2.1.3.</span> <span class="nav-text">问题分析1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B31"><span class="nav-number">2.1.4.</span> <span class="nav-text">问题解决1</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A1%8D%E7%94%9F%E9%97%AE%E9%A2%981"><span class="nav-number">2.1.4.1.</span> <span class="nav-text">衍生问题1</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90"><span class="nav-number">2.1.4.1.1.</span> <span class="nav-text">问题分析</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3"><span class="nav-number">2.1.4.1.2.</span> <span class="nav-text">问题解决</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%902"><span class="nav-number">2.1.5.</span> <span class="nav-text">问题分析2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B32"><span class="nav-number">2.1.6.</span> <span class="nav-text">问题解决2</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E9%97%AE%E9%A2%982"><span class="nav-number">2.2.</span> <span class="nav-text">2.4. 问题2</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%BA%E5%B0%91%E6%96%87%E4%BB%B6modules-dep"><span class="nav-number">2.2.1.</span> <span class="nav-text">缺少文件modules.dep</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E5%8A%A0%E8%BD%BD%E5%A4%B1%E8%B4%A5"><span class="nav-number">2.2.2.</span> <span class="nav-text">模块加载失败</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90-1"><span class="nav-number">2.2.3.</span> <span class="nav-text">问题分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3-1"><span class="nav-number">2.2.4.</span> <span class="nav-text">问题解决</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%AF%84%E5%AD%98%E5%99%A8linux%E7%82%B9%E7%81%AF"><span class="nav-number">3.</span> <span class="nav-text">3. 寄存器linux点灯</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B"><span class="nav-number">3.1.</span> <span class="nav-text">2.1. 基本流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E9%97%AE%E9%A2%981"><span class="nav-number">3.2.</span> <span class="nav-text">2.2. 问题1</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#uboot%E7%AA%81%E7%84%B6%E4%B8%8D%E8%83%BD%E9%80%9A%E8%BF%87tftp%E4%BB%8Eubuntu%E4%B8%8B%E8%BD%BDzImage"><span class="nav-number">3.2.1.</span> <span class="nav-text">uboot突然不能通过tftp从ubuntu下载zImage</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90-2"><span class="nav-number">3.2.2.</span> <span class="nav-text">问题分析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E8%AE%BE%E5%A4%87%E6%A0%91"><span class="nav-number">4.</span> <span class="nav-text">4. 设备树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">4.1.</span> <span class="nav-text">4.1. 基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-dts%E6%96%87%E4%BB%B6"><span class="nav-number">4.2.</span> <span class="nav-text">4.2. dts文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-OF%E5%87%BD%E6%95%B0"><span class="nav-number">4.3.</span> <span class="nav-text">4.3. OF函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E8%AE%BE%E5%A4%87%E6%A0%91%E5%BC%80%E5%8F%91LED"><span class="nav-number">5.</span> <span class="nav-text">5. 设备树开发LED</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-%E8%AE%BE%E5%A4%87%E6%A0%91%E8%8A%82%E7%82%B9%E6%B7%BB%E5%8A%A0"><span class="nav-number">5.1.</span> <span class="nav-text">5.1. 设备树节点添加</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-pinctl%E5%92%8Cgpio%E5%AD%90%E7%B3%BB%E7%BB%9F"><span class="nav-number">6.</span> <span class="nav-text">6. pinctl和gpio子系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-gpio%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B"><span class="nav-number">6.1.</span> <span class="nav-text">6.1. gpio驱动开发基本流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-%E8%AE%BE%E5%A4%87%E6%A0%91%E8%8A%82%E7%82%B9%E6%B7%BB%E5%8A%A0"><span class="nav-number">6.2.</span> <span class="nav-text">6.2. 设备树节点添加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-%E9%97%AE%E9%A2%981"><span class="nav-number">6.3.</span> <span class="nav-text">6.3. 问题1</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90-3"><span class="nav-number">6.3.1.</span> <span class="nav-text">问题分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3-2"><span class="nav-number">6.3.2.</span> <span class="nav-text">问题解决</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E5%B9%B6%E5%8F%91%E4%B8%8E%E7%AB%9E%E4%BA%89"><span class="nav-number">7.</span> <span class="nav-text">7. 并发与竞争</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-%E5%88%86%E7%B1%BB"><span class="nav-number">7.1.</span> <span class="nav-text">7.1. 分类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E5%86%85%E6%A0%B8%E5%AE%9A%E6%97%B6%E5%99%A8"><span class="nav-number">8.</span> <span class="nav-text">8. 内核定时器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1-%E5%AE%9A%E6%97%B6%E5%99%A8%E4%BD%BF%E7%94%A8%E6%B5%81%E7%A8%8B"><span class="nav-number">8.1.</span> <span class="nav-text">8.1. 定时器使用流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%E5%86%85%E6%A0%B8%E4%B8%AD%E6%96%AD"><span class="nav-number">9.</span> <span class="nav-text">9. 内核中断</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#9-1-%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B"><span class="nav-number">9.1.</span> <span class="nav-text">9.1. 基本流程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E5%A4%87%E6%A0%91%E4%BF%AE%E6%94%B9"><span class="nav-number">9.1.1.</span> <span class="nav-text">设备树修改</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-%E9%98%BB%E5%A1%9E%E4%B8%8E%E9%9D%9E%E9%98%BB%E5%A1%9EIO"><span class="nav-number">10.</span> <span class="nav-text">10. 阻塞与非阻塞IO</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#10-1-%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B"><span class="nav-number">10.1.</span> <span class="nav-text">10.1. 基本流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-%E5%BC%82%E6%AD%A5%E9%80%9A%E7%9F%A5"><span class="nav-number">11.</span> <span class="nav-text">11. 异步通知</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#11-1-%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B"><span class="nav-number">11.1.</span> <span class="nav-text">11.1. 基本流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-2-%E9%97%AE%E9%A2%981"><span class="nav-number">11.2.</span> <span class="nav-text">11.2. 问题1</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90-4"><span class="nav-number">11.2.1.</span> <span class="nav-text">问题分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3-3"><span class="nav-number">11.2.2.</span> <span class="nav-text">问题解决</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/12/26/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E6%AD%A3%E7%82%B9%E5%8E%9F%E5%AD%90/linux/linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%911/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="嵌入式linux入门(四)：linux-ARM驱动(1) | Hexo">
+      <meta itemprop="description" content="linux的嵌入式开发第四步，学习linux-ARM相关驱动开发，使用MPU为：I.MX6ULL">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          嵌入式linux入门(四)：linux-ARM驱动(1)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-12-26 12:58:01" itemprop="dateCreated datePublished" datetime="2023-12-26T12:58:01+08:00">2023-12-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-01-16 13:44:45" itemprop="dateModified" datetime="2024-01-16T13:44:45+08:00">2024-01-16</time>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">linux的嵌入式开发第四步，学习linux-ARM相关驱动开发，使用MPU为：I.MX6ULL</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="1-linux驱动开发基础"><a href="#1-linux驱动开发基础" class="headerlink" title="1. linux驱动开发基础"></a>1. linux驱动开发基础</h2><h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1-》字符设备驱动</span><br><span class="line">	USB WIFI\SDIO WIFI</span><br><span class="line">2-》块设备驱动</span><br><span class="line">3-》网络设备驱动</span><br></pre></td></tr></table></figure>
+
+<h3 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h3><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">1-》字符设备驱动</span><br><span class="line">	1-》本质上就是file_operations结构体中的成员变量的实现</span><br><span class="line">		1-》open\close\write\read...</span><br><span class="line">    2-》驱动模块的加载与卸载</span><br><span class="line">    	1-》module_init()\module_exit()</span><br><span class="line">    	2-》加载驱动模块指令</span><br><span class="line">    		insmod(无依赖自动分析)/modprobe(自动分析依赖)</span><br><span class="line">    	3-》卸载驱动模块指令</span><br><span class="line">    		rmmod</span><br><span class="line">    	4-》查看驱动模块指令</span><br><span class="line">    		lsmod</span><br><span class="line">    3-》字符设备的注册与注销</span><br><span class="line">    	1-》旧注册与注销</span><br><span class="line">            1-》注册register_chrdev()</span><br><span class="line">                缺点：需要手动指定未被占用的主设备号，且注册一个主设备号时，当前主设备号对应的次设备号全部被占用</span><br><span class="line">            2-》注销unregister_chrdev()</span><br><span class="line">        2-》新注册与注销</span><br><span class="line">        	1-》注册(一般情况下，完善的字符设备驱动两种情况都要考虑)</span><br><span class="line">        		1-》设备号分配</span><br><span class="line">        			1-》申请设备号(系统自动分配)</span><br><span class="line">        				alloc_chrdev_region()</span><br><span class="line">        			2-》指定主设备号与子设备号(手动分配)</span><br><span class="line">        				register_chrdev_region()</span><br><span class="line">        		2-》注册</span><br><span class="line">        			1-》cdev定义</span><br><span class="line">        			2-》初始化cdev</span><br><span class="line">        				cdev_init()</span><br><span class="line">        			3-》添加cdev</span><br><span class="line">        				cdev_add()</span><br><span class="line">        	2-》注销</span><br><span class="line">        		cdev_del()</span><br><span class="line">        		unregister_chrdev_region()</span><br><span class="line">    4-》设备号 dev_t</span><br><span class="line">    	1-》主设备号</span><br><span class="line">    		1-》获取</span><br><span class="line">    			MAJOR(dev_t)</span><br><span class="line">    	2-》次设备号</span><br><span class="line">    		1-》获取</span><br><span class="line">    			MINOR(dev_t)</span><br><span class="line">    	3-》生成设备号</span><br><span class="line">    		MKDEV(major, minor)</span><br><span class="line">    5-》file_operations结构体实现</span><br><span class="line">    	1-》owner</span><br><span class="line">    	2-》open(一般如果需要私有数据的时候，在这里添加，直接将设备结构体变量封装到私有数据中，用户直接通过私有数据就可以获得设备结构体变量的数					据)/release(私有数据的读取使用)/read(私有数据的读取使用)/write/...</span><br><span class="line">    6-》设备节点</span><br><span class="line">    	1-》手动创建设备节点(烧录后进行)</span><br><span class="line">    		1-》depmod</span><br><span class="line">    		2-》mknod</span><br><span class="line">    	2-》自动创建设备节点(代码编写)</span><br><span class="line">    		1-》类</span><br><span class="line">    			1-》创建类</span><br><span class="line">    				class_create()</span><br><span class="line">    			2-》摧毁类</span><br><span class="line">    				class_destroy()</span><br><span class="line">    		2-》设备</span><br><span class="line">    			1-》创建设备</span><br><span class="line">    				device_create()</span><br><span class="line">    			2-》摧毁设备</span><br><span class="line">    				device_destory()</span><br><span class="line">2-》块设备驱动</span><br><span class="line">3-》网络设备驱动</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-字符设备驱动初次编写"><a href="#2-字符设备驱动初次编写" class="headerlink" title="2. 字符设备驱动初次编写"></a>2. 字符设备驱动初次编写</h2><h3 id="2-1-问题1"><a href="#2-1-问题1" class="headerlink" title="2.1. 问题1"></a>2.1. 问题1</h3><h4 id="原始代码"><a href="#原始代码" class="headerlink" title="原始代码"></a>原始代码</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/module.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 驱动入口函数 */</span></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> __init <span class="title function_">chrdevbase_init</span><span class="params">(<span class="type">void</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 驱动出口函数 */</span></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> __exit <span class="title function_">chrdevbase_fini</span><span class="params">(<span class="type">void</span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 指定驱动入口与出口函数 */</span></span><br><span class="line">module_init(chrdevbase_init);</span><br><span class="line">module_exit(chrdevbase_fini);</span><br></pre></td></tr></table></figure>
+
+<h4 id="编译失败"><a href="#编译失败" class="headerlink" title="编译失败"></a>编译失败</h4><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">ybx@zoneminder:~/linux/imx6ull/1_chrdevbase$ make</span><br><span class="line">cc    -c -o chrdevbase.o chrdevbase.c</span><br><span class="line">chrdevbase.c:4:19: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘chrdevbase_init’</span><br><span class="line">    4 | static int __init chrdevbase_init(void)&#123;</span><br><span class="line">      |                   ^~~~~~~~~~~~~~~</span><br><span class="line">chrdevbase.c:9:20: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘chrdevbase_fini’</span><br><span class="line">    9 | static void __exit chrdevbase_fini(void)&#123;</span><br><span class="line">      |                    ^~~~~~~~~~~~~~~</span><br><span class="line">chrdevbase.c:15:1: warning: data definition has no type or storage class</span><br><span class="line">   15 | module_init(chrdevbase_init);</span><br><span class="line">      | ^~~~~~~~~~~</span><br><span class="line">chrdevbase.c:15:1: warning: type defaults to ‘int’ in declaration of ‘module_init’ [-Wimplicit-int]</span><br><span class="line">chrdevbase.c:15:1: warning: parameter names (without types) in function declaration</span><br><span class="line">chrdevbase.c:16:1: warning: data definition has no type or storage class</span><br><span class="line">   16 | module_exit(chrdevbase_fini);</span><br><span class="line">      | ^~~~~~~~~~~</span><br><span class="line">chrdevbase.c:16:1: warning: type defaults to ‘int’ in declaration of ‘module_exit’ [-Wimplicit-int]</span><br><span class="line">chrdevbase.c:16:1: warning: parameter names (without types) in function declaration</span><br><span class="line">make: *** [&lt;builtin&gt;: chrdevbase.o] Error 1</span><br></pre></td></tr></table></figure>
+
+<h4 id="问题分析1"><a href="#问题分析1" class="headerlink" title="问题分析1"></a>问题分析1</h4><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">经复制测试发现是环境问题，与代码无关，因此进行linux内核环境搭建</span><br></pre></td></tr></table></figure>
+
+<h4 id="问题解决1"><a href="#问题解决1" class="headerlink" title="问题解决1"></a>问题解决1</h4><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">1-》sudo apt-get install lzop</span><br><span class="line">	执行后续脚本文件时，如果未安装lzop会报错</span><br><span class="line">		recipe for target ‘arch/arm/boot/compressed/piggy.lzo’ failed</span><br><span class="line">	因此提前安装</span><br><span class="line">2-》新建文件夹 alientek_linux ，移动linux-imx-rel_imx_4.1.15_2.1.0_ga_alientek压缩文件到该文件夹中，解压</span><br><span class="line">3-》在 linux-imx-rel_imx_4.1.15_2.1.0_ga_alientek 文件夹中新建shell脚本 imx6ull_alientek_emmc.sh ，编辑脚本</span><br><span class="line">	在脚本中输入以下内容</span><br><span class="line">	#!/bin/sh</span><br><span class="line">    make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- distclean</span><br><span class="line">    make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- imx_alientek_emmc_defconfig</span><br><span class="line">    make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- menuconfig</span><br><span class="line">    make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- all -j12</span><br><span class="line">4-》在 linux-imx-rel_imx_4.1.15_2.1.0_ga_alientek 文件夹的命令行中输入./imx6ull_alientek_emmc.sh 执行脚本------遭遇衍生问题1</span><br><span class="line">5-》进入 linux-imx-rel_imx_4.1.15_2.1.0_ga_alientek 文件夹下的 arch/arm/boot 文件夹，其中有生成的zImage文件，即代表环境搭建成功</span><br></pre></td></tr></table></figure>
+
+<h5 id="衍生问题1"><a href="#衍生问题1" class="headerlink" title="衍生问题1"></a>衍生问题1</h5><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/ld: scripts/dtc/dtc-parser.tab.o:(.bss+0x50): multiple definition of `yylloc&#x27;; scripts/dtc/dtc-lexer.lex.o:(.bss+0x0): first defined here</span><br><span class="line">  HOSTLD  scripts/mod/modpost</span><br><span class="line">collect2: error: ld returned 1 exit status</span><br><span class="line">make[2]: *** [scripts/Makefile.host:100: scripts/dtc/dtc] Error 1</span><br><span class="line">make[1]: *** [scripts/Makefile.build:403: scripts/dtc] Error 2</span><br><span class="line">make[1]: *** Waiting for unfinished jobs....</span><br><span class="line">make: *** [Makefile:558: scripts] Error 2</span><br></pre></td></tr></table></figure>
+
+<h6 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h6><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc版本过高，导致出现了重定义 yylloc</span><br></pre></td></tr></table></figure>
+
+<h6 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h6><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1-》根据报错信息，在解压后的文件夹 linux-imx-rel_imx_4.1.15_2.1.0_ga_alientek 中找到 scripts 文件夹，进入后找到 dtc 文件夹，进入</span><br><span class="line">2-》.o文件为编译生成后的文件，所以应当去原始文件中进行修改，原始文件为 dtc-lexer.lex.c_shipped 文件，编辑文件</span><br><span class="line">3-》在文件640行</span><br><span class="line">	原始内容：YYLTYPE yylloc;</span><br><span class="line">	修改为：extern YYLTYPE yylloc;</span><br><span class="line">	修改的目的：为去除重定义问题，将此处的定义修改为外部变量使用</span><br></pre></td></tr></table></figure>
+
+<h4 id="问题分析2"><a href="#问题分析2" class="headerlink" title="问题分析2"></a>问题分析2</h4><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">环境搭建成功后编译依旧报错，说明问题在别处</span><br></pre></td></tr></table></figure>
+
+<h4 id="问题解决2"><a href="#问题解决2" class="headerlink" title="问题解决2"></a>问题解决2</h4><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">驱动出口函数名错误，应当是_exit，而不是_fini，与头文件中已经存在的定义不同，所以不存在，所以报错</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-问题2"><a href="#2-4-问题2" class="headerlink" title="2.4. 问题2"></a>2.4. 问题2</h3><h4 id="缺少文件modules-dep"><a href="#缺少文件modules-dep" class="headerlink" title="缺少文件modules.dep"></a>缺少文件modules.dep</h4><h4 id="模块加载失败"><a href="#模块加载失败" class="headerlink" title="模块加载失败"></a>模块加载失败</h4><h4 id="问题分析-1"><a href="#问题分析-1" class="headerlink" title="问题分析"></a>问题分析</h4><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用modprobe命令首次加载模块时，由于部分根文件系统没有depmod命令，所以需要手动执行，重新编译busybox</span><br></pre></td></tr></table></figure>
+
+<h4 id="问题解决-1"><a href="#问题解决-1" class="headerlink" title="问题解决"></a>问题解决</h4><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">执行命令 depmod</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-寄存器linux点灯"><a href="#3-寄存器linux点灯" class="headerlink" title="3. 寄存器linux点灯"></a>3. 寄存器linux点灯</h2><h3 id="2-1-基本流程"><a href="#2-1-基本流程" class="headerlink" title="2.1. 基本流程"></a>2.1. 基本流程</h3><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1-》获得物理地址对应的虚拟地址(linux由于开启MMU，虚拟地址映射，所以无法直接对物理寄存器进行读写)</span><br><span class="line">	1-》获取映射</span><br><span class="line">		虚拟地址 = ioremap(物理地址, 字节长度)</span><br><span class="line">	2-》释放映射</span><br><span class="line">		iounmap(虚拟地址)</span><br><span class="line">2-》初始化io，赋值</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-问题1"><a href="#2-2-问题1" class="headerlink" title="2.2. 问题1"></a>2.2. 问题1</h3><h4 id="uboot突然不能通过tftp从ubuntu下载zImage"><a href="#uboot突然不能通过tftp从ubuntu下载zImage" class="headerlink" title="uboot突然不能通过tftp从ubuntu下载zImage"></a>uboot突然不能通过tftp从ubuntu下载zImage</h4><h4 id="问题分析-2"><a href="#问题分析-2" class="headerlink" title="问题分析"></a>问题分析</h4><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1-》检查ubuntu的ip是否发生改变，是否能与uboot互相ping通</span><br><span class="line">2-》检查uboot/ubuntu的ip是否在当前网络中唯一，是否有设备冲突</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-设备树"><a href="#4-设备树" class="headerlink" title="4. 设备树"></a>4. 设备树</h2><h3 id="4-1-基本概念"><a href="#4-1-基本概念" class="headerlink" title="4.1. 基本概念"></a>4.1. 基本概念</h3><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">设备树信息在/proc/device-tree/中</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.dts文件类型就是.c，也就是设备树源码文件</span><br><span class="line">DTC相当于gcc交叉编译工具链</span><br><span class="line">.dtb相当于bin文件或者是可执行文件</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-dts文件"><a href="#4-2-dts文件" class="headerlink" title="4.2. dts文件"></a>4.2. dts文件</h3><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1. dts文件一般使用的头文件为.dtsi(这种文件一般是SOC的公共信息提取出来，所以用户不对这种文件做改动，而是在.dts中补充)，但是也可以使用.h文件作为头文件</span><br><span class="line">2. dts文件以 / 开头</span><br><span class="line">3. dts文件从 / 开始，描述设备信息</span><br><span class="line">4. dts文件向其他文件中有的设备中追加或修改信息，使用 &amp;节点名字</span><br><span class="line">5. 节点名字标准格式：node-name@unit-address(一般是外设寄存器的起始地址，但是有时也可以是外设（如i2c）的设备地址或其他的含义)</span><br><span class="line">	其他格式：label: node-name@unit-address，引入标签的作用是简化代码编写，可以直接 &amp;label 而不需要 &amp;node-name@unit-address 这么长一段</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-3-OF函数"><a href="#4-3-OF函数" class="headerlink" title="4.3. OF函数"></a>4.3. OF函数</h3><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在驱动中使用OF函数可以获取设备树的属性内容</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-设备树开发LED"><a href="#5-设备树开发LED" class="headerlink" title="5. 设备树开发LED"></a>5. 设备树开发LED</h2><h3 id="5-1-设备树节点添加"><a href="#5-1-设备树节点添加" class="headerlink" title="5.1. 设备树节点添加"></a>5.1. 设备树节点添加</h3><p>imx6ull-alientek-emmc.dts</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 新添加led设备树一级节点 */</span></span><br><span class="line"><span class="title class_">alphaled</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="comment">// 表明 reg 的格式为 1寄存器地址 1字节大小</span></span><br><span class="line">    <span class="meta">#address-cells = &lt;1&gt;;</span></span><br><span class="line">    <span class="meta">#size-cells = &lt;1&gt;;</span></span><br><span class="line">    <span class="attr">compatible</span> <span class="operator">=</span> <span class="string">&quot;alientek,alphaled&quot;</span><span class="punctuation">;</span></span><br><span class="line">    <span class="attr">status</span> <span class="operator">=</span> <span class="string">&quot;okay&quot;</span><span class="punctuation">;</span></span><br><span class="line">    <span class="attr">reg</span> <span class="operator">=</span> <span class="params">&lt;	<span class="number">0x020c406c</span> <span class="number">0x04</span> 	/* CCM_CCGR1_BASE */</span></span><br><span class="line"><span class="params">            <span class="number">0x020e0068</span> <span class="number">0x04</span>		/* SW_MUX_GPIO1_IO03_BASE */</span></span><br><span class="line"><span class="params">            <span class="number">0x020e02f4</span> <span class="number">0x04</span>		/* SW_PAD_GPIO1_IO03_BASE */</span></span><br><span class="line"><span class="params">            <span class="number">0x0209c000</span> <span class="number">0x04</span>		/* GPIO1_DR_BASE */</span></span><br><span class="line"><span class="params">            <span class="number">0x0209c004</span> <span class="number">0x04</span>&gt;</span><span class="punctuation">;</span>	<span class="comment">/* GPIO1_GDIR_BASE */</span></span><br><span class="line"><span class="punctuation">&#125;;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="6-pinctl和gpio子系统"><a href="#6-pinctl和gpio子系统" class="headerlink" title="6. pinctl和gpio子系统"></a>6. pinctl和gpio子系统</h2><h3 id="6-1-gpio驱动开发基本流程"><a href="#6-1-gpio驱动开发基本流程" class="headerlink" title="6.1. gpio驱动开发基本流程"></a>6.1. gpio驱动开发基本流程</h3><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">1-》获取gpio设备节点</span><br><span class="line">	of_find_node_by_path()</span><br><span class="line">2-》获取gpio编号</span><br><span class="line">	of_get_named_gpio()</span><br><span class="line">3-》请求GPIO</span><br><span class="line">	gpio_request()</span><br><span class="line">4-》设置GPIO输入/输出</span><br><span class="line">	gpio_direction_output()/gpio_direction_input()</span><br><span class="line">5-》读取或设置值</span><br><span class="line">	gpio_get_value()/gpio_set_value()</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-2-设备树节点添加"><a href="#6-2-设备树节点添加" class="headerlink" title="6.2. 设备树节点添加"></a>6.2. 设备树节点添加</h3><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 新添加的 pinctrl_gpioled */</span></span><br><span class="line"><span class="symbol">pinctrl_gpioled:</span> <span class="title class_">ledgrp</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">fsl,pins</span> <span class="operator">=</span> <span class="params">&lt;</span></span><br><span class="line"><span class="params">    	MX6UL_PAD_GPIO1_IO03__GPIO1_IO03	<span class="number">0x10b0</span>	/* GPIO LED */</span></span><br><span class="line"><span class="params">    &gt;</span><span class="punctuation">;</span></span><br><span class="line"><span class="punctuation">&#125;;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 新添加led设备树一级节点 使用pinctrl和gpio子系统 */</span></span><br><span class="line"><span class="title class_">gpioled</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">compatible</span> <span class="operator">=</span> <span class="string">&quot;alientek,gpioled&quot;</span><span class="punctuation">;</span></span><br><span class="line">    <span class="attr">pinctrl-names</span> <span class="operator">=</span> <span class="string">&quot;default&quot;</span><span class="punctuation">;</span></span><br><span class="line">    pinctrl<span class="number">-0</span> = <span class="params">&lt;<span class="variable">&amp;pinctrl_gpioled</span>&gt;</span><span class="punctuation">;</span></span><br><span class="line">    <span class="attr">led-gpio</span> <span class="operator">=</span> <span class="params">&lt;<span class="variable">&amp;gpio1</span> <span class="number">3</span> GPIO_ACTIVE_LOW&gt;</span><span class="punctuation">;</span></span><br><span class="line">    <span class="attr">status</span> <span class="operator">=</span> <span class="string">&quot;okay&quot;</span><span class="punctuation">;</span></span><br><span class="line"><span class="punctuation">&#125;;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="6-3-问题1"><a href="#6-3-问题1" class="headerlink" title="6.3. 问题1"></a>6.3. 问题1</h3><h4 id="问题分析-3"><a href="#问题分析-3" class="headerlink" title="问题分析"></a>问题分析</h4><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpio_request()申请失败，应该是io被其他外设占用</span><br></pre></td></tr></table></figure>
+
+<h4 id="问题解决-2"><a href="#问题解决-2" class="headerlink" title="问题解决"></a>问题解决</h4><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1-》检查设备树文件，是否有其他外设也复用了同一gpio</span><br><span class="line">2-》检查设备树文件，是否有其他gpio子系统使用了该gpio</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-并发与竞争"><a href="#7-并发与竞争" class="headerlink" title="7. 并发与竞争"></a>7. 并发与竞争</h2><h3 id="7-1-分类"><a href="#7-1-分类" class="headerlink" title="7.1. 分类"></a>7.1. 分类</h3><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1-》自旋锁：临界区使用时间短，支持中断</span><br><span class="line">2-》信号量：临界区使用时间长，且必须无中断</span><br><span class="line">3-》互斥体：互斥访问，必须无中断</span><br></pre></td></tr></table></figure>
+
+<h2 id="8-内核定时器"><a href="#8-内核定时器" class="headerlink" title="8. 内核定时器"></a>8. 内核定时器</h2><h3 id="8-1-定时器使用流程"><a href="#8-1-定时器使用流程" class="headerlink" title="8.1. 定时器使用流程"></a>8.1. 定时器使用流程</h3><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">1-》定时器定义</span><br><span class="line">	struct timer_list</span><br><span class="line">2-》初始化定时器</span><br><span class="line">	init_timer()/setup_timer()</span><br><span class="line">3-》配置定时器</span><br><span class="line">	struct timer_list &#123;</span><br><span class="line">        struct list_head entry;</span><br><span class="line">        unsigned long expires;</span><br><span class="line">        struct tvec_base *base;</span><br><span class="line">        void (*function)(unsigned long);</span><br><span class="line">        unsigned long data;</span><br><span class="line">        int slack;</span><br><span class="line">    #ifdef CONFIG_TIMER_STATS</span><br><span class="line">        int start_pid;</span><br><span class="line">        void *start_site;</span><br><span class="line">        char start_comm[16];</span><br><span class="line">    #endif</span><br><span class="line">    #ifdef CONFIG_LOCKDEP</span><br><span class="line">        struct lockdep_map lockdep_map;</span><br><span class="line">    #endif</span><br><span class="line">    &#125;;</span><br><span class="line">    其中必须配置的有：</span><br><span class="line">    1-》expires 	-- 定时时长，到expires失效，通常使用jiffies作为判断时长</span><br><span class="line">    	time_period = 500</span><br><span class="line">    	timer.expires = jiffies + msecs_to_jiffies(time_period)</span><br><span class="line">    2-》function -- 定时器处理函数</span><br><span class="line">    	timer.function = timer_func</span><br><span class="line">    3-》data 	-- 传递的实际上是定时器处理函数的参数</span><br><span class="line">    	timer.data = (unsigned long)&amp;timer_dev</span><br><span class="line">4-》定时器触发</span><br><span class="line">	1-》注册定时器，立即执行</span><br><span class="line">		add_timer()</span><br><span class="line">	2-》修改定时值</span><br><span class="line">		mod_timer()</span><br><span class="line">5-》定时器注销</span><br><span class="line">	del_timer_sync(r);</span><br></pre></td></tr></table></figure>
+
+<h2 id="9-内核中断"><a href="#9-内核中断" class="headerlink" title="9. 内核中断"></a>9. 内核中断</h2><h3 id="9-1-基本流程"><a href="#9-1-基本流程" class="headerlink" title="9.1. 基本流程"></a>9.1. 基本流程</h3><h4 id="设备树修改"><a href="#设备树修改" class="headerlink" title="设备树修改"></a>设备树修改</h4><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">1-》中断服务函数定义</span><br><span class="line">	irqreturn_t ( * handler)(int, void *);</span><br><span class="line">2-》中断号获取</span><br><span class="line">	1-》gpio专用</span><br><span class="line">		gpio_to_irq()</span><br><span class="line">	2-》通用</span><br><span class="line">		irq_of_parse_and_map()</span><br><span class="line">3-》绑定中断号</span><br><span class="line">	request_irq()</span><br><span class="line">4-》中断处理函数配置与实现</span><br><span class="line">	1-》配置中断处理函数</span><br><span class="line">		.handler = key0_handler</span><br><span class="line">	2-》实现中断处理函数</span><br><span class="line">		key0_handler()</span><br><span class="line">5-》释放中断</span><br><span class="line">	free_irq()</span><br><span class="line">6-》tasklet</span><br><span class="line">	1-》定义</span><br><span class="line">		struct tasklet_struct</span><br><span class="line">	2-》初始化</span><br><span class="line">		tasklet_init()</span><br><span class="line">	3-》执行</span><br><span class="line">		tasklet_schedule()</span><br><span class="line">7-》work</span><br><span class="line">	1-》定义</span><br><span class="line">		struct work_struct</span><br><span class="line">	2-》初始化</span><br><span class="line">		INIT_WORK()</span><br><span class="line">	3-》执行</span><br><span class="line">		schedule_work()</span><br></pre></td></tr></table></figure>
+
+<h2 id="10-阻塞与非阻塞IO"><a href="#10-阻塞与非阻塞IO" class="headerlink" title="10. 阻塞与非阻塞IO"></a>10. 阻塞与非阻塞IO</h2><h3 id="10-1-基本流程"><a href="#10-1-基本流程" class="headerlink" title="10.1. 基本流程"></a>10.1. 基本流程</h3><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">1-》阻塞IO==等待队列</span><br><span class="line">	1-》定义等待队列头</span><br><span class="line">		wait_queue_head_t</span><br><span class="line">	2-》初始化等待队列头</span><br><span class="line">		init_waitqueue_head()</span><br><span class="line">	3-》加入等待队列</span><br><span class="line">		1-》只有一种唤醒</span><br><span class="line">			wait_event_interruptible()</span><br><span class="line">		2-》任务切换进行唤醒</span><br><span class="line">			DECLARE_WAITQUEUE(wait, current);   //定义名为wait的等待队列</span><br><span class="line">            //加入等待队列</span><br><span class="line">            add_wait_queue(&amp;dev-&gt;r_wait, &amp;wait);</span><br><span class="line">            __set_current_state(TASK_INTERRUPTIBLE);/* 设置任务状态 */</span><br><span class="line">            //等待中断，进行一次任务切换</span><br><span class="line">            schedule();</span><br><span class="line">            if(signal_pending(current))	&#123;			/* 判断是否为信号引起的唤醒 */</span><br><span class="line">                ret = -ERESTARTSYS;</span><br><span class="line">                goto wait_error;</span><br><span class="line">            &#125;</span><br><span class="line">            __set_current_state(TASK_RUNNING);      /* 将当前任务设置为运行状态 */</span><br><span class="line">            remove_wait_queue(&amp;dev-&gt;r_wait, &amp;wait);    /* 将对应的队列项从等待队列头删除 */</span><br><span class="line">	4-》等待唤醒</span><br><span class="line">		wait_event_interruptible()</span><br><span class="line">	5-》移除等待队列</span><br><span class="line">		remove_wait_queue()</span><br><span class="line">2-》非阻塞IO==轮询</span><br><span class="line">	1-》file_operations的.poll函数</span><br><span class="line">		.poll = imx6ullirq_poll</span><br><span class="line">		static unsigned int imx6ullirq_poll(struct file *filp, struct poll_table_struct *wait)&#123;&#125;</span><br><span class="line">	2-》应用程序调用</span><br><span class="line">		struct pollfd fds;</span><br><span class="line">		fd_set readfds;</span><br><span class="line">		struct timeval timeout;</span><br><span class="line">		</span><br><span class="line">		fds.fd = fd;</span><br><span class="line">        fds.events = POLLIN;</span><br><span class="line">        ret = poll(&amp;fds, 1, 1000);</span><br></pre></td></tr></table></figure>
+
+<h2 id="11-异步通知"><a href="#11-异步通知" class="headerlink" title="11. 异步通知"></a>11. 异步通知</h2><h3 id="11-1-基本流程"><a href="#11-1-基本流程" class="headerlink" title="11.1. 基本流程"></a>11.1. 基本流程</h3><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1-》定义结构体变量</span><br><span class="line">	struct fasync_struct</span><br><span class="line">2-》信号释放</span><br><span class="line">	kill_fasync()</span><br><span class="line">3-》file_operations中的.fasync函数实现</span><br><span class="line">	.fasync = asyncnoti_fasync</span><br><span class="line">	static int imx6uirq_fasync(int fd, struct file *filp, int on)&#123;&#125;</span><br><span class="line">4-》关闭时调用fasync函数</span><br><span class="line">	static int asyncnoti_release(struct inode *inode, struct file *file)&#123;</span><br><span class="line">        return asyncnoti_fasync(-1, flie, 0);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="11-2-问题1"><a href="#11-2-问题1" class="headerlink" title="11.2. 问题1"></a>11.2. 问题1</h3><h4 id="问题分析-4"><a href="#问题分析-4" class="headerlink" title="问题分析"></a>问题分析</h4><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">程序正确运行，但是应用程序却没有正常打印出内容</span><br></pre></td></tr></table></figure>
+
+<h4 id="问题解决-3"><a href="#问题解决-3" class="headerlink" title="问题解决"></a>问题解决</h4><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">unix上标准输入输出都是带有缓存的，一般是行缓存。</span><br><span class="line">对于标准输出，需要输出的数据并不是直接输出到终端上，而是首先缓存到某个地方，当遇到行刷新标志或者该缓存已满的情况下，才会把缓存的数据显示到终端设备上。</span><br><span class="line">ANSI C中定义换行符&#x27;\n&#x27;可以认为是行刷新标志。</span><br><span class="line">所以，printf函数没有带&#x27;\n&#x27;是不会自动刷新输出流，直至缓存被填满。</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/12/25/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E6%AD%A3%E7%82%B9%E5%8E%9F%E5%AD%90/linux/I.MX6ULL%E8%A3%B8%E6%9C%BA%E5%BC%80%E5%8F%91%E7%BB%AD4/" rel="prev" title="嵌入式linux入门(三)：linux-ARM裸机五">
+                  <i class="fa fa-chevron-left"></i> 嵌入式linux入门(三)：linux-ARM裸机五
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/01/02/%E5%B5%8C%E5%85%A5%E5%BC%8F/python/ubuntu22.04%E5%AE%89%E8%A3%85python3.9/" rel="next" title="ubuntu22.04安装python3.9 源代码编译安装">
+                  ubuntu22.04安装python3.9 源代码编译安装 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://example.com/2023/12/26/%E5%B5%8C%E5%85%A5%E5%BC%8F/stm32/%E6%AD%A3%E7%82%B9%E5%8E%9F%E5%AD%90/linux/linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%911/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>

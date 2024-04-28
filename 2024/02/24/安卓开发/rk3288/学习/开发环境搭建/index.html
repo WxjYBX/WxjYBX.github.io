@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha256-/4UQcSmErDzPCMAiuOiWPVVsNN2s3ZY/NsmXNcj0IFc=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="安卓开发板RK3288的基础信息介绍与开发环境搭建">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安卓开发板基础-1">
+<meta property="og:url" content="http://example.com/2024/02/24/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%AD%A6%E4%B9%A0/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="安卓开发板RK3288的基础信息介绍与开发环境搭建">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-02-24T02:30:17.999Z">
+<meta property="article:modified_time" content="2024-02-27T13:03:25.789Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2024/02/24/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%AD%A6%E4%B9%A0/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2024/02/24/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%AD%A6%E4%B9%A0/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/","path":"2024/02/24/安卓开发/rk3288/学习/开发环境搭建/","title":"安卓开发板基础-1"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>安卓开发板基础-1 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%95%99%E7%A8%8B%EF%BC%9A1-%E4%BB%8B%E7%BB%8D-%E2%80%94-Firefly-Wiki-t-firefly-com-%E8%B5%84%E6%BA%90%EF%BC%9AFirefly-%E8%AE%A9%E7%A7%91%E6%8A%80%E6%9B%B4%E7%AE%80%E5%8D%95%EF%BC%8C%E8%AE%A9%E7%94%9F%E6%B4%BB%E6%9B%B4%E6%99%BA%E8%83%BD-t-firefly-com"><span class="nav-number">1.</span> <span class="nav-text">1. 教程：1. 介绍 — Firefly Wiki (t-firefly.com)	资源：Firefly | 让科技更简单，让生活更智能 (t-firefly.com)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-rk3288%E7%A1%AC%E4%BB%B6%E5%8F%82%E6%95%B0-Rockchip-%E7%91%9E%E8%8A%AF%E5%BE%AE%E7%94%B5%E5%AD%90%E8%82%A1%E4%BB%BD%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8-rock-chips-com"><span class="nav-number">2.</span> <span class="nav-text">2. rk3288硬件参数(Rockchip-瑞芯微电子股份有限公司 (rock-chips.com))</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gpu%EF%BC%9AMali-T764"><span class="nav-number">2.1.</span> <span class="nav-text">gpu：Mali T764</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98"><span class="nav-number">2.2.</span> <span class="nav-text">内存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A5%E5%8F%A3"><span class="nav-number">2.3.</span> <span class="nav-text">接口</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-number">3.</span> <span class="nav-text">3. 开发环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E4%B8%B2%E5%8F%A3%E8%B0%83%E8%AF%95%E4%B8%8E%E5%9B%BA%E4%BB%B6%E5%8D%87%E7%BA%A7"><span class="nav-number">3.1.</span> <span class="nav-text">3.1. 串口调试与固件升级</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%82%E9%85%8D%E5%99%A8-usb%E8%BD%AC%E4%B8%B2%E5%8F%A3%EF%BC%8C%E5%8F%AF%E4%BD%BF%E7%94%A8OTG%E8%BD%AC%E6%8E%A5"><span class="nav-number">3.1.1.</span> <span class="nav-text">适配器(usb转串口，可使用OTG转接)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%B2%E5%8F%A3%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7"><span class="nav-number">3.1.2.</span> <span class="nav-text">串口调试工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%BA%E4%BB%B6%E7%83%A7%E5%86%99"><span class="nav-number">3.1.3.</span> <span class="nav-text">固件烧写</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%BA%E4%BB%B6%E5%8D%87%E7%BA%A7%E8%BD%AF%E4%BB%B6http-www-t-firefly-com-doc-download-16-html-windows-22"><span class="nav-number">3.1.4.</span> <span class="nav-text">固件升级软件http:&#x2F;&#x2F;www.t-firefly.com&#x2F;doc&#x2F;download&#x2F;16.html#windows_22</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rk-usb%E9%A9%B1%E5%8A%A8http-www-t-firefly-com-doc-download-16-html-other-23"><span class="nav-number">3.1.5.</span> <span class="nav-text">rk usb驱动http:&#x2F;&#x2F;www.t-firefly.com&#x2F;doc&#x2F;download&#x2F;16.html#other_23</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%BA%E4%BB%B6%E5%8D%87%E7%BA%A7"><span class="nav-number">3.1.6.</span> <span class="nav-text">固件升级</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#windows"><span class="nav-number">3.1.6.1.</span> <span class="nav-text">windows</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#linux"><span class="nav-number">3.1.6.2.</span> <span class="nav-text">linux</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-adb-Android%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7"><span class="nav-number">3.2.</span> <span class="nav-text">3.2. adb(Android命令行调试工具)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E6%9D%A1%E4%BB%B6"><span class="nav-number">3.2.1.</span> <span class="nav-text">前置条件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">3.2.2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">3.2.3.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86"><span class="nav-number">3.2.3.1.</span> <span class="nav-text">连接管理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%B0%83%E8%AF%95"><span class="nav-number">3.2.3.2.</span> <span class="nav-text">调试</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#root-TARGET-BUILD-VARIANT%E4%B8%8D%E5%90%8C%E6%A8%A1%E5%BC%8F%E5%88%86%E6%9E%90%EF%BC%9Ahttps-wiki-t-firefly-com-zh-CN-AIO-3288J-compile-android-firmware-html-gou-jian-bian-ti-shuo-ming"><span class="nav-number">3.2.3.3.</span> <span class="nav-text">root(TARGET_BUILD_VARIANT不同模式分析：https:&#x2F;&#x2F;wiki.t-firefly.com&#x2F;zh_CN&#x2F;AIO-3288J&#x2F;compile_android_firmware.html#gou-jian-bian-ti-shuo-ming)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E7%AE%A1%E7%90%86"><span class="nav-number">3.2.3.4.</span> <span class="nav-text">应用管理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B8%AE%E5%8A%A9%E4%BF%A1%E6%81%AF"><span class="nav-number">3.2.3.5.</span> <span class="nav-text">帮助信息</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83"><span class="nav-number">3.3.</span> <span class="nav-text">3.3. 编译环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-%E5%AE%89%E5%8D%93%E5%9B%BA%E4%BB%B6"><span class="nav-number">3.4.</span> <span class="nav-text">3.4. 安卓固件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-linux%E5%9B%BA%E4%BB%B6"><span class="nav-number">3.5.</span> <span class="nav-text">3.5. linux固件</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/02/24/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%AD%A6%E4%B9%A0/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="安卓开发板基础-1 | Hexo">
+      <meta itemprop="description" content="安卓开发板RK3288的基础信息介绍与开发环境搭建">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          安卓开发板基础-1
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-02-24 10:30:17" itemprop="dateCreated datePublished" datetime="2024-02-24T10:30:17+08:00">2024-02-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-02-27 21:03:25" itemprop="dateModified" datetime="2024-02-27T21:03:25+08:00">2024-02-27</time>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">安卓开发板RK3288的基础信息介绍与开发环境搭建</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="1-教程：1-介绍-—-Firefly-Wiki-t-firefly-com-资源：Firefly-让科技更简单，让生活更智能-t-firefly-com"><a href="#1-教程：1-介绍-—-Firefly-Wiki-t-firefly-com-资源：Firefly-让科技更简单，让生活更智能-t-firefly-com" class="headerlink" title="1. 教程：1. 介绍 — Firefly Wiki (t-firefly.com)	资源：Firefly | 让科技更简单，让生活更智能 (t-firefly.com)"></a>1. 教程：<a target="_blank" rel="noopener" href="https://wiki.t-firefly.com/zh_CN/AIO-3288J/started.html">1. 介绍 — Firefly Wiki (t-firefly.com)</a>	资源：<a target="_blank" rel="noopener" href="https://www.t-firefly.com/doc/download/17.html">Firefly | 让科技更简单，让生活更智能 (t-firefly.com)</a></h2><h2 id="2-rk3288硬件参数-Rockchip-瑞芯微电子股份有限公司-rock-chips-com"><a href="#2-rk3288硬件参数-Rockchip-瑞芯微电子股份有限公司-rock-chips-com" class="headerlink" title="2. rk3288硬件参数(Rockchip-瑞芯微电子股份有限公司 (rock-chips.com))"></a>2. rk3288硬件参数(<a target="_blank" rel="noopener" href="https://www.rock-chips.com/a/cn/product/RK32xilie/2014/0504/483.html">Rockchip-瑞芯微电子股份有限公司 (rock-chips.com)</a>)</h2><h3 id="gpu：Mali-T764"><a href="#gpu：Mali-T764" class="headerlink" title="gpu：Mali T764"></a>gpu：Mali T764</h3><ol>
+<li>AFBC：帧缓冲压缩</li>
+<li>OpenGL ES 1.1&#x2F;2.0&#x2F;3.1：⾼级3D图形应⽤程序编程接⼝</li>
+</ol>
+<h3 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h3><ol>
+<li>DDR3-1333&#x2F;DDR3L-1333&#x2F;LPDDR2-1066：高性能双通道外部存储器接口</li>
+<li>MLC NAND Flash（闪存），eMMC 4.51（闪存标准）</li>
+</ol>
+<h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><ol>
+<li>内置 13M ISP（1300万像素的图像信号处理器）, MIPI CSI-2与DVP 接口（两种连接图像传感器与处理器的接口标准）</li>
+<li>双路 SDIO 3.0 接口：两个能连接SD卡、Wi-Fi模块或其他支持SDIO接口的设备的接口</li>
+<li>TS in&#x2F;CSA2.0 ,支持DTV功能：能够处理数字电视信号</li>
+<li>HDMI、Ethernet MAC 、S&#x2F;PDIF、USB,I2C,I2S ,UART,SPI,PS2<ol>
+<li>HDMI：音视频传输接口</li>
+<li>Ethernet MAC：可以用作以太网适配器，支持局域网数据通信</li>
+<li>S&#x2F;PDIF：数字音频输出接口</li>
+</ol>
+</li>
+</ol>
+<h2 id="3-开发环境搭建"><a href="#3-开发环境搭建" class="headerlink" title="3. 开发环境搭建"></a>3. 开发环境搭建</h2><h3 id="3-1-串口调试与固件升级"><a href="#3-1-串口调试与固件升级" class="headerlink" title="3.1. 串口调试与固件升级"></a>3.1. 串口调试与固件升级</h3><h4 id="适配器-usb转串口，可使用OTG转接"><a href="#适配器-usb转串口，可使用OTG转接" class="headerlink" title="适配器(usb转串口，可使用OTG转接)"></a>适配器(usb转串口，可使用OTG转接)</h4><ol>
+<li>FT232：芯片性能最好，价格高<a target="_blank" rel="noopener" href="https://ftdichip.com/drivers/">Drivers - FTDI (ftdichip.com)</a></li>
+<li>ch340：性能相对稳定<a target="_blank" rel="noopener" href="https://sparks.gogo.co.nz/ch340.html">CH340 Drivers for Windows, Mac and Linux (gogo.co.nz)</a></li>
+<li>CP2102：性能相对稳定<a target="_blank" rel="noopener" href="https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers?tab=downloads">CP210x USB to UART Bridge VCP Drivers - Silicon Labs (silabs.com)</a></li>
+<li>PL2303：性能相对最差<a target="_blank" rel="noopener" href="https://www.prolific.com.tw/US/ShowProduct.aspx?pcid=41">Products (prolific.com.tw)</a></li>
+</ol>
+<h4 id="串口调试工具"><a href="#串口调试工具" class="headerlink" title="串口调试工具"></a>串口调试工具</h4><ol>
+<li>windows<ol>
+<li>MobaXterm：<a target="_blank" rel="noopener" href="https://mobaxterm.mobatek.net/">MobaXterm free Xserver and tabbed SSH client for Windows (mobatek.net)</a></li>
+<li>putty：</li>
+<li>secureCRT：</li>
+</ol>
+</li>
+<li>ubuntu<ol>
+<li>minicom：<a target="_blank" rel="noopener" href="https://wiki.t-firefly.com/zh_CN/AIO-3288J/debug.html#an-zhuang-minicom">2. 串口调试 — Firefly Wiki (t-firefly.com)</a></li>
+<li>picocom：</li>
+<li>kermit：</li>
+</ol>
+</li>
+</ol>
+<h4 id="固件烧写"><a href="#固件烧写" class="headerlink" title="固件烧写"></a>固件烧写</h4><ol>
+<li><p>统一固件：分区表、bootloader、uboot、kernel、system 等所有文件打包合并成的单个文件，升级时更新所有分区的数据和分区表</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">统一固件打包</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">linux 打包完成后固件会生成在 rockdev/Image-rk3288_aio_3288j_box/ 目录</span></span><br><span class="line">./FFTools/mkupdate/mkupdate.sh -l rk3288_aio_3288j_box-userdebug</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">windows</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将文件拷贝到 AndroidTool 的 rockdev\Image 目录中，然后运行 rockdev 目录下的 mkupdate.bat 批处理文件即可创建 update.img 并存放到 rockdev\Image 目录里</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>分区镜像：按照不同的分区，更新时只更新单个指定的分区</p>
+</li>
+</ol>
+<h4 id="固件升级软件http-www-t-firefly-com-doc-download-16-html-windows-22"><a href="#固件升级软件http-www-t-firefly-com-doc-download-16-html-windows-22" class="headerlink" title="固件升级软件http://www.t-firefly.com/doc/download/16.html#windows_22"></a>固件升级软件<a target="_blank" rel="noopener" href="http://www.t-firefly.com/doc/download/16.html#windows_22">http://www.t-firefly.com/doc/download/16.html#windows_22</a></h4><h4 id="rk-usb驱动http-www-t-firefly-com-doc-download-16-html-other-23"><a href="#rk-usb驱动http-www-t-firefly-com-doc-download-16-html-other-23" class="headerlink" title="rk usb驱动http://www.t-firefly.com/doc/download/16.html#other_23"></a>rk usb驱动<a target="_blank" rel="noopener" href="http://www.t-firefly.com/doc/download/16.html#other_23">http://www.t-firefly.com/doc/download/16.html#other_23</a></h4><h4 id="固件升级"><a href="#固件升级" class="headerlink" title="固件升级"></a>固件升级</h4><h5 id="windows"><a href="#windows" class="headerlink" title="windows"></a>windows</h5><p>如果使用的是 Windows 系统，将映像文件拷贝到 AndroidTool 的 <code>rockdev\Image</code> 目录中，之后参照升级文档烧写分区映像即可，这样的好处是使用默认配置即可，不用修改文件的路径。</p>
+<h5 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h5><h3 id="3-2-adb-Android命令行调试工具"><a href="#3-2-adb-Android命令行调试工具" class="headerlink" title="3.2. adb(Android命令行调试工具)"></a>3.2. adb(Android命令行调试工具)</h3><h4 id="前置条件"><a href="#前置条件" class="headerlink" title="前置条件"></a>前置条件</h4><p>rk usb驱动安装成功</p>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><ol>
+<li><p>windows<a target="_blank" rel="noopener" href="http://www.t-firefly.com/share/index/index/id/6afafdf7c54b8eb95e81156d94e54db5.html">http://www.t-firefly.com/share/index/index/id/6afafdf7c54b8eb95e81156d94e54db5.html</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">开启adb</span></span><br><span class="line">adb shell</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ubuntu</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装</span></span><br><span class="line">sudo apt-get install android-tools-adb</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">加入设备标识</span></span><br><span class="line">mkdir -p ~/.android</span><br><span class="line">vi ~/.android/adb_usb.ini</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">添加以下一行，设备标识不固定</span></span><br><span class="line">0x2207</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">加入udev规则	-- 运行在用户空间的设备管理工具</span></span><br><span class="line">sudo vi /etc/udev/rules.d/51-android.rules</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">添加以下一行：</span></span><br><span class="line">SUBSYSTEM==&quot;usb&quot;, ATTR&#123;idVendor&#125;==&quot;2207&quot;, MODE=&quot;0666&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">生效udev规则</span></span><br><span class="line">sudo udevadm control --reload-rules</span><br><span class="line">sudo udevadm trigger</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">重启adb</span></span><br><span class="line">sudo adb kill-server</span><br><span class="line">adb start-server</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><h5 id="连接管理"><a href="#连接管理" class="headerlink" title="连接管理"></a>连接管理</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">列出所有连接设备与序列号</span></span><br><span class="line">adb devices</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将设备序列号设置为环境变量ANDROID_SERIAL的值。通过设置该环境变量，adb命令将自动使用指定设备执行操作，而不必每次手动指定设备序列号</span></span><br><span class="line">export ANDROID_SERIAL=&lt;设备序列号&gt;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用adb命令连接到设备，并在设备上执行<span class="string">&quot;ls&quot;</span>命令，以列出当前目录中的文件和文件夹</span></span><br><span class="line">adb shell ls</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">多设备下连接指定设备</span></span><br><span class="line">adb -s 序列号 shell</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">通过网络来连接 ADB</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">让设备端的 adbd 重启，并在 TCP 端口 5555 处监听</span></span><br><span class="line">adb tcpip 5555</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">此时可以断开 USB 连接</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">远程连接设备，设备的 IP 地址是 192.168.1.100</span></span><br><span class="line">adb connect 192.168.1.100:5555</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">断开连接</span></span><br><span class="line">adb disconnect 192.168.1.100:5555</span><br></pre></td></tr></table></figure>
+
+<h5 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">获取系统日志</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">语法规则：adb logcat [选项] [应用标签]</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">	-v &lt;format&gt;：指定日志输出格式，可以使用的格式包括 brief、process、tag、thread、raw、time、threadtime、long等，默认为 brief。</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">	-d：显示设备上的所有日志，并退出。</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">	-e &lt;filter-spec&gt;：显示特定的事件类型，例如“am”（活动管理器）或“crash”（崩溃）。</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">	-f &lt;filename&gt;：将日志输出写入指定的文件中。</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">	-n &lt;count&gt;：指定最大日志条数，超过该条数后旧的日志将被删除。</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">	-s &lt;tag&gt;[:priority]：仅显示指定标记的日志，可选地指定日志级别。</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">	-t &lt;count&gt;：指定要显示最新的日志条数。</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">	-b &lt;buffer&gt;：选择要读取的日志缓冲区，可以是 main（主缓冲区）、system（系统缓冲区）或 radio（无线电缓冲区）。</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看全部日志</span></span><br><span class="line">adb logcat</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">筛选并显示包含“WifiStateMachine”和“StateMachine”关键字的日志信息</span></span><br><span class="line">adb logcat -s WifiStateMachine StateMachine</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">建立与设备的连接，并打开一个交互式的shell会话</span></span><br><span class="line">adb shell</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">获取详细信息，用于错误报告</span></span><br><span class="line">adb bugreport</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">保存到本地，方便用编辑器查看</span></span><br><span class="line">adb bugreport &gt;bugreport.txt</span><br></pre></td></tr></table></figure>
+
+<h5 id="root-TARGET-BUILD-VARIANT不同模式分析：https-wiki-t-firefly-com-zh-CN-AIO-3288J-compile-android-firmware-html-gou-jian-bian-ti-shuo-ming"><a href="#root-TARGET-BUILD-VARIANT不同模式分析：https-wiki-t-firefly-com-zh-CN-AIO-3288J-compile-android-firmware-html-gou-jian-bian-ti-shuo-ming" class="headerlink" title="root(TARGET_BUILD_VARIANT不同模式分析：https://wiki.t-firefly.com/zh_CN/AIO-3288J/compile_android_firmware.html#gou-jian-bian-ti-shuo-ming)"></a>root(TARGET_BUILD_VARIANT不同模式分析：<a target="_blank" rel="noopener" href="https://wiki.t-firefly.com/zh_CN/AIO-3288J/compile_android_firmware.html#gou-jian-bian-ti-shuo-ming">https://wiki.t-firefly.com/zh_CN/AIO-3288J/compile_android_firmware.html#gou-jian-bian-ti-shuo-ming</a>)</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">获取root权限</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">adb root命令只能在eng或userdebug版本的Android系统中使用，因为user版本通常不允许通过adb root获取root权限</span></span><br><span class="line">adb root</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">TARGET_BUILD_VARIANT 是一个 Android 编译系统中的环境变量，用于指定当前编译所使用的构建变体（Build Variant）。</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">构建变体表示编译时使用的配置选项，通常用于指定要构建的版本类型，例如 eng（工程版本）、userdebug（调试版本）和 user（用户版本）等。</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">TARGET_BUILD_VARIANT 环境变量可以有以下几种取值：</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	eng：表示工程版本，包含完整的调试选项和工具，适用于开发人员进行系统调试和开发。</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	userdebug：表示调试版本，包含调试选项但不包含所有的测试和调试工具，适用于开发人员进行应用程序调试和系统开发。</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	user：表示用户版本，不包含调试选项和工具，适用于最终用户使用的发布版本。</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">通过设置 TARGET_BUILD_VARIANT 环境变量，开发人员可以控制 Android 编译系统生成不同类型的构建版本，以满足不同阶段和需求的开发和测试。</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="应用管理"><a href="#应用管理" class="headerlink" title="应用管理"></a>应用管理</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">应用安装</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">语法规则：adb install [选项] 应用包.apk</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">	-l forward-lock</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">	-r 重新安装应用，保留原先数据</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">	-s 安装到 SD 卡上，而不是内部存储</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装 facebook.apk</span></span><br><span class="line">adb install facebook.apk</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">升级 twitter.apk</span></span><br><span class="line">adb install -r twitter.apk</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">应用卸载</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">adb uninstall 应用包名称</span></span><br><span class="line">adb uninstall com.android.chrome</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">显示apk名称和与之对应的应用包名称，apk与应用包名称并不等同</span></span><br><span class="line">adb shell pm list packages -f</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">输出格式：package:/system/app/Bluetooth.apk=com.android.bluetooth</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="帮助信息"><a href="#帮助信息" class="headerlink" title="帮助信息"></a>帮助信息</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb help</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-编译环境"><a href="#3-3-编译环境" class="headerlink" title="3.3. 编译环境"></a>3.3. 编译环境</h3><ol>
+<li><p>openjdk安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">jdk安装	-- 会更改jdk的默认链接，SDK 在找不到操作系统默认 JDK 的时候会使用内部设定的 JDK 路径，去掉链接更方便</span></span><br><span class="line">sudo apt-get install openjdk-7-jdk</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">jdk使用版本切换</span></span><br><span class="line">sudo update-alternatives --config java</span><br><span class="line">sudo update-alternatives --config javac</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">取消链接</span></span><br><span class="line">sudo /var/lib/dpkg/info/openjdk-7-jdk:amd64.prerm remove</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ubuntu资源包安装(一次安装多个包，如果某些包安装失败也可以分别安装)</p>
+<ol>
+<li><p>ubuntu12.04</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install git gnupg flex bison gperf build-essential \</span><br><span class="line">zip curl libc6-dev libncurses5-dev:i386 x11proto-core-dev \</span><br><span class="line">libx11-dev:i386 libreadline6-dev:i386 libgl1-mesa-glx:i386 \</span><br><span class="line">g++-multilib mingw32 tofrodos gcc-multilib ia32-libs \</span><br><span class="line">python-markdown libxml2-utils xsltproc zlib1g-dev:i386 \</span><br><span class="line">lzop libssl1.0.0 libssl-dev</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ubuntu14.04(官方推荐)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install git-core gnupg flex bison gperf libsdl1.2-dev \</span><br><span class="line">libesd0-dev libwxgtk2.8-dev squashfs-tools build-essential zip curl \</span><br><span class="line">libncurses5-dev zlib1g-dev pngcrush schedtool libxml2 libxml2-utils \</span><br><span class="line">xsltproc lzop libc6-dev schedtool g++-multilib lib32z1-dev lib32ncurses5-dev \</span><br><span class="line">lib32readline-gplv2-dev gcc-multilib libswitch-perl \</span><br><span class="line">libssl1.0.0 libssl-dev</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ol>
+<h3 id="3-4-安卓固件"><a href="#3-4-安卓固件" class="headerlink" title="3.4. 安卓固件"></a>3.4. 安卓固件</h3><ol>
+<li><p>下载：<a target="_blank" rel="noopener" href="http://www.t-firefly.com/doc/download/16.html#other_35">http://www.t-firefly.com/doc/download/16.html#other_35</a></p>
+<ol>
+<li><p>校验</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">校验对应的固件包，根据实际地址修改shell命令</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash"><span class="built_in">md5sum</span> ~/firefly_rk3288_rk3128_android5.1_git_20211216.7z.001</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash"><span class="built_in">md5sum</span> ~/firefly_rk3288_rk3128_android5.1_git_20211216.7z.002</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">md5码</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">3d7a59a84e059cd55a68304d47a5462b  firefly_rk3288_rk3128_android5.1_git_20211216.7z.001</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">1979bd263b51bec27ec10eceb500731b  firefly_rk3288_rk3128_android5.1_git_20211216.7z.002</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>解压固件包</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p ~/proj/firefly_rk3288_android5.1</span><br><span class="line">cd ~/proj/firefly_rk3288_android5.1</span><br><span class="line">7z x ~/firefly_rk3288_rk3128_android5.1_git_20211216.7z.001 -r -o.</span><br><span class="line">git reset --hard</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>更新</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull gitlab Firefly-RK3288:Firefly-RK3288</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>编译：<a target="_blank" rel="noopener" href="https://wiki.t-firefly.com/zh_CN/AIO-3288J/compile_android_firmware.html#bian-yi-fang-fa">https://wiki.t-firefly.com/zh_CN/AIO-3288J/compile_android_firmware.html#bian-yi-fang-fa</a></p>
+<ol>
+<li><p>HDMI编译–整体编译</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">./FFTools/make.sh 是运行位于 FFTools 目录下的 make.sh 脚本。</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-d firefly-rk3288-aio-3288j 表示要编译的设备是 firefly-rk3288-aio-3288j。</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-j8 表示使用 8 个线程并行编译，可以根据机器的 CPU 核心数进行调整。</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-l rk3288_aio_3288j_box-userdebug 表示要构建的 Build Variant 是 rk3288_aio_3288j_box-userdebug，即调试版本</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">选择目标构建变体,只需要在生成时加入对应模式即可</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">make -j8 PRODUCT-rk3288_aio_3288j_box-user</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">make -j8 PRODUCT-rk3288_aio_3288j_box-userdebug</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">make -j8 PRODUCT-rk3288_aio_3288j_box-eng</span></span><br><span class="line">./FFTools/make.sh -d firefly-rk3288-aio-3288j -j8 -l rk3288_aio_3288j_box-userdebug</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">./FFTools/mkupdate/mkupdate.sh 是运行位于 FFTools/mkupdate 目录下的 mkupdate.sh 脚本。</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-l rk3288_aio_3288j_box-userdebug 表示要构建的 Build Variant 是 rk3288_aio_3288j_box-userdebug，即调试版本</span></span><br><span class="line">./FFTools/mkupdate/mkupdate.sh -l rk3288_aio_3288j_box-userdebug</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>LVDS+HDMI编译-整体编译</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">./FFTools/make.sh 是运行位于 FFTools 目录下的 make.sh 脚本。</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-d firefly-rk3288-aio-3288j_lvds 表示要编译的设备是 firefly-rk3288-aio-3288j_lvds。</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-j8 表示使用 8 个线程并行编译，可以根据机器的 CPU 核心数进行调整。</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-l rk3288_aio_3288j_box-userdebug 表示要构建的 Build Variant 是 rk3288_aio_3288j_box-userdebug，即调试版本</span></span><br><span class="line">./FFTools/make.sh -d firefly-rk3288-aio-3288j_lvds -j8 -l rk3288_aio_3288j_box-userdebug</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">./FFTools/mkupdate/mkupdate.sh 是运行位于 FFTools/mkupdate 目录下的 mkupdate.sh 脚本。</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-l rk3288_aio_3288j_box-userdebug 表示要构建的 Build Variant 是 rk3288_aio_3288j_box-userdebug，即调试版本</span></span><br><span class="line">./FFTools/mkupdate/mkupdate.sh -l rk3288_aio_3288j_box-userdebug</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>分步编译</p>
+<ol>
+<li><p>uboot</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd ~/proj/firefly_rk3288_android5.1/u-boot</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">运行 make 命令并使用 rk3288_defconfig 配置文件生成 U-Boot 的配置，根据 rk3288_defconfig 配置文件设置编译选项</span></span><br><span class="line">make rk3288_defconfig</span><br><span class="line">make -j8</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>kernel</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd ~/proj/firefly_rk3288_android5.1/kernel</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">用于生成该硬件平台的默认配置文件,firefly_defconfig 是一个默认的配置文件，会设置一些 U-Boot 的编译选项</span></span><br><span class="line">make firefly_defconfig</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">编译 U-Boot 并生成启动镜像</span></span><br><span class="line">make -j8 firefly-rk3288-aio-3288j.img</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Android</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cd ~/proj/firefly_rk3288_android5.1/</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置 Android 编译环境</span></span><br><span class="line">source build.sh</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">选择要编译的目标 lunch 配置</span></span><br><span class="line">lunch rk3288_aio_3288j_box-userdebug</span><br><span class="line">make -j8</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建镜像文件或者打包生成 Android 系统映像</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">重新打包 boot.img 和 system.img, 并将其它相关的映像文件拷贝到目录 rockdev/Image-rk3288_aio_3288j_box/ 中</span></span><br><span class="line">./mkimage.sh</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="3-5-linux固件"><a href="#3-5-linux固件" class="headerlink" title="3.5. linux固件"></a>3.5. linux固件</h3><ol>
+<li><p>sdk下载</p>
+</li>
+<li><ol>
+<li><ol>
+<li>问题1：Package ‘python’ has no installation candidate</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><ol>
+<li><ol>
+<li><ol>
+<li>解决：找到python的目录，创建一个软链接到指定目录下即可</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># 查找python路径 whereis python3 # 创建软链接	/usr/bin/python3 是查找到的路径 sudo ln -s /usr/bin/python3 /usr/bin/python</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><ol>
+<li><ol>
+<li>问题2：ModuleNotFoundError: No module named ‘formatter’</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><ol>
+<li><ol>
+<li><ol>
+<li>解决：修改.repo&#x2F;repo&#x2F;subcmds&#x2F;help.py文件</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding:utf-8 -*- # # Copyright (C) 2008 The Android Open Source Project # # Licensed under the Apache License, Version 2.0 (the &quot;License&quot;); # you may not use this file except in compliance with the License. # You may obtain a copy of the License at # #      http://www.apache.org/licenses/LICENSE-2.0 # # Unless required by applicable law or agreed to in writing, software # distributed under the License is distributed on an &quot;AS IS&quot; BASIS, # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. # See the License for the specific language governing permissions and # limitations under the License.  from __future__ import print_function import re import sys import textwrap  from subcmds import all_commands from color import Coloring from command import PagedCommand, MirrorSafeCommand, GitcAvailableCommand, GitcClientCommand import gitc_utils class Help(PagedCommand, MirrorSafeCommand):  common = False  helpSummary = &quot;Display detailed help on a command&quot;  helpUsage = &quot;&quot;&quot; %prog [--all|command] &quot;&quot;&quot;  helpDescription = &quot;&quot;&quot; Displays detailed usage information about a command. &quot;&quot;&quot;   def _PrintCommands(self, commandNames):    &quot;&quot;&quot;Helper to display |commandNames| summaries.&quot;&quot;&quot;    maxlen = 0    for name in commandNames:      maxlen = max(maxlen, len(name))    fmt = &#x27;  %%-%ds  %%s&#x27; % maxlen     for name in commandNames:      command = all_commands[name]()      try:        summary = command.helpSummary.strip()      except AttributeError:        summary = &#x27;&#x27;      print(fmt % (name, summary))  def _PrintAllCommands(self):    print(&#x27;usage: repo COMMAND [ARGS]&#x27;)    print(&#x27;The complete list of recognized repo commands are:&#x27;)    commandNames = list(sorted(all_commands))    self._PrintCommands(commandNames)    print(&quot;See &#x27;repo help &lt;command&gt;&#x27; for more information on a &quot;          &#x27;specific command.&#x27;)   def _PrintCommonCommands(self):    print(&#x27;usage: repo COMMAND [ARGS]&#x27;)    print(&#x27;The most commonly used repo commands are:&#x27;)     def gitc_supported(cmd):      if not isinstance(cmd, GitcAvailableCommand) and not isinstance(cmd, GitcClientCommand):        return True      if self.manifest.isGitcClient:        return True      if isinstance(cmd, GitcClientCommand):        return False      if gitc_utils.get_gitc_manifest_dir():        return True      return False     commandNames = list(sorted([name                                for name, command in all_commands.items()                                if command.common and gitc_supported(command)]))    self._PrintCommands(commandNames)     print(        &quot;See &#x27;repo help &lt;command&gt;&#x27; for more information on a specific command.\n&quot;        &quot;See &#x27;repo help --all&#x27; for a complete list of recognized commands.&quot;)   def _PrintCommandHelp(self, cmd, header_prefix=&#x27;&#x27;):    class _Out(Coloring):      def __init__(self, gc):        Coloring.__init__(self, gc, &#x27;help&#x27;)        self.heading = self.printer(&#x27;heading&#x27;, attr=&#x27;bold&#x27;)         self.wrap = True       def _PrintSection(self, heading, bodyAttr):        try:          body = getattr(cmd, bodyAttr)        except AttributeError:          return        if body == &#x27;&#x27; or body is None:          return        if not self._first:          self.nl()        self._first = False                self.heading(&#x27;%s%s&#x27;, header_prefix, heading)        self.nl()        self.nl()         me = &#x27;repo %s&#x27; % cmd.NAME        body = body.strip()        body = body.replace(&#x27;%prog&#x27;, me)         # Extract the title, but skip any trailing &#123;#anchors&#125;.        asciidoc_hdr = re.compile(r&#x27;^\n?#+ ([^&#123;]+)(\&#123;#.+\&#125;)?$&#x27;)        for para in body.split(&quot;\n\n&quot;):          if para.startswith(&#x27; &#x27;):            self.write(&#x27;%s&#x27;, para)            self.nl()            self.nl()            continue           m = asciidoc_hdr.match(para)          if m:            self.heading(&#x27;%s%s&#x27;, header_prefix, m.group(1))            self.nl()            self.nl()            continue           lines = textwrap.wrap(para.replace(&#x27;  &#x27;, &#x27; &#x27;), width=80,                                break_long_words=False, break_on_hyphens=False)          for line in lines:            self.write(&#x27;%s&#x27;, line)            self.nl()          self.nl()     out = _Out(self.manifest.globalConfig)    out._PrintSection(&#x27;Summary&#x27;, &#x27;helpSummary&#x27;)    cmd.OptionParser.print_help()    out._PrintSection(&#x27;Description&#x27;, &#x27;helpDescription&#x27;)   def _PrintAllCommandHelp(self):    for name in sorted(all_commands):      cmd = all_commands[name]()      cmd.manifest = self.manifest      self._PrintCommandHelp(cmd, header_prefix=&#x27;[%s] &#x27; % (name,))   def _Options(self, p):    p.add_option(&#x27;-a&#x27;, &#x27;--all&#x27;,                 dest=&#x27;show_all&#x27;, action=&#x27;store_true&#x27;,                 help=&#x27;show the complete list of commands&#x27;)    p.add_option(&#x27;--help-all&#x27;,                 dest=&#x27;show_all_help&#x27;, action=&#x27;store_true&#x27;,                 help=&#x27;show the --help of all commands&#x27;)   def Execute(self, opt, args):    if len(args) == 0:      if opt.show_all_help:        self._PrintAllCommandHelp()      elif opt.show_all:        self._PrintAllCommands()      else:        self._PrintCommonCommands()     elif len(args) == 1:      name = args[0]       try:        cmd = all_commands[name]()      except KeyError:        print(&quot;repo: &#x27;%s&#x27; is not a repo command.&quot; % name, file=sys.stderr)        sys.exit(1)       cmd.manifest = self.manifest      self._PrintCommandHelp(cmd)     else:      self._PrintCommandHelp(self)</span><br></pre></td></tr></table></figure>
+
+<p>1. </p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/02/19/python/selenium/selenium-0/" rel="prev" title="">
+                  <i class="fa fa-chevron-left"></i> 
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/02/24/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%AD%A6%E4%B9%A0/%E5%9B%BA%E4%BB%B6%E5%AE%9A%E5%88%B6/" rel="next" title="安卓开发板基础-2">
+                  安卓开发板基础-2 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://example.com/2024/02/24/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%AD%A6%E4%B9%A0/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>
