@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha256-/4UQcSmErDzPCMAiuOiWPVVsNN2s3ZY/NsmXNcj0IFc=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="参考B站同济子豪兄的视频，学习yolo架构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="yolo作者的论文学习">
+<meta property="og:url" content="http://example.com/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="参考B站同济子豪兄的视频，学习yolo架构">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240624220748320.png">
+<meta property="og:image" content="http://example.com/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240624220903153.png">
+<meta property="og:image" content="http://example.com/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240624220822624.png">
+<meta property="og:image" content="http://example.com/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240624222110610.png">
+<meta property="og:image" content="http://example.com/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240624222312718.png">
+<meta property="og:image" content="http://example.com/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240624224455638.png">
+<meta property="og:image" content="http://example.com/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240624224721968.png">
+<meta property="og:image" content="http://example.com/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240624224845792.png">
+<meta property="og:image" content="http://example.com/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240625210052893.png">
+<meta property="og:image" content="http://example.com/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240630210132742.png">
+<meta property="og:image" content="http://example.com/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240630212446910.png">
+<meta property="og:image" content="http://example.com/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240630212654380.png">
+<meta property="og:image" content="http://example.com/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240630212846959.png">
+<meta property="og:image" content="http://example.com/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240630213416077.png">
+<meta property="og:image" content="http://example.com/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240630215807911.png">
+<meta property="og:image" content="http://example.com/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240630215936527.png">
+<meta property="og:image" content="http://example.com/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240630220621148.png">
+<meta property="og:image" content="http://example.com/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240630220656910.png">
+<meta property="article:published_time" content="2024-06-24T14:01:00.591Z">
+<meta property="article:modified_time" content="2024-06-30T14:22:53.458Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240624220748320.png">
+
+
+<link rel="canonical" href="http://example.com/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/","path":"2024/06/24/机器学习/机器视觉/YOLO/yolo作者论文精读/","title":"yolo作者的论文学习"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>yolo作者的论文学习 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B"><span class="nav-number">1.</span> <span class="nav-text">目标检测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-number">1.1.</span> <span class="nav-text">数据集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E7%B1%BB"><span class="nav-number">1.2.</span> <span class="nav-text">分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E7%90%86-%E9%A2%84%E6%B5%8B%E9%98%B6%E6%AE%B5"><span class="nav-number">1.3.</span> <span class="nav-text">原理-预测阶段</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#yolov1%E5%8F%82%E6%95%B0%E8%A7%A3%E6%9E%90"><span class="nav-number">1.3.1.</span> <span class="nav-text">yolov1参数解析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E7%90%86-%E9%A2%84%E6%B5%8B%E9%98%B6%E6%AE%B5%E5%90%8E%E5%A4%84%E7%90%86"><span class="nav-number">1.4.</span> <span class="nav-text">原理-预测阶段后处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#NMS%E9%9D%9E%E6%9E%81%E5%A4%A7%E5%80%BC%E6%8A%91%E5%88%B6-%E9%99%8D%E5%BA%8F%E6%8E%92%E5%88%97%EF%BC%8C%E9%9A%8F%E5%90%8E%E6%8A%91%E5%88%B6%E9%9D%9E%E6%9E%81%E5%A4%A7%E5%80%BC%EF%BC%8C%E6%8E%92%E9%99%A4%E5%8F%AF%E8%83%BD%E9%87%8D%E5%A4%8D%E5%80%BC"><span class="nav-number">1.4.1.</span> <span class="nav-text">NMS非极大值抑制 - 降序排列，随后抑制非极大值，排除可能重复值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.4.2.</span> <span class="nav-text">训练模型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">损失函数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB"><span class="nav-number">1.5.</span> <span class="nav-text">论文解读</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="nav-number">1.5.1.</span> <span class="nav-text">基本原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B9%B3%E6%96%B9%E5%92%8C%E8%AF%AF%E5%B7%AE-%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">1.5.2.</span> <span class="nav-text">平方和误差-损失函数的优缺点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B9%B3%E6%96%B9%E5%92%8C%E8%AF%AF%E5%B7%AE-%E7%BC%BA%E7%82%B9%E8%A1%A5%E5%81%BF"><span class="nav-number">1.5.3.</span> <span class="nav-text">平方和误差-缺点补偿</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A1%A5%E5%81%BF%E8%B4%9F%E8%B4%A3%E6%A3%80%E6%9F%A5%E8%AF%AF%E5%B7%AE%E7%9A%84%E6%A1%86"><span class="nav-number">1.5.3.1.</span> <span class="nav-text">补偿负责检查误差的框</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A1%A5%E5%81%BF%E5%A4%A7%E6%A1%86%E7%9A%84%E7%BB%9D%E5%AF%B9%E8%AF%AF%E5%B7%AE-%E5%B0%8F%E6%A1%86%E4%B8%8E%E5%A4%A7%E6%A1%86%E5%9C%A8%E5%90%8C%E6%A0%B7%E7%9A%84%E7%9B%B8%E5%AF%B9%E8%AF%AF%E5%B7%AE%E7%9A%84%E6%83%85%E5%86%B5%E4%B8%8B%EF%BC%8C%E5%A4%A7%E6%A1%86%E7%9A%84%E7%BB%9D%E5%AF%B9%E8%AF%AF%E5%B7%AE%E4%BC%9A%E5%A4%A7%E5%BE%88%E5%A4%9A%EF%BC%8C%E4%BE%8B%E5%A6%825%EF%BC%8C10%E9%83%BD%E6%98%AF40-%E7%9A%84%E7%9B%B8%E5%AF%B9%E8%AF%AF%E5%B7%AE%EF%BC%8C%E5%B0%8F%E6%A1%86%E6%98%AF3-7%EF%BC%8C%E5%A4%A7%E6%A1%86%E6%98%AF6-14%EF%BC%8C%E5%B0%B1%E4%B8%8D%E5%85%AC%E5%B9%B3%EF%BC%8C%E5%8D%B3%E5%90%8C%E6%A0%B7%E5%81%8F%E7%A7%BB2%EF%BC%8C%E5%B0%8F%E6%A1%86%E6%98%AF40-%E7%9B%B8%E5%AF%B9%E5%81%8F%E5%B7%AE%EF%BC%8C%E5%A4%A7%E6%A1%86%E5%BA%94%E8%AF%A5%E5%8F%AA%E6%9C%8920-%EF%BC%8C%E8%80%8C%E4%B8%8D%E5%BA%94%E8%AF%A5%E5%90%8C%E6%A0%B7%E4%B9%9F%E6%98%AF40"><span class="nav-number">1.5.3.2.</span> <span class="nav-text">补偿大框的绝对误差-小框与大框在同样的相对误差的情况下，大框的绝对误差会大很多，例如5，10都是40%的相对误差，小框是3-7，大框是6-14，就不公平，即同样偏移2，小框是40%相对偏差，大框应该只有20%，而不应该同样也是40%</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A2%84%E6%B5%8B%E6%A1%86%E7%9A%84%E7%89%B9%E5%8C%96"><span class="nav-number">1.5.4.</span> <span class="nav-text">预测框的特化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E9%94%99%E8%AF%AF"><span class="nav-number">1.5.5.</span> <span class="nav-text">主要错误</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%B9%E6%AF%94%E5%85%B6%E4%BB%96"><span class="nav-number">1.5.6.</span> <span class="nav-text">对比其他</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="yolo作者的论文学习 | Hexo">
+      <meta itemprop="description" content="参考B站同济子豪兄的视频，学习yolo架构">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          yolo作者的论文学习
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-06-24 22:01:00" itemprop="dateCreated datePublished" datetime="2024-06-24T22:01:00+08:00">2024-06-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-06-30 22:22:53" itemprop="dateModified" datetime="2024-06-30T22:22:53+08:00">2024-06-30</time>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">参考B站同济子豪兄的视频，学习yolo架构</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="目标检测"><a href="#目标检测" class="headerlink" title="目标检测"></a>目标检测</h2><h3 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h3><img src="/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240624220748320.png" class="" title="image-20240624220748320">
+
+<h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><img src="/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240624220903153.png" class="" title="image-20240624220903153">
+
+<img src="/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240624220822624.png" class="" title="image-20240624220822624">
+
+<h3 id="原理-预测阶段"><a href="#原理-预测阶段" class="headerlink" title="原理-预测阶段"></a>原理-预测阶段</h3><img src="/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240624222110610.png" class="" title="image-20240624222110610">
+
+<img src="/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240624222312718.png" class="" title="image-20240624222312718">
+
+<h4 id="yolov1参数解析"><a href="#yolov1参数解析" class="headerlink" title="yolov1参数解析"></a>yolov1参数解析</h4><ol>
+<li>S&#x3D;7，网格个数为7x7</li>
+<li>B&#x3D;2，每个网格单元获取2个预测框（框体随机，仅确保框体中心在该网格单元），IOU更大的框负责进行物体预测</li>
+<li>SxSx(5xB+C)，S是网格边长，C是分类数，20分类就是20，20个值分别是该网格对20个类别的条件类别概率（假设该网格东西是物体），1024分类就是1024，B代表框体，每个框体有5个值，x,y为中心坐标，w,h为框体宽高，c为框体是物体的置信度，</li>
+</ol>
+<h3 id="原理-预测阶段后处理"><a href="#原理-预测阶段后处理" class="headerlink" title="原理-预测阶段后处理"></a>原理-预测阶段后处理</h3><ol>
+<li>x30的处理，5x20，5x20，获得了两个预测框的全概率，也就是分别是20分类中哪个物品的实际概率</li>
+<li>7x7x30，总计可以获得7x7x2个全概率，20值的向量         - - -     此时已经获取到了中间的图的结果，98个框</li>
+</ol>
+<img src="/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240624224455638.png" class="" title="image-20240624224455638">
+
+<h4 id="NMS非极大值抑制-降序排列，随后抑制非极大值，排除可能重复值"><a href="#NMS非极大值抑制-降序排列，随后抑制非极大值，排除可能重复值" class="headerlink" title="NMS非极大值抑制 - 降序排列，随后抑制非极大值，排除可能重复值"></a>NMS非极大值抑制 - 降序排列，随后抑制非极大值，排除可能重复值</h4><img src="/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240624224721968.png" class="" title="image-20240624224721968">
+
+<img src="/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240624224845792.png" class="" title="image-20240624224845792">
+
+<h4 id="训练模型"><a href="#训练模型" class="headerlink" title="训练模型"></a>训练模型</h4><h5 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h5><img src="/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240625210052893.png" class="" title="image-20240625210052893">
+
+<h3 id="论文解读"><a href="#论文解读" class="headerlink" title="论文解读"></a>论文解读</h3><h4 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h4><img src="/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240630210132742.png" class="" title="image-20240630210132742">
+
+<h4 id="平方和误差-损失函数的优缺点"><a href="#平方和误差-损失函数的优缺点" class="headerlink" title="平方和误差-损失函数的优缺点"></a>平方和误差-损失函数的优缺点</h4><img src="/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240630212446910.png" class="" title="image-20240630212446910">
+
+<h4 id="平方和误差-缺点补偿"><a href="#平方和误差-缺点补偿" class="headerlink" title="平方和误差-缺点补偿"></a>平方和误差-缺点补偿</h4><h5 id="补偿负责检查误差的框"><a href="#补偿负责检查误差的框" class="headerlink" title="补偿负责检查误差的框"></a>补偿负责检查误差的框</h5><img src="/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240630212654380.png" class="" title="image-20240630212654380">
+
+<h5 id="补偿大框的绝对误差-小框与大框在同样的相对误差的情况下，大框的绝对误差会大很多，例如5，10都是40-的相对误差，小框是3-7，大框是6-14，就不公平，即同样偏移2，小框是40-相对偏差，大框应该只有20-，而不应该同样也是40"><a href="#补偿大框的绝对误差-小框与大框在同样的相对误差的情况下，大框的绝对误差会大很多，例如5，10都是40-的相对误差，小框是3-7，大框是6-14，就不公平，即同样偏移2，小框是40-相对偏差，大框应该只有20-，而不应该同样也是40" class="headerlink" title="补偿大框的绝对误差-小框与大框在同样的相对误差的情况下，大框的绝对误差会大很多，例如5，10都是40%的相对误差，小框是3-7，大框是6-14，就不公平，即同样偏移2，小框是40%相对偏差，大框应该只有20%，而不应该同样也是40%"></a>补偿大框的绝对误差-小框与大框在同样的相对误差的情况下，大框的绝对误差会大很多，例如5，10都是40%的相对误差，小框是3-7，大框是6-14，就不公平，即同样偏移2，小框是40%相对偏差，大框应该只有20%，而不应该同样也是40%</h5><img src="/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240630212846959.png" class="" title="image-20240630212846959">
+
+<h4 id="预测框的特化"><a href="#预测框的特化" class="headerlink" title="预测框的特化"></a>预测框的特化</h4><img src="/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240630213416077.png" class="" title="image-20240630213416077">
+
+<h4 id="主要错误"><a href="#主要错误" class="headerlink" title="主要错误"></a>主要错误</h4><img src="/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240630215807911.png" class="" title="image-20240630215807911">
+
+<h4 id="对比其他"><a href="#对比其他" class="headerlink" title="对比其他"></a>对比其他</h4><img src="/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240630215936527.png" class="" title="image-20240630215936527">
+
+<img src="/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240630220621148.png" class="" title="image-20240630220621148">
+
+<img src="/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/image-20240630220656910.png" class="" title="image-20240630220656910">
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/06/22/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo-01/" rel="prev" title="yolov1-v9的学习-01">
+                  <i class="fa fa-chevron-left"></i> yolov1-v9的学习-01
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/08/17/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%B8%97%E9%80%8F%E6%8A%93%E5%8C%85/01-WireShark/" rel="next" title="wireshark抓包修改教程">
+                  wireshark抓包修改教程 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://example.com/2024/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo%E4%BD%9C%E8%80%85%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>

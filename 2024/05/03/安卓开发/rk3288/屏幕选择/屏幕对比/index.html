@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha256-/4UQcSmErDzPCMAiuOiWPVVsNN2s3ZY/NsmXNcj0IFc=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="在进行屏幕挑选时需要考虑到的参数列表">
+<meta property="og:type" content="article">
+<meta property="og:title" content="比较常见的mipi、lvds、hdmi、rgb-ttl接口的LCD屏幕">
+<meta property="og:url" content="http://example.com/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="在进行屏幕挑选时需要考虑到的参数列表">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/image-20240505120711484.png">
+<meta property="og:image" content="http://example.com/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/image-20240505124205291.png">
+<meta property="og:image" content="http://example.com/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/image-20240505132659869.png">
+<meta property="og:image" content="http://example.com/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/image-20240505134058443.png">
+<meta property="og:image" content="http://example.com/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/image-20240505133257814.png">
+<meta property="og:image" content="http://example.com/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/image-20240505133355967.png">
+<meta property="og:image" content="http://example.com/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/image-20240505134601098.png">
+<meta property="og:image" content="http://example.com/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/image-20240505190402429.png">
+<meta property="og:image" content="http://example.com/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/image-20240505191552901.png">
+<meta property="og:image" content="http://example.com/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/2dba9bc5fd065af60df4eefc23a9969c.jpeg">
+<meta property="og:image" content="http://example.com/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FsZXhjZWw=,size_16,color_FFFFFF,t_70.png">
+<meta property="og:image" content="http://example.com/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/image-20240505202942892.png">
+<meta property="og:image" content="http://example.com/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/Center.jpeg">
+<meta property="og:image" content="http://example.com/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/Center-17149126545473.jpeg">
+<meta property="og:image" content="http://example.com/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/Center-17149126875599.jpeg">
+<meta property="og:image" content="http://example.com/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/image-20240504165648534.png">
+<meta property="og:image" content="http://example.com/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/image-20240504183705650.png">
+<meta property="og:image" content="http://example.com/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/image-20240504184018300.png">
+<meta property="og:image" content="http://example.com/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/image-20240505205459232.png">
+<meta property="article:published_time" content="2024-05-03T04:00:34.406Z">
+<meta property="article:modified_time" content="2024-05-12T13:01:20.674Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/image-20240505120711484.png">
+
+
+<link rel="canonical" href="http://example.com/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/","path":"2024/05/03/安卓开发/rk3288/屏幕选择/屏幕对比/","title":"比较常见的mipi、lvds、hdmi、rgb-ttl接口的LCD屏幕"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>比较常见的mipi、lvds、hdmi、rgb-ttl接口的LCD屏幕 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-LCD%E6%98%BE%E7%A4%BA%E5%B1%8F%E5%8F%82%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">1. LCD显示屏参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%B0%BA%E5%AF%B8"><span class="nav-number">1.1.</span> <span class="nav-text">1.1. 尺寸</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E5%88%86%E8%BE%A8%E7%8E%87%E2%80%93%E4%B8%8E%E6%98%BE%E7%A4%BA%E5%9B%BE%E5%83%8F%E7%9A%84%E7%B2%BE%E7%BB%86%E7%A8%8B%E5%BA%A6%E6%88%90%E6%AD%A3%E6%AF%94"><span class="nav-number">1.2.</span> <span class="nav-text">1.2. 分辨率	–	与显示图像的精细程度成正比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E4%BA%AE%E5%BA%A6%EF%BC%88nit%EF%BC%89-%E2%80%93-%E4%B8%8E%E5%8F%AF%E8%A7%86%E6%AD%A3%E7%9B%B8%E5%85%B3%EF%BC%8C%E7%9B%B4%E6%8E%A5%E5%BD%B1%E5%93%8D%E5%AF%B9%E6%AF%94%E5%BA%A6%EF%BC%8C%E5%AE%A4%E5%86%85LED%E7%9A%84%E7%90%86%E6%83%B3%E4%BA%AE%E5%BA%A6500-1000"><span class="nav-number">1.3.</span> <span class="nav-text">1.3. 亮度（nit） – 与可视正相关，直接影响对比度，室内LED的理想亮度500-1000</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E4%BF%A1%E5%8F%B7%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.4.</span> <span class="nav-text">1.4. 信号接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-%E8%A7%A6%E6%91%B8%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.5.</span> <span class="nav-text">1.5. 触摸类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-%E9%9D%A2%E6%9D%BF%E7%B1%BB%E5%9E%8B%E2%80%93-LCD%E5%B1%8F%E5%B9%95%EF%BC%8C%E4%BE%9D%E8%B5%96LED%E5%8F%91%E5%85%89"><span class="nav-number">1.6.</span> <span class="nav-text">1.6. 面板类型	– LCD屏幕，依赖LED发光</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-7-%E5%88%B7%E6%96%B0%E7%8E%87%E2%80%93-%E8%B6%8A%E9%AB%98%E6%98%BE%E7%A4%BA%E7%9A%84%E5%9B%BE%E5%83%8F%E8%B6%8A%E7%A8%B3%E5%AE%9A"><span class="nav-number">1.7.</span> <span class="nav-text">1.7. 刷新率	– 越高显示的图像越稳定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-8-%E6%8D%A2%E5%B8%A7%E7%8E%87%E2%80%93-%E8%B6%8A%E9%AB%98%E6%98%BE%E7%A4%BA%E5%9B%BE%E5%83%8F%E7%9A%84%E8%BF%9E%E7%BB%AD%E6%80%A7%E8%B6%8A%E5%A5%BD"><span class="nav-number">1.8.</span> <span class="nav-text">1.8. 换帧率	– 越高显示图像的连续性越好</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-9-%E5%AF%B9%E6%AF%94%E5%BA%A6"><span class="nav-number">1.9.</span> <span class="nav-text">1.9. 对比度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-10-%E8%89%B2%E5%B7%AE-%E8%89%B2%E5%87%86-%CE%94E%E6%95%B0%E5%80%BC%E8%B6%8A%E5%B0%8F%EF%BC%8C%E9%A2%9C%E8%89%B2%E7%9A%84%E5%87%86%E7%A1%AE%E5%BA%A6%E8%B6%8A%E9%AB%98"><span class="nav-number">1.10.</span> <span class="nav-text">1.10. 色差(色准) ΔE	数值越小，颜色的准确度越高</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-11-%E8%89%B2%E5%9F%9F-%E2%80%93-%E4%B8%8D%E5%90%8C%E6%A0%87%E5%87%86%E5%AF%B9%E5%BA%94%E7%9A%84%E8%89%B2%E5%9F%9F%E4%B8%8D%E5%90%8C%EF%BC%8C100-sRGB%E2%89%8880-DCI-P3%EF%BC%8C%E4%BD%86%E6%98%AF%E8%89%B2%E5%9F%9F%E5%B9%B6%E4%B8%8D%E6%98%AF%E8%B6%8A%E5%B9%BF%E8%B6%8A%E5%A5%BD%EF%BC%8C%E7%9B%AE%E5%89%8D100-sRGB%E4%BD%93%E6%84%9F%E6%9C%80%E4%BD%B3%EF%BC%8C%E5%86%8D%E5%A4%9A%E4%BC%9A%E5%87%BA%E7%8E%B0%E8%BF%87%E9%A5%B1%E5%92%8C%EF%BC%88%E5%8F%AF%E4%BB%A5%E7%94%A8ICC%E6%96%87%E4%BB%B6%E6%A0%A1%E8%89%B2%EF%BC%8C%E4%BD%86%E6%98%AF%E9%BA%BB%E7%83%A6%E8%80%8C%E4%B8%94%E4%B8%8D%E5%AE%8C%E5%85%A8%E8%83%BD%E6%A0%A1%E5%87%86%EF%BC%89"><span class="nav-number">1.11.</span> <span class="nav-text">1.11. 色域 – 不同标准对应的色域不同，100%sRGB≈80%DCI-P3，但是色域并不是越广越好，目前100%sRGB体感最佳，再多会出现过饱和（可以用ICC文件校色，但是麻烦而且不完全能校准）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-12-HDR%E7%AD%89%E7%BA%A7"><span class="nav-number">1.12.</span> <span class="nav-text">1.12. HDR等级</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%8E%A5%E5%8F%A3%E8%AF%A6%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">2. 接口详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-8080%E5%B1%8F%E5%B9%95%E7%9A%848080%E6%8E%A5%E5%8F%A3%E5%92%8CRGB%E6%8E%A5%E5%8F%A3-CSDN%E5%8D%9A%E5%AE%A2"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. 8080屏幕的8080接口和RGB接口-CSDN博客</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%B9%E7%82%B9"><span class="nav-number">2.1.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E7%BA%BF"><span class="nav-number">2.1.2.</span> <span class="nav-text">信号线</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-RGB-TTL"><span class="nav-number">2.2.</span> <span class="nav-text">2.1. RGB-TTL</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%B9%E7%82%B9-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E7%BA%BF-1"><span class="nav-number">2.2.2.</span> <span class="nav-text">信号线</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-LVDS"><span class="nav-number">2.3.</span> <span class="nav-text">2.2. LVDS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8EMIPI%E6%AF%94%E8%BE%83"><span class="nav-number">2.3.1.</span> <span class="nav-text">与MIPI比较</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%B9%E7%82%B9-2"><span class="nav-number">2.3.2.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%AC%E8%B4%A8"><span class="nav-number">2.3.3.</span> <span class="nav-text">本质</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%A5%E5%8F%A3%E5%88%86%E7%B1%BB"><span class="nav-number">2.3.4.</span> <span class="nav-text">接口分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%91%E9%80%81%E5%8E%9F%E7%90%86LVDS%EF%BC%8C%E6%8E%A5%E5%8F%A3%EF%BC%8C%E6%97%B6%E5%BA%8F%E8%AE%B2%E8%A7%A3%EF%BC%8C%E9%9D%9E%E5%B8%B8%E5%A5%BD%E7%9A%84%E6%96%87%E7%AB%A0-lvds%E6%97%B6%E5%BA%8F-CSDN%E5%8D%9A%E5%AE%A2"><span class="nav-number">2.3.5.</span> <span class="nav-text">发送原理LVDS，接口，时序讲解，非常好的文章_lvds时序-CSDN博客</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-MIPI"><span class="nav-number">2.4.</span> <span class="nav-text">2.3. MIPI</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#C-PHY"><span class="nav-number">2.4.1.</span> <span class="nav-text">C-PHY</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#D-PHY-%E2%80%93-%E5%85%A8%E9%83%A8%E6%95%B0%E6%8D%AE%E9%80%9A%E9%81%93%E9%83%BD%E5%8F%AF%E4%BB%A5%E7%94%A8%E4%BA%8E%E5%8D%95%E5%90%91%E7%9A%84%E9%AB%98%E9%80%9F%E4%BC%A0%E8%BE%93%EF%BC%8C%E5%8F%AA%E6%9C%89%E7%AC%AC%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E9%80%9A%E9%81%93%E6%89%8D%E5%8F%AF%E7%94%A8%E4%BA%8E%E4%BD%8E%E9%80%9F%E5%8F%8C%E5%90%91%E4%BC%A0%E8%BE%93"><span class="nav-number">2.4.2.</span> <span class="nav-text">D-PHY – 全部数据通道都可以用于单向的高速传输，只有第一个数据通道才可用于低速双向传输</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Lane-MIPI%E9%87%8C%E9%9D%A2%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF%E4%BC%A0%E8%BE%93%E5%8D%95%E5%85%83"><span class="nav-number">2.4.3.</span> <span class="nav-text">Lane-MIPI里面的基本信息传输单元</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8A%97%E5%B9%B2%E6%89%B0%E8%83%BD%E5%8A%9B"><span class="nav-number">2.4.4.</span> <span class="nav-text">抗干扰能力</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%95%E8%84%9A"><span class="nav-number">2.4.5.</span> <span class="nav-text">引脚</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-HDMIHDMI-%E6%8E%A5%E5%8F%A3%E4%BB%8B%E7%BB%8D-hdmi%E6%8E%A5%E5%8F%A3%E5%AE%9A%E4%B9%89-CSDN%E5%8D%9A%E5%AE%A2"><span class="nav-number">2.5.</span> <span class="nav-text">2.4. HDMIHDMI 接口介绍_hdmi接口定义-CSDN博客</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-DVPMIPI%E3%80%81LVDS%E3%80%81RGB%E3%80%81HDMI%E7%AD%89%E6%8E%A5%E5%8F%A3%E5%AF%B9%E6%AF%94-lvds%E5%92%8Cmipi%E5%8C%BA%E5%88%AB-CSDN%E5%8D%9A%E5%AE%A2"><span class="nav-number">2.6.</span> <span class="nav-text">2.5. DVPMIPI、LVDS、RGB、HDMI等接口对比_lvds和mipi区别-CSDN博客</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-MIPI%E4%B8%8ELVDS"><span class="nav-number">2.7.</span> <span class="nav-text">2.6. MIPI与LVDS</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="比较常见的mipi、lvds、hdmi、rgb-ttl接口的LCD屏幕 | Hexo">
+      <meta itemprop="description" content="在进行屏幕挑选时需要考虑到的参数列表">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          比较常见的mipi、lvds、hdmi、rgb-ttl接口的LCD屏幕
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-05-03 12:00:34" itemprop="dateCreated datePublished" datetime="2024-05-03T12:00:34+08:00">2024-05-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-05-12 21:01:20" itemprop="dateModified" datetime="2024-05-12T21:01:20+08:00">2024-05-12</time>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">在进行屏幕挑选时需要考虑到的参数列表</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="1-LCD显示屏参数"><a href="#1-LCD显示屏参数" class="headerlink" title="1. LCD显示屏参数"></a>1. LCD显示屏参数</h2><img src="/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/image-20240505120711484.png" class="" title="image-20240505120711484">
+
+<h3 id="1-1-尺寸"><a href="#1-1-尺寸" class="headerlink" title="1.1. 尺寸"></a>1.1. 尺寸</h3><p>7寸-对角线长度为7x2.54≈17.78cm</p>
+<h3 id="1-2-分辨率–与显示图像的精细程度成正比"><a href="#1-2-分辨率–与显示图像的精细程度成正比" class="headerlink" title="1.2. 分辨率	–	与显示图像的精细程度成正比"></a>1.2. 分辨率	–	与显示图像的精细程度成正比</h3><p>PPI：衡量屏幕分辨率的高低程度，一般情况下&gt;300就够用了，360清晰，420锐利</p>
+<img src="/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/image-20240505124205291.png" class="" title="image-20240505124205291">
+
+<ol>
+<li>横屏：800x480&#x2F;1024x600&#x2F;1024x768&#x2F;1200x1920</li>
+<li>竖屏：800x1280</li>
+</ol>
+<h3 id="1-3-亮度（nit）-–-与可视正相关，直接影响对比度，室内LED的理想亮度500-1000"><a href="#1-3-亮度（nit）-–-与可视正相关，直接影响对比度，室内LED的理想亮度500-1000" class="headerlink" title="1.3. 亮度（nit） – 与可视正相关，直接影响对比度，室内LED的理想亮度500-1000"></a>1.3. 亮度（nit） – 与可视正相关，直接影响对比度，室内LED的理想亮度500-1000</h3><p>200&#x2F;300&#x2F;350&#x2F;360&#x2F;400&#x2F;500&#x2F;550&#x2F;1000&#x2F;1500</p>
+<h3 id="1-4-信号接口"><a href="#1-4-信号接口" class="headerlink" title="1.4. 信号接口"></a>1.4. 信号接口</h3><ol>
+<li><p>8080接口</p>
+</li>
+<li><p>RGB-TTL</p>
+</li>
+<li><p>HDMI</p>
+</li>
+<li><p>MIPI</p>
+</li>
+<li><p>LVDS</p>
+<ol>
+<li>可使系统供电电压低至 2V，采用低压和低电流驱动方式，实现了低噪声和低功耗</li>
+</ol>
+</li>
+<li><p>eDP</p>
+<ol>
+<li>支持超高分辨率</li>
+</ol>
+</li>
+</ol>
+<h3 id="1-5-触摸类型"><a href="#1-5-触摸类型" class="headerlink" title="1.5. 触摸类型"></a>1.5. 触摸类型</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>电阻触摸屏</th>
+<th>电容触摸屏</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>价格</td>
+<td>低</td>
+<td>高</td>
+</tr>
+<tr>
+<td>触控</td>
+<td>一点触控-本质上是类似传感器感应</td>
+<td>多点触控</td>
+</tr>
+<tr>
+<td>触控精度</td>
+<td>高</td>
+<td>低</td>
+</tr>
+<tr>
+<td>像素配置</td>
+<td>高</td>
+<td>较高</td>
+</tr>
+<tr>
+<td>环境容忍度</td>
+<td>高，灰尘多、戴手套、温差大</td>
+<td>低</td>
+</tr>
+<tr>
+<td>屏幕类型</td>
+<td>软屏</td>
+<td>硬屏</td>
+</tr>
+<tr>
+<td>灵敏度</td>
+<td>较高</td>
+<td>高</td>
+</tr>
+<tr>
+<td>使用寿命</td>
+<td>短</td>
+<td>长</td>
+</tr>
+</tbody></table>
+<h3 id="1-6-面板类型–-LCD屏幕，依赖LED发光"><a href="#1-6-面板类型–-LCD屏幕，依赖LED发光" class="headerlink" title="1.6. 面板类型	– LCD屏幕，依赖LED发光"></a>1.6. 面板类型	– LCD屏幕，依赖LED发光</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>IPS-色彩还原度最高√</th>
+<th>TN</th>
+<th>VA-有过饱和倾向√</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>灰阶(色深)-色彩数量与bit成正比，色彩多过渡自然</td>
+<td>原生8bit 2^(8+8+8)</td>
+<td>原生6bit 2^(6+6+6)</td>
+<td>原生8bit</td>
+</tr>
+<tr>
+<td>可视角度</td>
+<td>广视角（150-178）</td>
+<td>仅正对效果好，窄视角</td>
+<td>广视角</td>
+</tr>
+<tr>
+<td>漏光</td>
+<td>严重</td>
+<td>不漏光</td>
+<td>不漏光</td>
+</tr>
+<tr>
+<td>对比度-色彩对比度</td>
+<td>低</td>
+<td>高</td>
+<td>高</td>
+</tr>
+<tr>
+<td>色彩还原度</td>
+<td>准确</td>
+<td>泛白，暗角严重，白平衡漂移，不准确</td>
+<td>较准确，色彩过饱和</td>
+</tr>
+<tr>
+<td>屏幕类型</td>
+<td>硬屏</td>
+<td>软屏，滑动有水纹</td>
+<td>软屏</td>
+</tr>
+<tr>
+<td>刷新率</td>
+<td>低</td>
+<td>高</td>
+<td>低</td>
+</tr>
+<tr>
+<td>响应时间</td>
+<td>较快（4-40ms）</td>
+<td>快（1-5ms）</td>
+<td>慢</td>
+</tr>
+<tr>
+<td>价格</td>
+<td>较高</td>
+<td>低</td>
+<td>较高</td>
+</tr>
+<tr>
+<td>色域</td>
+<td>50%-80%</td>
+<td>&gt;98%</td>
+<td></td>
+</tr>
+</tbody></table>
+<img src="/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/image-20240505132659869.png" class="" title="image-20240505132659869">
+
+<h3 id="1-7-刷新率–-越高显示的图像越稳定"><a href="#1-7-刷新率–-越高显示的图像越稳定" class="headerlink" title="1.7. 刷新率	– 越高显示的图像越稳定"></a>1.7. 刷新率	– 越高显示的图像越稳定</h3><p>60Hz&#x2F;120Hz&#x2F;240Hz</p>
+<h3 id="1-8-换帧率–-越高显示图像的连续性越好"><a href="#1-8-换帧率–-越高显示图像的连续性越好" class="headerlink" title="1.8. 换帧率	– 越高显示图像的连续性越好"></a>1.8. 换帧率	– 越高显示图像的连续性越好</h3><p>25Hz&#x2F;30Hz&#x2F;50Hz&#x2F;60Hz&#x2F;75Hz</p>
+<h3 id="1-9-对比度"><a href="#1-9-对比度" class="headerlink" title="1.9. 对比度"></a>1.9. 对比度</h3><p>600:1&#x2F;700:1&#x2F;800:1&#x2F;1000:1&#x2F;1200:1</p>
+<h3 id="1-10-色差-色准-ΔE数值越小，颜色的准确度越高"><a href="#1-10-色差-色准-ΔE数值越小，颜色的准确度越高" class="headerlink" title="1.10. 色差(色准) ΔE	数值越小，颜色的准确度越高"></a>1.10. 色差(色准) ΔE	数值越小，颜色的准确度越高</h3><img src="/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/image-20240505134058443.png" class="" title="image-20240505134058443">
+
+<h3 id="1-11-色域-–-不同标准对应的色域不同，100-sRGB≈80-DCI-P3，但是色域并不是越广越好，目前100-sRGB体感最佳，再多会出现过饱和（可以用ICC文件校色，但是麻烦而且不完全能校准）"><a href="#1-11-色域-–-不同标准对应的色域不同，100-sRGB≈80-DCI-P3，但是色域并不是越广越好，目前100-sRGB体感最佳，再多会出现过饱和（可以用ICC文件校色，但是麻烦而且不完全能校准）" class="headerlink" title="1.11. 色域 – 不同标准对应的色域不同，100%sRGB≈80%DCI-P3，但是色域并不是越广越好，目前100%sRGB体感最佳，再多会出现过饱和（可以用ICC文件校色，但是麻烦而且不完全能校准）"></a>1.11. 色域 – 不同标准对应的色域不同，100%sRGB≈80%DCI-P3，但是色域并不是越广越好，目前100%sRGB体感最佳，再多会出现过饱和（可以用ICC文件校色，但是麻烦而且不完全能校准）<img src="/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/image-20240505133257814.png" class="" title="image-20240505133257814"></h3><img src="/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/image-20240505133355967.png" class="" title="image-20240505133355967">
+
+<p>[^100%sRGB]: 目前的windows 10系统，以及网络上的大部分图片视频，都是按照100%sRGB的色域进行色彩存储的</p>
+<img src="/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/image-20240505134601098.png" class="" title="image-20240505134601098">
+
+<img src="/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/image-20240505190402429.png" class="" title="image-20240505190402429">
+
+<img src="/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/image-20240505191552901.png" class="" title="image-20240505191552901">
+
+<h3 id="1-12-HDR等级"><a href="#1-12-HDR等级" class="headerlink" title="1.12. HDR等级"></a>1.12. HDR等级</h3><p>HDR认证等级共分为400、600、1000三个档别</p>
+<ol>
+<li>DisplayHDR 400需要设备支持8bit影像处理、全局调光、峰值亮度为400cd&#x2F;㎡、全屏长续亮度为320cd&#x2F;㎡以及覆盖95%的BT.709色域</li>
+<li>DisplayHDR 600则要求设备峰值亮度≥600cd&#x2F;㎡、持续亮度≥350cd&#x2F;㎡、黑白亮度响应时间≤8帧，此外需覆盖99% BT.709色域以及≥90%的DCI-P3色域</li>
+<li>DisplayHDR 1000更为严格，要求峰值亮度1000cd&#x2F;㎡、长续亮度600cd&#x2F;㎡、角亮度0.05cd&#x2F;㎡</li>
+</ol>
+<h2 id="2-接口详解"><a href="#2-接口详解" class="headerlink" title="2. 接口详解"></a>2. 接口详解</h2><p>LVDS 和MIPI的物理接线是一样的，都是5组差分对，但是传输的内容是不一样的，即软件的报文格式不一样</p>
+<h3 id="2-1-8080屏幕的8080接口和RGB接口-CSDN博客"><a href="#2-1-8080屏幕的8080接口和RGB接口-CSDN博客" class="headerlink" title="2.1. 8080屏幕的8080接口和RGB接口-CSDN博客"></a>2.1. 8080<a target="_blank" rel="noopener" href="https://blog.csdn.net/qlexcel/article/details/113833575">屏幕的8080接口和RGB接口-CSDN博客</a></h3><h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><ol>
+<li>使用这种接口的屏幕一般是屏幕自带了驱动芯片，比如ILI9488、ILI9341、SSD1963等。驱动芯片里面自带了显存，MCU只需要把显示数据传给驱动芯片，驱动芯片会把数据保存到显存中，最后再把显存中的数据显示到屏幕上。</li>
+<li>控制简单方便，无需时钟和同步信号，无需MCU提供显存，可省掉SDRAM或SRAM</li>
+<li>耗费GRAM，对驱动芯片有要求，所以难以做到大屏（QVGA以上），因为带了驱动芯片，会比RGB接口屏幕贵</li>
+</ol>
+<h4 id="信号线"><a href="#信号线" class="headerlink" title="信号线"></a>信号线</h4><ol>
+<li>LCD_DB[15:0]：数据信号</li>
+<li>LCD_RD：读数据信号，低电平有效</li>
+<li>LCD_RS：数据&#x2F;命令信号，高电平时，D[15:0]表示的是数据 (RGB 像素数据或命令数据)，低电平时D[15:0]表示控制命令</li>
+<li>LCD_RESET：复位信号，低电平有效</li>
+<li>LCD_WR：写数据信号，低电平有效</li>
+<li>LCD_CS：片选信号，低电平有效</li>
+</ol>
+<img src="/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/2dba9bc5fd065af60df4eefc23a9969c.jpeg" class="" title="img">
+
+<h3 id="2-1-RGB-TTL"><a href="#2-1-RGB-TTL" class="headerlink" title="2.1. RGB-TTL"></a>2.1. RGB-TTL</h3><p>信号类型：TTL电平</p>
+<p>信号内容：RGB666或者RGB888还有行场同步和时钟</p>
+<h4 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h4><ol>
+<li>大屏采用较多的接口，屏幕不带显存，需要MCU准备充足的显存空间，一般的MCU都没有这么大的RAM，要加外置的SRAM或SDRAM</li>
+<li>TTL接口，数据传输速率不高，传输距离较短，且抗电磁干扰（EMI）能力也比较差，会对RGB数据造成一定的影响</li>
+<li>TTL多路数据信号采用排线的方式来传送，整个排线数量达几十路，连接不便<ol>
+<li>数据信号: 指RGB数据信号, 如R0<del>R5、G0</del>G5、B0~B5</li>
+<li>时钟信号: 像素时钟信号(DCLK), 是传输数据和对数据信号进行读取的基准</li>
+<li>控制信号: 包括数据有效信号(DE), 行同步信号(HSYNC)、场同步信号(VSYNC)</li>
+</ol>
+</li>
+</ol>
+<h4 id="信号线-1"><a href="#信号线-1" class="headerlink" title="信号线"></a>信号线</h4><ol>
+<li>R[7:0] ：红色数据</li>
+<li>G[7:0] ： 绿色数据</li>
+<li>B[7:0]：蓝色数据</li>
+<li>CLK：像素同步时钟信号</li>
+<li>HSYNC：水平同步信号</li>
+<li>VSYNC：垂直同步信号</li>
+<li>DE：数据使能信号</li>
+</ol>
+<img src="/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FsZXhjZWw=,size_16,color_FFFFFF,t_70.png" class="" title="img">
+
+<h3 id="2-2-LVDS"><a href="#2-2-LVDS" class="headerlink" title="2.2. LVDS"></a>2.2. LVDS</h3><p>信号类型：LVDS信号（低电压差分对）</p>
+<p>信号内容：RGB数据还有行场同步和时钟</p>
+<h4 id="与MIPI比较"><a href="#与MIPI比较" class="headerlink" title="与MIPI比较"></a>与MIPI比较</h4><ol>
+<li>LVDS接口只用于传输视频数据，MIPI DSI不仅能够传输视频数据，还能传输控制指令</li>
+<li>LVDS接口主要是将RGB TTL信号按照SPWG&#x2F;JEIDA格式转换成LVDS信号进行传输，MIPI DSI接口则按照特定的握手顺序和指令规则传输屏幕控制所需的视频数据和控制数据。</li>
+</ol>
+<h4 id="特点-2"><a href="#特点-2" class="headerlink" title="特点"></a>特点</h4><ol>
+<li>由于电压信号幅度较低，而且采用恒流源模式驱动，故只产生极低的噪声，消耗非常小的功率，甚至不论频率高低功耗都几乎不变。</li>
+<li>由于LVDS以差分方式传送数据，所以不易受共模噪音影响，属于平衡传输信号</li>
+</ol>
+<h4 id="本质"><a href="#本质" class="headerlink" title="本质"></a>本质</h4><p>并&#x2F;串转换（SerDes），电平转换（RGB TTL &#x2F; LVDS）；以RGB666为例，采用并行接口往往需要22根线，而采用FPD-Link却只需要四对差分线（一对时钟，三对数据）</p>
+<h4 id="接口分类"><a href="#接口分类" class="headerlink" title="接口分类"></a>接口分类</h4><p>单路6位LVDS：采用单路方式传输，每个基色采用6位数据，共18位RGB数据；</p>
+<p>双路6位LVDS：采用双路方式传输，每个基色采用6位数据，奇路数据为18位，偶路数据为18位，共36位RGB数据；</p>
+<p>单路8位LVDS：采用单路方式传输，每个基色采用8位数据，共24位RGB数据；</p>
+<p>双路8位LVDS：采用双路方式传输，每个基色采用8位数据，奇路数据为24位，偶路数据为24位，共48位RGB数据；</p>
+<h4 id="发送原理LVDS，接口，时序讲解，非常好的文章-lvds时序-CSDN博客"><a href="#发送原理LVDS，接口，时序讲解，非常好的文章-lvds时序-CSDN博客" class="headerlink" title="发送原理LVDS，接口，时序讲解，非常好的文章_lvds时序-CSDN博客"></a>发送原理<a target="_blank" rel="noopener" href="https://blog.csdn.net/perfect1t/article/details/81627066">LVDS，接口，时序讲解，非常好的文章_lvds时序-CSDN博客</a></h4><img src="/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/image-20240505202942892.png" class="" title="image-20240505202942892">
+
+<p>LVDS发送器将驱动板主控芯片输出的TTL电平并行RGB数据信号和控制信号转换成低电压串行LVDS信号，然后通过驱动板与液晶面板之间的柔性电缆（排线）将信号传送到液晶面板侧的LVDS接收器，LVDS接收器再将串行信号转换为TTL电平的并行信号，送往液晶屏时序控制与行列驱动电路。</p>
+<ol>
+<li><p>4通道LVDS发送芯片主要用于驱动6bit液晶面板。使用四通道LVDS发送芯片可以构成单路6bit LVDS接自电路和奇&#x2F;偶双路6bit LVDS接口电路</p>
+<img src="/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/Center.jpeg" class="" title="img">
+</li>
+<li><p>五通道LVDS发送芯片主要用于驱动8bit液晶面板。使用五通道LVDS发送芯片主要用来构成单路8bit LVDS接口电路和奇&#x2F;偶双路8bitLVDS接口电路</p>
+<img src="/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/Center-17149126545473.jpeg" class="" title="img">
+</li>
+<li><p>十通道LVDS发送芯片主要用于驱动8bit液晶面板。使用十通道LVDS发送芯片主要用来构成奇&#x2F;偶双路8bit LVDS位接口电路。在十通道LVDS发送芯片中，设置了两个时钟脉冲输出通道，这样做之目之是可以更加灵活之适应不同类型之LVDS接收芯片。当LVDS接收电路同样使用一片十通道LVDS接收芯片时，只需使用一个通道之时钟信号即可；当LVDS接收电路使用两片五通道LVDS接收芯片时，十通道LVDS发送芯片需要为每个LVDS接收芯片提供单独之时钟信号。</p>
+<img src="/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/Center-17149126875599.jpeg" class="" title="img">
+
+<blockquote>
+<p>如果只看电路图，是不能从LVDS发送芯片的输出信号TXOUT－、TXOUT0＋中看出其内部到底包含哪些信号数据，以及这些数据是怎样排列的（或者说这些数据的格式是怎样的）。不同厂家生产的LVDS发送芯片，其输出数据排列方式可能是不同的。</p>
+<p>因此，液晶显示器驱动板上的LVDS发送芯片的输出数据格式必须与液晶面板LVDS接收芯片要求的数据格式相同，否则，驱动板与液晶面板不匹配。这也是更换液晶面板时必须考虑的一个问题。</p>
+<p>如果表示明白，你就数带 “+-”的这种信号线一共有几对，</p>
+<p>有10对的减掉2对（时钟信号）就是双8。</p>
+<p>有8对的减掉2对 （时钟信号）就是双6。</p>
+<p>有5对的减掉1对 （时钟信号）对是单8。</p>
+<p>有4对的减掉1对 （时钟信号）是单6。  </p>
+<p>如果既无资料，也看不清标识，最简单的办法就是看看里面的电路，一般每对数据线之间都有一个100欧姆的电阻，数电阻的个数，看到4个的话就是单口6位颜色的屏，看到8个的话就是双口六位，5个的话一般是单口8位，有10个一般就是双口8位。</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="2-3-MIPI"><a href="#2-3-MIPI" class="headerlink" title="2.3. MIPI"></a>2.3. MIPI</h3><p>信号类型：LVDS信号</p>
+<p>信号内容：视频流数据和控制指令</p>
+<p><strong>CSI是for Camera的，DSI是for Display</strong></p>
+<p><strong>更低功耗、更高数据传输率和更小的PCB占位空间，并且专门为移动设备进行的优化，因而更适合手机和智能平板的连接</strong></p>
+<p>MIPI接口LCD包括1对差分时钟（CLKP，CLKN），4对数据差分线（D0P，D0N；D1P，D1N；D2P，D2N；D3P，D3N），每一对之间有GND线，4对数据差分线并不一定要全部使用，很多屏只需要2对就可以了</p>
+<p>RESET（复位脚），STBYB（高电平有效）</p>
+<p>VGL，VGH（像素点上开关管的开启关闭电压，加在开关管的栅极上，VGH 高电平打开给像素点电容充电， VGL 负电压 关闭开关管），VCOM（ 液晶像素点的存储电容共用电极）,在TFT液晶屏驱动电路供电中，VGH电压和VGL电压担负着开通TFT（薄膜场效应管）对电容充电（修正电容两端电压）和关闭TFT，使电容电压保持（一场周期时间）的作用</p>
+<p>VLED-（背光负极），VLED+（背光正极）</p>
+<p>电源有1.8V和3.3V</p>
+<h4 id="C-PHY"><a href="#C-PHY" class="headerlink" title="C-PHY"></a>C-PHY</h4><p>C-PHY主要时为了提高传输的带宽，C-PHY没有同步时钟，时钟时嵌套在数据中。其中物理层和D-PHY完全不同，线路上采用A&#x2F;B&#x2F;C三线系统</p>
+<h4 id="D-PHY-–-全部数据通道都可以用于单向的高速传输，只有第一个数据通道才可用于低速双向传输"><a href="#D-PHY-–-全部数据通道都可以用于单向的高速传输，只有第一个数据通道才可用于低速双向传输" class="headerlink" title="D-PHY – 全部数据通道都可以用于单向的高速传输，只有第一个数据通道才可用于低速双向传输"></a>D-PHY – 全部数据通道都可以用于单向的高速传输，只有第一个数据通道才可用于低速双向传输</h4><p>提供了对DSI （串行显示接口）和CSI（串行摄像头接口）在物理层上的定义，采用一个差分时钟和1-4对差分数据线来传输数据</p>
+<p>D-PHY的物理层支持HS（High Speed）和LP（Low Power）两种工作模式。</p>
+<p>HS模式下采用低压差分信号，用于传输图像信号，数据传输采用DDR方式，即在时钟的上下边沿都有数据传输，电平范围为100mv-300mv，数据传输速率为80M～2.5Gbps，功耗较高，在该模式下传输时，当差分线正端收到 1.2V 信号，负端收到 0V信号时，这时接收端识别为 1，反之为0。</p>
+<p>LP模式下采用单端信号（LVCMOS信号），用于传输控制指令，异步传输，信号线为单端，电平范围是0-1.2v，没有用时钟线，时钟是通过两个数据线异或而来的，数据速率小于10Mbps，功耗较低，在该模式下传输时，当正端接收到300m V，负端接收到100m V 时接收端识别为1，反之则识别为0.</p>
+<h4 id="Lane-MIPI里面的基本信息传输单元"><a href="#Lane-MIPI里面的基本信息传输单元" class="headerlink" title="Lane-MIPI里面的基本信息传输单元"></a>Lane-MIPI里面的基本信息传输单元</h4><p>两块使用MIPI连接的芯片，中间使用差分信号对进行连接，收发端各有一个Lane模块，完成数据收发。有时我们经常说的几个lane传输数据，可理解成几对差分对传输数据。</p>
+<p>注意：lane并不是差分对，它是收发器里面的一个模块，它包括低功耗发射器（LP-TX），低功耗接收器（LP-RX），高速发射器（HS-TX），高速接收器（HS-RX）,低功耗竞争检测器（LP-CD）</p>
+<h4 id="抗干扰能力"><a href="#抗干扰能力" class="headerlink" title="抗干扰能力"></a>抗干扰能力</h4><p>MIPI信号是成对传输的，主要是为了减少干扰，MIPI信号成对走线，两根线从波形看是成反相，所以有外部干扰过来，就会被抵消很大部分</p>
+<h4 id="引脚"><a href="#引脚" class="headerlink" title="引脚"></a>引脚</h4><ol>
+<li><p>30pin</p>
+<img src="/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/image-20240504165648534.png" class="" title="image-20240504165648534"><img src="/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/image-20240504183705650.png" class="" title="image-20240504183705650">
+</li>
+<li><p>40pin</p>
+<img src="/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/image-20240504184018300.png" class="" title="image-20240504184018300">
+</li>
+<li><p>31pin</p>
+<img src="/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/image-20240505205459232.png" class="" title="image-20240505205459232"></li>
+</ol>
+<h3 id="2-4-HDMIHDMI-接口介绍-hdmi接口定义-CSDN博客"><a href="#2-4-HDMIHDMI-接口介绍-hdmi接口定义-CSDN博客" class="headerlink" title="2.4. HDMIHDMI 接口介绍_hdmi接口定义-CSDN博客"></a>2.4. HDMI<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43839976/article/details/127182060">HDMI 接口介绍_hdmi接口定义-CSDN博客</a></h3><h3 id="2-5-DVPMIPI、LVDS、RGB、HDMI等接口对比-lvds和mipi区别-CSDN博客"><a href="#2-5-DVPMIPI、LVDS、RGB、HDMI等接口对比-lvds和mipi区别-CSDN博客" class="headerlink" title="2.5. DVPMIPI、LVDS、RGB、HDMI等接口对比_lvds和mipi区别-CSDN博客"></a>2.5. DVP<a target="_blank" rel="noopener" href="https://blog.csdn.net/lx123010/article/details/109117439">MIPI、LVDS、RGB、HDMI等接口对比_lvds和mipi区别-CSDN博客</a></h3><p>DVP接口在信号完整性方面受限制，速率也受限制。500W还可以勉强用DVP，800W及以上都采用MIPI接口</p>
+<h3 id="2-6-MIPI与LVDS"><a href="#2-6-MIPI与LVDS" class="headerlink" title="2.6. MIPI与LVDS"></a>2.6. MIPI与LVDS</h3><ol>
+<li>mipi贵，lvds便宜</li>
+<li>mipi功耗低，设备寿命长，lvds功耗高，设备寿命短</li>
+<li>mipi带宽高，支持高分辨率与高刷新率，lvds带宽低，对高分辨率和高刷新率支持受限</li>
+<li>mipi标准化程度低，技术要求高，lvds标准化程度低，技术友好</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/04/28/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E6%A0%88/%E6%AD%A3%E7%82%B9%E5%8E%9F%E5%AD%90/lwip/lwip%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5-01/" rel="prev" title="嵌入式通信之Lwip(一)：Lwip基础">
+                  <i class="fa fa-chevron-left"></i> 嵌入式通信之Lwip(一)：Lwip基础
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/05/09/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E9%A9%B1%E5%8A%A8%E6%8E%A5%E5%8F%A3/" rel="next" title="挑选屏幕时需要考虑的驱动接口">
+                  挑选屏幕时需要考虑的驱动接口 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://example.com/2024/05/03/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E5%B1%8F%E5%B9%95%E5%AF%B9%E6%AF%94/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>

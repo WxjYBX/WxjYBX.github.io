@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha256-/4UQcSmErDzPCMAiuOiWPVVsNN2s3ZY/NsmXNcj0IFc=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="linux的嵌入式开发第一步，学习linux-C相关shell命令及语法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="嵌入式linux入门(一)：linux-C">
+<meta property="og:url" content="http://example.com/2023/11/30/%E5%B5%8C%E5%85%A5%E5%BC%8F/linux/%E6%AD%A3%E7%82%B9%E5%8E%9F%E5%AD%90/linux%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="linux的嵌入式开发第一步，学习linux-C相关shell命令及语法">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2023/11/30/%E5%B5%8C%E5%85%A5%E5%BC%8F/linux/%E6%AD%A3%E7%82%B9%E5%8E%9F%E5%AD%90/linux%E5%85%A5%E9%97%A8/image-20231201125335789.png">
+<meta property="article:published_time" content="2023-11-30T10:37:26.595Z">
+<meta property="article:modified_time" content="2023-12-28T11:59:26.389Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/11/30/%E5%B5%8C%E5%85%A5%E5%BC%8F/linux/%E6%AD%A3%E7%82%B9%E5%8E%9F%E5%AD%90/linux%E5%85%A5%E9%97%A8/image-20231201125335789.png">
+
+
+<link rel="canonical" href="http://example.com/2023/11/30/%E5%B5%8C%E5%85%A5%E5%BC%8F/linux/%E6%AD%A3%E7%82%B9%E5%8E%9F%E5%AD%90/linux%E5%85%A5%E9%97%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/11/30/%E5%B5%8C%E5%85%A5%E5%BC%8F/linux/%E6%AD%A3%E7%82%B9%E5%8E%9F%E5%AD%90/linux%E5%85%A5%E9%97%A8/","path":"2023/11/30/嵌入式/linux/正点原子/linux入门/","title":"嵌入式linux入门(一)：linux-C"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>嵌入式linux入门(一)：linux-C | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-gcc%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7"><span class="nav-number">1.</span> <span class="nav-text">1. gcc交叉编译工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Makefile"><span class="nav-number">2.</span> <span class="nav-text">2. Makefile</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95%E6%A0%BC%E5%BC%8F"><span class="nav-number">2.1.</span> <span class="nav-text">基本语法格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%98%E9%87%8F"><span class="nav-number">2.2.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%93%E5%8D%B0"><span class="nav-number">2.3.</span> <span class="nav-text">打印</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%8B%E5%80%BC"><span class="nav-number">2.4.</span> <span class="nav-text">赋值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%8C%96%E5%8F%98%E9%87%8F"><span class="nav-number">2.5.</span> <span class="nav-text">自动化变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%AA%E7%9B%AE%E6%A0%87"><span class="nav-number">2.6.</span> <span class="nav-text">伪目标</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Shell%E8%84%9A%E6%9C%AC"><span class="nav-number">3.</span> <span class="nav-text">3. Shell脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96%E8%BE%93%E5%85%A5%E5%B9%B6%E6%89%93%E5%8D%B0"><span class="nav-number">3.1.</span> <span class="nav-text">读取输入并打印</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#test%E5%91%BD%E4%BB%A4"><span class="nav-number">3.2.</span> <span class="nav-text">test命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A4%E6%96%AD-x3D-x3D-%E5%92%8C-x3D"><span class="nav-number">3.3.</span> <span class="nav-text">[]判断&#x3D;&#x3D;和!&#x3D;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E5%8F%98%E9%87%8F"><span class="nav-number">3.4.</span> <span class="nav-text">默认变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#if-then-else"><span class="nav-number">3.5.</span> <span class="nav-text">if then else</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#case"><span class="nav-number">3.6.</span> <span class="nav-text">case</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0function"><span class="nav-number">3.7.</span> <span class="nav-text">函数function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#while-x2F-until-x2F-for"><span class="nav-number">3.8.</span> <span class="nav-text">while&#x2F;until&#x2F;for</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%B8%B8%E7%94%A8shell%E5%91%BD%E4%BB%A4"><span class="nav-number">4.</span> <span class="nav-text">4. 常用shell命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#man-%E6%95%B0%E5%AD%97-%E6%8C%87%E4%BB%A4%E5%90%8D%E7%A7%B0"><span class="nav-number">4.1.</span> <span class="nav-text">man [数字] 指令名称</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/30/%E5%B5%8C%E5%85%A5%E5%BC%8F/linux/%E6%AD%A3%E7%82%B9%E5%8E%9F%E5%AD%90/linux%E5%85%A5%E9%97%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="嵌入式linux入门(一)：linux-C | Hexo">
+      <meta itemprop="description" content="linux的嵌入式开发第一步，学习linux-C相关shell命令及语法">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          嵌入式linux入门(一)：linux-C
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-11-30 18:37:26" itemprop="dateCreated datePublished" datetime="2023-11-30T18:37:26+08:00">2023-11-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-12-28 19:59:26" itemprop="dateModified" datetime="2023-12-28T19:59:26+08:00">2023-12-28</time>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">linux的嵌入式开发第一步，学习linux-C相关shell命令及语法</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="1-gcc交叉编译工具"><a href="#1-gcc交叉编译工具" class="headerlink" title="1. gcc交叉编译工具"></a>1. gcc交叉编译工具</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">编译.c文件，生成.o文件</span></span><br><span class="line">gcc -c xxx.c</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">链接.o文件，生成可执行文件</span></span><br><span class="line">gcc xxx.o -o xxx</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-Makefile"><a href="#2-Makefile" class="headerlink" title="2. Makefile"></a>2. Makefile</h2><h3 id="基本语法格式"><a href="#基本语法格式" class="headerlink" title="基本语法格式"></a>基本语法格式</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">目标: 依赖文件集合</span><br><span class="line">	命令1</span><br><span class="line">	命令2</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">示例</span></span><br><span class="line">main: xxx.o xxxx.o xxxxx.o</span><br><span class="line">	gcc -o xxx xxx.o xxxx.o xxxxx.o</span><br><span class="line">xxx.o: xxx.c</span><br><span class="line">	gcc -c xxx.c</span><br><span class="line">xxxx.o: xxxx.c</span><br><span class="line">	gcc -c xxxx.c</span><br><span class="line">xxxxx.o: xxxxx.c</span><br><span class="line">	gcc -c xxxxx.c</span><br><span class="line"></span><br><span class="line">clean:</span><br><span class="line">	rm *.o</span><br><span class="line">	rm xxx</span><br></pre></td></tr></table></figure>
+
+<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">objects = xxx.o xxxx.o xxxxx.o</span><br><span class="line"></span><br><span class="line">main: $(objects)</span><br><span class="line">	gcc -o xxx $(objects)</span><br><span class="line">xxx.o: xxx.c</span><br><span class="line">	gcc -c xxx.c</span><br><span class="line">xxxx.o: xxxx.c</span><br><span class="line">	gcc -c xxxx.c</span><br><span class="line">xxxxx.o: xxxxx.c</span><br><span class="line">	gcc -c xxxxx.c</span><br><span class="line"></span><br><span class="line">clean:</span><br><span class="line">	rm *.o</span><br><span class="line">	rm xxx</span><br></pre></td></tr></table></figure>
+
+<h3 id="打印"><a href="#打印" class="headerlink" title="打印"></a>打印</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print:</span><br><span class="line">	@echo objects: $(objects)</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">加上@之后，不打印<span class="built_in">echo</span>命令本身，而是直接打印后面的objects: xxx</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="赋值"><a href="#赋值" class="headerlink" title="赋值"></a>赋值</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">示例 打印结果 curname: lisi</span></span><br><span class="line">name = zhangsan</span><br><span class="line">curname = $(name)</span><br><span class="line">name = lisi</span><br><span class="line">print:</span><br><span class="line">	@echo curname: $(curname)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">示例 打印结果 curname: zhangsan</span></span><br><span class="line">name = zhangsan</span><br><span class="line">curname := $(name)</span><br><span class="line">name = lisi</span><br><span class="line">print:</span><br><span class="line">	@echo curname: $(curname)</span><br><span class="line"><span class="meta prompt_">	</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">示例 打印结果 curname: wangwu</span></span><br><span class="line">name = zhangsan</span><br><span class="line">curname = wangwu</span><br><span class="line">curname ?= $(name)</span><br><span class="line">name = lisi</span><br><span class="line">print:</span><br><span class="line">	@echo curname: $(curname)</span><br></pre></td></tr></table></figure>
+
+<h3 id="自动化变量"><a href="#自动化变量" class="headerlink" title="自动化变量"></a>自动化变量</h3><img src="/2023/11/30/%E5%B5%8C%E5%85%A5%E5%BC%8F/linux/%E6%AD%A3%E7%82%B9%E5%8E%9F%E5%AD%90/linux%E5%85%A5%E9%97%A8/image-20231201125335789.png" class="" title="image-20231201125335789">
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">objects = xxx.o xxxx.o xxxxx.o</span><br><span class="line"></span><br><span class="line">main: $(objects)</span><br><span class="line">	gcc -o xxx $(objects)</span><br><span class="line"><span class="meta prompt_">%</span><span class="language-bash">.o: %.c</span></span><br><span class="line">	gcc -c $&lt;</span><br><span class="line"></span><br><span class="line">clean:</span><br><span class="line">	rm *.o</span><br><span class="line">	rm xxx</span><br></pre></td></tr></table></figure>
+
+<h3 id="伪目标"><a href="#伪目标" class="headerlink" title="伪目标"></a>伪目标</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">objects = xxx.o xxxx.o xxxxx.o</span><br><span class="line"></span><br><span class="line">main: $(objects)</span><br><span class="line">	gcc -o xxx $(objects)</span><br><span class="line"><span class="meta prompt_">%</span><span class="language-bash">.o: %.c</span></span><br><span class="line">	gcc -c $&lt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">声明为伪目标变量，即使当前项目路径下有同名文件也会执行命令</span></span><br><span class="line">.PHONY: clean</span><br><span class="line"></span><br><span class="line">clean:</span><br><span class="line">	rm *.o</span><br><span class="line">	rm xxx</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-Shell脚本"><a href="#3-Shell脚本" class="headerlink" title="3. Shell脚本"></a>3. Shell脚本</h2><h3 id="读取输入并打印"><a href="#读取输入并打印" class="headerlink" title="读取输入并打印"></a>读取输入并打印</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">开头固定格式</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="built_in">read</span> -p 添加提示符</span></span><br><span class="line">read -p &quot;please input a and b: &quot; a b</span><br><span class="line">echo &quot;a=$a, b=$b, a+b=$((a+b))&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="test命令"><a href="#test命令" class="headerlink" title="test命令"></a>test命令</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line">echo &quot;please input&quot;</span><br><span class="line">read -p &quot;file name: &quot; filename</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="built_in">test</span> -e 测试文件存在性</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">&amp;&amp; 如果前面的为真，执行后面的，否则不执行</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">|| 如果前面的为假，执行后面的，否则不执行</span></span><br><span class="line">test -e $filename &amp;&amp; echo &quot;$filename exist&quot; || echo &quot;$filename not exist&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="判断-x3D-x3D-和-x3D"><a href="#判断-x3D-x3D-和-x3D" class="headerlink" title="[]判断&#x3D;&#x3D;和!&#x3D;"></a>[]判断&#x3D;&#x3D;和!&#x3D;</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line">echo &quot;please input two nums&quot;</span><br><span class="line">read -p &quot;first num: &quot; first</span><br><span class="line">read -p &quot;second num: &quot; second</span><br><span class="line">[ &quot;$fisrt&quot; == &quot;$second&quot; ] &amp;&amp; echo &quot;fisrt=second&quot; || echo &quot;fisrt!=second&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="默认变量"><a href="#默认变量" class="headerlink" title="默认变量"></a>默认变量</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line">echo &quot;file name:&quot; $0</span><br><span class="line">echo &quot;total param num:&quot; $#</span><br><span class="line">echo &quot;whole param:&quot; $@</span><br><span class="line">echo &quot;first param:&quot; $1</span><br><span class="line">echo &quot;second param:&quot; $2</span><br></pre></td></tr></table></figure>
+
+<h3 id="if-then-else"><a href="#if-then-else" class="headerlink" title="if then else"></a>if then else</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">if 表达式; then</span><br><span class="line">	代码段</span><br><span class="line">else</span><br><span class="line">	代码段</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">if 表达式; then</span><br><span class="line">	代码段</span><br><span class="line">elif 表达式; then</span><br><span class="line">	代码段</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<h3 id="case"><a href="#case" class="headerlink" title="case"></a>case</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">case $1 in</span><br><span class="line">	&quot;a&quot;)</span><br><span class="line">		echo &quot;param a&quot;</span><br><span class="line">		;;</span><br><span class="line">	&quot;b&quot;)</span><br><span class="line">		echo &quot;param b&quot;</span><br><span class="line">		;;</span><br><span class="line">	*)</span><br><span class="line">		echo &quot;undefined&quot;</span><br><span class="line">		;;</span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
+
+<h3 id="函数function"><a href="#函数function" class="headerlink" title="函数function"></a>函数function</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">function help()&#123;</span><br><span class="line">	echo &quot;function help&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function close()&#123;</span><br><span class="line">	echo &quot;function close&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">case $1 in</span><br><span class="line">	&quot;-h&quot;)</span><br><span class="line">		help</span><br><span class="line">		;;</span><br><span class="line">	&quot;-c&quot;)</span><br><span class="line">		close</span><br><span class="line">		;;</span><br><span class="line">	*)</span><br><span class="line">		echo &quot;undefined function&quot;</span><br><span class="line">		;;</span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
+
+<h3 id="while-x2F-until-x2F-for"><a href="#while-x2F-until-x2F-for" class="headerlink" title="while&#x2F;until&#x2F;for"></a>while&#x2F;until&#x2F;for</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">while [条件]</span><br><span class="line">do</span><br><span class="line">	代码段</span><br><span class="line">done</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">与<span class="keyword">while</span>相反，条件不成立才执行</span></span><br><span class="line">until [条件]</span><br><span class="line">do</span><br><span class="line">	代码段</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">for name in name1 name2 name3</span><br><span class="line">do</span><br><span class="line">	代码段</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">for((i=0;i&lt;3;i++))</span><br><span class="line">do</span><br><span class="line">	代码段</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-常用shell命令"><a href="#4-常用shell命令" class="headerlink" title="4. 常用shell命令"></a>4. 常用shell命令</h2><h3 id="man-数字-指令名称"><a href="#man-数字-指令名称" class="headerlink" title="man [数字] 指令名称"></a>man [数字] 指令名称</h3><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">数字：</span><br><span class="line">1 - commands</span><br><span class="line">2 - system calls</span><br><span class="line">3 - library calls</span><br><span class="line">4 - special files</span><br><span class="line">5 - file formats and convertions</span><br><span class="line">6 - games for linux</span><br><span class="line">7 - macro packages and conventions</span><br><span class="line">8 - system management commands</span><br><span class="line">9 - 其他</span><br><span class="line"></span><br><span class="line">1是普通的命令</span><br><span class="line">2是系统调用,如open,write之类的(通过这个，至少可以很方便的查到调用这个函数，需要加什么头文件)</span><br><span class="line">3是库函数,如printf,fread</span><br><span class="line">4是特殊文件,也就是/dev下的各种设备文件</span><br><span class="line">5是指文件的格式,比如passwd, 就会说明这个文件中各个字段的含义</span><br><span class="line">6是给游戏留的,由各个游戏自己定义</span><br><span class="line">7是附件还有一些变量,比如向environ这种全局变量在这里就有说明</span><br><span class="line">8是系统管理用的命令,这些命令只能由root使用,如ifconfig</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">man 2 open</span><br><span class="line">man 3 printf</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/11/23/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/%E6%A8%A1%E7%94%B5%E7%BB%AD1/" rel="prev" title="模拟电子技术-b站-电子陈老师">
+                  <i class="fa fa-chevron-left"></i> 模拟电子技术-b站-电子陈老师
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/12/01/%E5%B5%8C%E5%85%A5%E5%BC%8F/linux/%E6%AD%A3%E7%82%B9%E5%8E%9F%E5%AD%90/linux_arm%E8%A3%B8%E6%9C%BA/" rel="next" title="嵌入式linux入门(二)：linux-ARM裸机">
+                  嵌入式linux入门(二)：linux-ARM裸机 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://example.com/2023/11/30/%E5%B5%8C%E5%85%A5%E5%BC%8F/linux/%E6%AD%A3%E7%82%B9%E5%8E%9F%E5%AD%90/linux%E5%85%A5%E9%97%A8/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>

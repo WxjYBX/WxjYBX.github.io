@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha256-/4UQcSmErDzPCMAiuOiWPVVsNN2s3ZY/NsmXNcj0IFc=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="解析原有的安卓开发板厂商提供的固件包">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安卓开发板基础-2">
+<meta property="og:url" content="http://example.com/2024/02/24/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%9B%BA%E4%BB%B6%E8%A7%A3%E5%90%88/%E5%9B%BA%E4%BB%B6%E5%AE%9A%E5%88%B6/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="解析原有的安卓开发板厂商提供的固件包">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-02-24T08:12:06.362Z">
+<meta property="article:modified_time" content="2024-02-25T14:34:16.415Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2024/02/24/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%9B%BA%E4%BB%B6%E8%A7%A3%E5%90%88/%E5%9B%BA%E4%BB%B6%E5%AE%9A%E5%88%B6/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2024/02/24/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%9B%BA%E4%BB%B6%E8%A7%A3%E5%90%88/%E5%9B%BA%E4%BB%B6%E5%AE%9A%E5%88%B6/","path":"2024/02/24/安卓开发/rk3288/固件解合/固件定制/","title":"安卓开发板基础-2"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>安卓开发板基础-2 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%9B%BA%E4%BB%B6-x2F-%E9%95%9C%E5%83%8F%E6%9E%B6%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">1. 固件&#x2F;镜像架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%8C%BA%E6%98%A0%E5%83%8F%E6%96%87%E4%BB%B6"><span class="nav-number">1.1.</span> <span class="nav-text">分区映像文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%9F%E4%B8%80%E5%9B%BA%E4%BB%B6release-update-img%E5%86%85%E9%83%A8%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">统一固件release_update.img内部格式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%9B%BA%E4%BB%B6%E5%AE%9A%E5%88%B6"><span class="nav-number">2.</span> <span class="nav-text">2. 固件定制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E6%94%B9%E6%BA%90%E7%A0%81%E9%87%8D%E6%96%B0%E7%BC%96%E8%AF%91%E5%9B%BA%E4%BB%B6"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. 改源码重新编译固件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E5%AF%B9%E7%8E%B0%E6%9C%89%E5%9B%BA%E4%BB%B6%E8%BF%9B%E8%A1%8C%E8%A3%81%E5%89%AA"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. 对现有固件进行裁剪</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E5%8C%85%E2%80%93%E6%8F%90%E5%8F%96update-img-%E8%A7%A3%E5%8E%8B%E5%87%BApackage-file%E4%B8%AD%E5%A3%B0%E6%98%8E%E7%9A%84%E6%96%87%E4%BB%B6"><span class="nav-number">2.2.1.</span> <span class="nav-text">解包–提取update.img,解压出package-file中声明的文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9A%E5%88%B6"><span class="nav-number">2.2.2.</span> <span class="nav-text">定制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%93%E5%8C%85%E2%80%93%E5%B0%86package-file%E4%B8%AD%E5%A3%B0%E6%98%8E%E7%9A%84%E6%96%87%E4%BB%B6%E5%90%88%E6%88%90update-img-%E5%8A%A0%E8%BF%9Bloader-img-%E7%94%9F%E6%88%90%E7%BB%9F%E4%B8%80%E5%9B%BA%E4%BB%B6"><span class="nav-number">2.2.3.</span> <span class="nav-text">打包–将package-file中声明的文件合成update.img,加进loader.img,生成统一固件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-u-boot"><span class="nav-number">3.</span> <span class="nav-text">3. u-boot</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/02/24/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%9B%BA%E4%BB%B6%E8%A7%A3%E5%90%88/%E5%9B%BA%E4%BB%B6%E5%AE%9A%E5%88%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="安卓开发板基础-2 | Hexo">
+      <meta itemprop="description" content="解析原有的安卓开发板厂商提供的固件包">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          安卓开发板基础-2
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-02-24 16:12:06" itemprop="dateCreated datePublished" datetime="2024-02-24T16:12:06+08:00">2024-02-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-02-25 22:34:16" itemprop="dateModified" datetime="2024-02-25T22:34:16+08:00">2024-02-25</time>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">解析原有的安卓开发板厂商提供的固件包</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="1-固件-x2F-镜像架构"><a href="#1-固件-x2F-镜像架构" class="headerlink" title="1. 固件&#x2F;镜像架构"></a>1. 固件&#x2F;镜像架构</h2><h3 id="分区映像文件"><a href="#分区映像文件" class="headerlink" title="分区映像文件"></a>分区映像文件</h3><ul>
+<li>boot.img ：Android 的初始文件映像，负责初始化并加载 system 分区。</li>
+<li>kernel.img ：内核映像。</li>
+<li>misc.img ：misc 分区映像，负责启动模式切换和急救模式的参数传递。</li>
+<li>recovery.img ：急救模式映像。</li>
+<li>resource.img ：资源映像，内含开机图片和内核的设备树信息。</li>
+<li>system.img ：Android 的 system 分区映像，ext4 文件系统格式。</li>
+</ul>
+<h3 id="统一固件release-update-img内部格式"><a href="#统一固件release-update-img内部格式" class="headerlink" title="统一固件release_update.img内部格式"></a>统一固件release_update.img内部格式</h3><ul>
+<li><p>loader.img : 启动加载器</p>
+</li>
+<li><p>update.img : 固件数据</p>
+<ul>
+<li><p>package-file</p>
+<ul>
+<li><p>update.img 的打包说明文件，update.img 里也含有一份 package-file。</p>
+</li>
+<li><p>package-file标准格式</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># NAME          Relative path</span><br><span class="line">#</span><br><span class="line">#HWDEF          HWDEF</span><br><span class="line">package-file    package-file</span><br><span class="line">bootloader      RK3288Loader_uboot_Apr212014_134842.bin</span><br><span class="line">parameter       rk3288-3.10-uboot-data1G.parameter.txt</span><br><span class="line">uboot           Image/uboot.img</span><br><span class="line">misc            Image/misc.img</span><br><span class="line">resource        Image/resource.img</span><br><span class="line">kernel          Image/kernel.img</span><br><span class="line">boot            Image/boot.img</span><br><span class="line">recovery        Image/recovery.img</span><br><span class="line">system          Image/system.img</span><br><span class="line">backup          RESERVED</span><br><span class="line">update-script   update-script</span><br><span class="line">recover-script  recover-script</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>RK3288Loader_uboot_Apr212014_134842.bin</p>
+<ul>
+<li>启动加载器，即 bootloader。</li>
+</ul>
+</li>
+<li><p>rk3288-3.10-uboot-data1G.parameter.txt(rk3288parameter文件格式:<a target="_blank" rel="noopener" href="http://www.t-firefly.com/download/firefly-rk3288/rockchip/Rockchip%20Parameter%20File%20Format%20Ver1.3.pdf">http://www.t-firefly.com/download/firefly-rk3288/rockchip/Rockchip%20Parameter%20File%20Format%20Ver1.3.pdf</a>)</p>
+<ul>
+<li>参数文件，可以设定内核启动参数，里面有重要的分区信息。固件的版本信息也在这里设置</li>
+</ul>
+</li>
+<li><p>Image&#x2F;misc.img</p>
+<ul>
+<li>misc 分区的映像，用来控制 Android 是正常启动，还是进入急救模式（Recovery Mode）。</li>
+</ul>
+</li>
+<li><p>Image&#x2F;kernel.img</p>
+<ul>
+<li>Android 内核。</li>
+</ul>
+</li>
+<li><p>Image&#x2F;resource.img</p>
+<ul>
+<li>资源映像，内有内核开机图片和内核设备树信息（Device Tree Blob)。</li>
+</ul>
+</li>
+<li><p>Image&#x2F;boot.img</p>
+<ul>
+<li>Android 内核的内存启动盘（initrd)，是内核启动后最先加载的根文件系统，包含重要的初始化动作，一般不需要改动。</li>
+</ul>
+</li>
+<li><p>Image&#x2F;recovery.img</p>
+<ul>
+<li>Android 急救模式的映像，内含内核和急救模式的根文件系统。</li>
+</ul>
+</li>
+<li><p>Image&#x2F;system.img</p>
+<ul>
+<li>对应于 Android 的 &#x2F;system 分区，是以下的定制对象。</li>
+<li>system.img结构<ul>
+<li>&#x2F;system&#x2F;app 系统应用程序存放目录</li>
+<li>&#x2F;system&#x2F;bin 系统的本地程序，是binary二进制的程序，里面主要是Linux系统自带的组件。</li>
+<li>&#x2F;system&#x2F;etc 系统的配置文件，比如APN接入点设置等核心配置。 </li>
+<li>&#x2F;system&#x2F;fonts 字体文件夹。</li>
+<li>&#x2F;system&#x2F;framework 主要是一些核心的文件，从后缀名为jar可以看出是系统平台框架。</li>
+<li>&#x2F;system&#x2F;lib 存放的主要是系统底层库，如平台运行时库。</li>
+<li>&#x2F;system&#x2F;media 铃声音乐文件夹，除了常规的铃声外还有一些系统提示事件音</li>
+<li>&#x2F;system&#x2F;usr 用户文件夹，包含共享、键盘布局、时间区域文件等。</li>
+<li>&#x2F;system&#x2F;xbin 存放系统管理工具，他们都是为系统管理员准备的，是一些系统管理和配置工具。</li>
+<li>&#x2F;system&#x2F;build.prop 属性文件，“关于MID”中所显示的软件版本、内核、机型等信息。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-固件定制"><a href="#2-固件定制" class="headerlink" title="2. 固件定制"></a>2. 固件定制</h2><h3 id="2-1-改源码重新编译固件"><a href="#2-1-改源码重新编译固件" class="headerlink" title="2.1. 改源码重新编译固件"></a>2.1. 改源码重新编译固件</h3><h3 id="2-2-对现有固件进行裁剪"><a href="#2-2-对现有固件进行裁剪" class="headerlink" title="2.2. 对现有固件进行裁剪"></a>2.2. 对现有固件进行裁剪</h3><h4 id="解包–提取update-img-解压出package-file中声明的文件"><a href="#解包–提取update-img-解压出package-file中声明的文件" class="headerlink" title="解包–提取update.img,解压出package-file中声明的文件"></a>解包–提取update.img,解压出package-file中声明的文件</h4><ol>
+<li><p>工具准备</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/TeeFirefly/rk2918_tools.git</span><br><span class="line">cd rk2918_tools</span><br><span class="line">make</span><br><span class="line">sudo cp afptool img_unpack img_maker mkkrnlimg /usr/local/bin</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>解包全过程</p>
+<ol>
+<li><p>解压release_update.img</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /path/to/your/firmware/dir</span><br><span class="line">img_unpack Firefly-RK3288_Android4.4_20140818.img img</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>解压update.img</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">cd img</span><br><span class="line">afptool -unpack update.img update</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">以下为手动排列过的解压结果</span></span><br><span class="line">Check file...OK</span><br><span class="line">------- UNPACK -------</span><br><span class="line">		文件								起始位置		空间大小</span><br><span class="line">package-file							0x00000800		0x00000285</span><br><span class="line">RK3288Loader_uboot_Apr212014_134842.bin	0x00001000		0x0004694E</span><br><span class="line">rk3288-3.10-uboot-data1G.parameter.txt	0x00048000		0x000005A1</span><br><span class="line">Image/misc.img							0x00048800		0x0000C000</span><br><span class="line">Image/kernel.img						0x00055000		0x00578E3C</span><br><span class="line">Image/resource.img						0x005CE000		0x0001C400</span><br><span class="line">Image/boot.img							0x005EA800		0x0011F6CF</span><br><span class="line">Image/recovery.img						0x0070A000		0x0040F6AE</span><br><span class="line">Image/system.img						0x00B19800		0x180EF000</span><br><span class="line">RESERVED								0x00000000		0x00000000</span><br><span class="line">update-script							0x18C09000		0x000003A5</span><br><span class="line">recover-script							0x18C09800		0x0000010A</span><br><span class="line">UnPack OK!</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>检查解包数据</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">cd update/</span><br><span class="line">tree</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">以下为标准打印结果</span></span><br><span class="line">.</span><br><span class="line">├── Image</span><br><span class="line">│   ├── boot.img</span><br><span class="line">│   ├── kernel.img</span><br><span class="line">│   ├── misc.img</span><br><span class="line">│   ├── recovery.img</span><br><span class="line">│   ├── resource.img</span><br><span class="line">│   ├── uboot.img</span><br><span class="line">│   └── system.img</span><br><span class="line">├── package-file</span><br><span class="line">├── recover-script</span><br><span class="line">├── RESERVED</span><br><span class="line">├── rk3288-3.10-uboot-data1G.parameter.txt</span><br><span class="line">├── RK3288Loader_uboot_Apr212014_134842.bin</span><br><span class="line">└── update-script</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ol>
+<h4 id="定制"><a href="#定制" class="headerlink" title="定制"></a>定制</h4><ol>
+<li><p>system.img</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">system.img 是个 ext4 文件系统格式的映像文件，可以直接挂载到系统进行修改</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">原因如下:</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	文件系统格式：ext4 是一种常见的、可靠的 Linux 文件系统格式，支持各种文件和目录操作, Android 是基于 Linux 内核的</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	映像文件结构：system.img 是一个完整的文件系统映像文件，它包含了完整的目录结构、文件和权限等信息。可以直接将它挂载到一个挂载点上</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	修改系统内容：通过挂载 system.img，可以在系统运行时修改其中的文件和目录，例如添加、删除或修改应用程序、系统设置等</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	方便：挂载 system.img 相对于提取和重新打包系统映像更加方便, 可以直接在挂载点上进行修改，而不需要对整个映像文件进行解包和重新打包</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在定制文件之前, 需要检查文件剩余空间,如果需要增加内容且空间不足,则需要对文件进行扩容.</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">如 system.img 的剩余空间基本为 0, 如果不删除文件，就需要对 system.img 进行扩容，并根据文件大小，相应地调整 parameter 文件里的分区设置。</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在扩展前，先运行 mount 来查看系统挂载情况，确保 system.img 已经卸载</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">增加 128M 的空间</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">从 /dev/zero 设备读取 128MB 的空白数据，并追加到 Image/system.img 文件末尾，以扩大文件大小。</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">这样可以增加文件的空间，但并不会自动扩展文件系统，因此在添加完空间后需要进行文件系统的扩展操作。</span></span><br><span class="line">dd if=/dev/zero bs=1M count=128 &gt;&gt; Image/system.img</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">扩展文件系统信息</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">对 Image/system.img 中的 ext 文件系统进行检查和修复</span></span><br><span class="line">e2fsck -f Image/system.img</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">调整 Image/system.img 中 ext 文件系统的大小，使其能够利用新增加的空间</span></span><br><span class="line">resize2fs Image/system.img</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建一个名为 /mnt/system 的目录，用于挂载 system.img 文件</span></span><br><span class="line">sudo mkdir -p /mnt/system</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将 system.img 文件以循环设备的方式挂载到 /mnt/system 目录中。-o loop 参数用于将文件挂载为一个块设备</span></span><br><span class="line">sudo mount -o loop Image/system.img /mnt/system</span><br><span class="line">cd /mnt/system</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">修改里面的东西，注意剩余空间，不能添加太多的 APK</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">修改完成后，需要卸载挂载的 system.img 文件，以便保存修改后的内容</span></span><br><span class="line">cd /</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用 umount 命令卸载挂载点 /mnt/system，并释放相关资源</span></span><br><span class="line">sudo umount /mnt/system</span><br></pre></td></tr></table></figure>
+</li>
+<li></li>
+</ol>
+<h4 id="打包–将package-file中声明的文件合成update-img-加进loader-img-生成统一固件"><a href="#打包–将package-file中声明的文件合成update-img-加进loader-img-生成统一固件" class="headerlink" title="打包–将package-file中声明的文件合成update.img,加进loader.img,生成统一固件"></a>打包–将package-file中声明的文件合成update.img,加进loader.img,生成统一固件</h4><ol>
+<li><p>前置判断:如果分区不用更改，可以直接用烧写工具将新的 <code>system.img</code> 烧写到开发板的 <code>system</code> 分区上做试验。否则，需要制作新固件并烧写后再行测试。</p>
+</li>
+<li><p>打包全过程</p>
+<ol>
+<li><p>合成update.img</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">当前的目录仍然为 update/ ，内有 package-file, package-file 所列的文件均存在</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将参数文件拷贝一份到 paramter, 因为 afptool 默认要用到</span></span><br><span class="line">cp rk3288-3.10-uboot-data1G.parameter.txt parameter</span><br><span class="line">afptool -pack . ../update_new.img</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">以下为打印结果</span></span><br><span class="line">------ PACKAGE ------</span><br><span class="line">Add file: ./package-file</span><br><span class="line">Add file: ./RK3288Loader_uboot_Apr212014_134842.bin</span><br><span class="line">Add file: ./rk3288-3.10-uboot-data1G.parameter.txt</span><br><span class="line">Add file: ./Image/uboot.img</span><br><span class="line">Add file: ./Image/misc.img</span><br><span class="line">Add file: ./Image/kernel.img</span><br><span class="line">Add file: ./Image/resource.img</span><br><span class="line">Add file: ./Image/boot.img</span><br><span class="line">Add file: ./Image/recovery.img</span><br><span class="line">Add file: ./Image/system.img</span><br><span class="line">Add file: ./RESERVED</span><br><span class="line">Add file: ./update-script</span><br><span class="line">Add file: ./recover-script</span><br><span class="line">Add CRC...</span><br><span class="line">------ OK ------</span><br><span class="line">Pack OK!</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>合成release_update.img</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">img_maker -rk32 loader.img update_new.img release_update_new.img</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">以下为打印结果</span></span><br><span class="line">generate image...</span><br><span class="line">append md5sum...</span><br><span class="line">success!</span><br></pre></td></tr></table></figure>
+</li>
+<li></li>
+</ol>
+</li>
+</ol>
+<h2 id="3-u-boot"><a href="#3-u-boot" class="headerlink" title="3. u-boot"></a>3. u-boot</h2>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/02/24/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%9B%BA%E4%BB%B6%E8%A7%A3%E5%90%88/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" rel="prev" title="安卓开发板基础-1">
+                  <i class="fa fa-chevron-left"></i> 安卓开发板基础-1
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/02/25/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%9B%BA%E4%BB%B6%E8%A7%A3%E5%90%88/%E5%AE%89%E5%8D%93%E9%A9%B1%E5%8A%A8/" rel="next" title="安卓开发板基础-3">
+                  安卓开发板基础-3 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://example.com/2024/02/24/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%9B%BA%E4%BB%B6%E8%A7%A3%E5%90%88/%E5%9B%BA%E4%BB%B6%E5%AE%9A%E5%88%B6/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>

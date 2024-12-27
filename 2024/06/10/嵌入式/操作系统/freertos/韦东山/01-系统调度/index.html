@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha256-/4UQcSmErDzPCMAiuOiWPVVsNN2s3ZY/NsmXNcj0IFc=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="韦东山介绍freertos基本调度原理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="freeRTOS任务调度">
+<meta property="og:url" content="http://example.com/2024/06/10/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/freertos/%E9%9F%A6%E4%B8%9C%E5%B1%B1/01-%E7%B3%BB%E7%BB%9F%E8%B0%83%E5%BA%A6/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="韦东山介绍freertos基本调度原理">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2024/06/10/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/freertos/%E9%9F%A6%E4%B8%9C%E5%B1%B1/01-%E7%B3%BB%E7%BB%9F%E8%B0%83%E5%BA%A6/image-20240612001811392.png">
+<meta property="og:image" content="http://example.com/2024/06/10/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/freertos/%E9%9F%A6%E4%B8%9C%E5%B1%B1/01-%E7%B3%BB%E7%BB%9F%E8%B0%83%E5%BA%A6/image-20240612003021727.png">
+<meta property="article:published_time" content="2024-06-10T11:49:04.679Z">
+<meta property="article:modified_time" content="2024-06-11T16:38:07.099Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/06/10/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/freertos/%E9%9F%A6%E4%B8%9C%E5%B1%B1/01-%E7%B3%BB%E7%BB%9F%E8%B0%83%E5%BA%A6/image-20240612001811392.png">
+
+
+<link rel="canonical" href="http://example.com/2024/06/10/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/freertos/%E9%9F%A6%E4%B8%9C%E5%B1%B1/01-%E7%B3%BB%E7%BB%9F%E8%B0%83%E5%BA%A6/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2024/06/10/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/freertos/%E9%9F%A6%E4%B8%9C%E5%B1%B1/01-%E7%B3%BB%E7%BB%9F%E8%B0%83%E5%BA%A6/","path":"2024/06/10/嵌入式/操作系统/freertos/韦东山/01-系统调度/","title":"freeRTOS任务调度"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>freeRTOS任务调度 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-ARM%E6%9E%B6%E6%9E%84%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">1. ARM架构基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SOC%EF%BC%88system-on-chip%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">SOC（system on chip）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CPU%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">1.2.</span> <span class="nav-text">CPU寄存器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E4%BB%BB%E5%8A%A1%E4%B8%AD%E6%96%AD"><span class="nav-number">2.</span> <span class="nav-text">2. 任务中断</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6"><span class="nav-number">2.1.</span> <span class="nav-text">任务调度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E4%B8%AD%E6%96%AD%EF%BC%88%E4%B8%BB%E5%8A%A8%E6%94%BE%E5%BC%83-x2F-%E8%A2%AB%E5%8A%A8%E6%94%BE%E5%BC%83%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">任务中断（主动放弃&#x2F;被动放弃）</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/06/10/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/freertos/%E9%9F%A6%E4%B8%9C%E5%B1%B1/01-%E7%B3%BB%E7%BB%9F%E8%B0%83%E5%BA%A6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="freeRTOS任务调度 | Hexo">
+      <meta itemprop="description" content="韦东山介绍freertos基本调度原理">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          freeRTOS任务调度
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-06-10 19:49:04" itemprop="dateCreated datePublished" datetime="2024-06-10T19:49:04+08:00">2024-06-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-06-12 00:38:07" itemprop="dateModified" datetime="2024-06-12T00:38:07+08:00">2024-06-12</time>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">韦东山介绍freertos基本调度原理</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="1-ARM架构基础"><a href="#1-ARM架构基础" class="headerlink" title="1. ARM架构基础"></a>1. ARM架构基础</h2><h3 id="SOC（system-on-chip）"><a href="#SOC（system-on-chip）" class="headerlink" title="SOC（system on chip）"></a>SOC（system on chip）</h3><p>一个基本的SOC单元包括cpu+RAM+flash+其他模块，其中RAM存储数据，flash存储代码</p>
+<h3 id="CPU寄存器"><a href="#CPU寄存器" class="headerlink" title="CPU寄存器"></a>CPU寄存器</h3><ol>
+<li><p>ARM微处理器共有<strong>37个</strong>32位寄存器，其中<strong>31个为通用寄存器</strong>，<strong>6个位状态寄存器</strong>。但是这些寄存器<strong>不能被同时访问</strong></p>
+</li>
+<li><p>在任何时候，通用寄存器R14~R0、程序计数器PC（即R15）、一个状态寄存器都是可访问的</p>
+<blockquote>
+<p>通用寄存器包括R0<del>R15,可以分为3类:<br>(1)未分组寄存器R0</del>R7<br>(2)分组寄存器R8~R14<br>(3)程序计数器PC(R15)</p>
+</blockquote>
+</li>
+<li><p>寄存器R13在ARM指令中常用作<strong>堆栈指针SP</strong>,但这只是一种习惯用法，用户也可使用其他的寄存器作为堆栈指针,而在Thumb指令集中,某些指令强制性的要求使用R13作为堆栈指针</p>
+<blockquote>
+<p>由于处理器的每种运行模式均有自己独立的物理寄存器R13，在用户应用程序的初始化部分，****一般都要初始化每种模式下的R13，使其指向该运行模式的栈空间*<em><strong>。这样，当程序的运行进入异常模式时，可以</strong></em>*将需要保护的寄存器放入R13所指向的堆栈*<em><strong>，而当程序从异常模式返回时，则从对应的堆栈中恢复，采用这种方式可以</strong></em>*保证异常发生后程序的正常执行****。</p>
+</blockquote>
+</li>
+<li><p>R14称为<strong>子程序链接寄存器LR</strong>(Link Register),当执行子程序调用指令(BL)时,<strong>R14可得到R15(程序计数器PC)的备份</strong></p>
+</li>
+<li><p>寄存器R15用作程序计数器(PC),在ARM状态下,位[1:0]为0,位[31:2]用于保存PC,在Thumb状态下,位[0]为0,位[31:1]用于保存PC.<br>由于ARM体系结构采用了多级流水线技术，对于ARM指令集而言，PC总是指向当前指令的下两条指令的地址,即PC的值为当前指令的地址值加8个字节程序状态寄存器</p>
+</li>
+<li><p>寄存器R16用作CPSR(CurrentProgram Status Register，当前程序状态寄存器)，CPSR可在任何运行模式下被访问，它包括条件标志位、中断禁止位、当前处理器模式标志位，以及其他一些相关的控制和状态位。<br>每一种运行模式下又都有一个专用的物理状态寄存器，称为SPSR(Saved Program Status Register，备份的程序状态寄存器)，当异常发生时，SPSR用于保存CPSR的当前值，从异常退出时则可由SPSR来恢复CPSR。<br><strong>由于用户模式和系统模式不属于异常模式，它们没有SPSR，当在这两种模式下访问SPSR，结果是未知的</strong></p>
+</li>
+</ol>
+<h2 id="2-任务中断"><a href="#2-任务中断" class="headerlink" title="2. 任务中断"></a>2. 任务中断</h2><p>任务≈函数+变量+环境≈函数+栈（环境-寄存器、变量等内容存储在栈中）</p>
+<h3 id="任务调度"><a href="#任务调度" class="headerlink" title="任务调度"></a>任务调度</h3><p>Tick中断进行任务调度，优先从高优先级找，同级的时间片轮转</p>
+<ol>
+<li><p>新创建任务时，正常来说是倒序开始，例如同级的task1,task2,task3，依次创建后，优先执行task3</p>
+<img src="/2024/06/10/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/freertos/%E9%9F%A6%E4%B8%9C%E5%B1%B1/01-%E7%B3%BB%E7%BB%9F%E8%B0%83%E5%BA%A6/image-20240612001811392.png" class="" title="image-20240612001811392">
+</li>
+<li><p>但是，任务优先级为0时除外，因为任务优先级为0时，由于空闲任务的优先级也是0，所以空闲任务会是最后一个被创建的任务，随后就会按照正常顺序执行<strong>（仅在创建时有效）</strong></p>
+</li>
+<li><p>正常情况下，同为优先级0时，空闲任务主动放弃一次运行机会，由其他任务优先调度，再次运行到这里时，继续往下执行</p>
+</li>
+</ol>
+<img src="/2024/06/10/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/freertos/%E9%9F%A6%E4%B8%9C%E5%B1%B1/01-%E7%B3%BB%E7%BB%9F%E8%B0%83%E5%BA%A6/image-20240612003021727.png" class="" title="image-20240612003021727">
+
+<h3 id="任务中断（主动放弃-x2F-被动放弃）"><a href="#任务中断（主动放弃-x2F-被动放弃）" class="headerlink" title="任务中断（主动放弃&#x2F;被动放弃）"></a>任务中断（主动放弃&#x2F;被动放弃）</h3><ol>
+<li>主动放弃：vTaskDelay()&#x2F;QueueReceive()</li>
+<li>被动放弃：QueueSend()-&gt;唤醒其他任务</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/" rel="prev" title="WIFI的安全攻击">
+                  <i class="fa fa-chevron-left"></i> WIFI的安全攻击
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/06/13/linux/linux%E5%86%85%E6%A0%B8/01-linux%E5%86%85%E6%A0%B8%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/" rel="next" title="linux内核源码分析01-内核启动流程">
+                  linux内核源码分析01-内核启动流程 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://example.com/2024/06/10/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/freertos/%E9%9F%A6%E4%B8%9C%E5%B1%B1/01-%E7%B3%BB%E7%BB%9F%E8%B0%83%E5%BA%A6/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>

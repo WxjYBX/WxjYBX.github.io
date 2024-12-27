@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha256-/4UQcSmErDzPCMAiuOiWPVVsNN2s3ZY/NsmXNcj0IFc=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="嵌入式的通信协议，Lwip的各种基础原理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="嵌入式通信之Lwip(三)：Lwip原理分析">
+<meta property="og:url" content="http://example.com/2024/12/09/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E6%A0%88/%E6%AD%A3%E7%82%B9%E5%8E%9F%E5%AD%90/lwip/lwip%E5%8E%9F%E7%90%86-03/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="嵌入式的通信协议，Lwip的各种基础原理">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2024/12/09/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E6%A0%88/%E6%AD%A3%E7%82%B9%E5%8E%9F%E5%AD%90/lwip/lwip%E5%8E%9F%E7%90%86-03/image-20241209172249483.png">
+<meta property="og:image" content="http://example.com/2024/12/09/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E6%A0%88/%E6%AD%A3%E7%82%B9%E5%8E%9F%E5%AD%90/lwip/lwip%E5%8E%9F%E7%90%86-03/image-20241209170807213.png">
+<meta property="og:image" content="http://example.com/2024/12/09/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E6%A0%88/%E6%AD%A3%E7%82%B9%E5%8E%9F%E5%AD%90/lwip/lwip%E5%8E%9F%E7%90%86-03/image-20241209171844450.png">
+<meta property="article:published_time" content="2024-12-09T08:51:33.642Z">
+<meta property="article:modified_time" content="2024-12-23T10:00:00.999Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/12/09/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E6%A0%88/%E6%AD%A3%E7%82%B9%E5%8E%9F%E5%AD%90/lwip/lwip%E5%8E%9F%E7%90%86-03/image-20241209172249483.png">
+
+
+<link rel="canonical" href="http://example.com/2024/12/09/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E6%A0%88/%E6%AD%A3%E7%82%B9%E5%8E%9F%E5%AD%90/lwip/lwip%E5%8E%9F%E7%90%86-03/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2024/12/09/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E6%A0%88/%E6%AD%A3%E7%82%B9%E5%8E%9F%E5%AD%90/lwip/lwip%E5%8E%9F%E7%90%86-03/","path":"2024/12/09/嵌入式/网络协议栈/正点原子/lwip/lwip原理-03/","title":"嵌入式通信之Lwip(三)：Lwip原理分析"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>嵌入式通信之Lwip(三)：Lwip原理分析 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">6. 内存管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E5%A0%86-%E6%8C%89%E9%9C%80%E5%88%86%E9%85%8D"><span class="nav-number">1.1.</span> <span class="nav-text">内存堆 - 按需分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%B1%A0-%E5%9B%BA%E5%AE%9A%E5%A4%A7%E5%B0%8F%EF%BC%8C%E5%8F%AF%E5%A4%9A%E4%B8%8D%E5%8F%AF%E5%B0%91"><span class="nav-number">1.2.</span> <span class="nav-text">内存池 - 固定大小，可多不可少</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C%E5%8A%A8%E6%80%81%E5%88%86%E9%85%8D"><span class="nav-number">1.3.</span> <span class="nav-text">C动态分配</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E7%BD%91%E7%BB%9C%E6%8E%A5%E5%8F%A3-netif"><span class="nav-number">2.</span> <span class="nav-text">7. 网络接口 netif</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E5%8C%85-pbuf"><span class="nav-number">3.</span> <span class="nav-text">8. 网络数据包 pbuf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%E8%B6%85%E6%97%B6%E5%AE%9A%E6%97%B6%E5%99%A8-timeout"><span class="nav-number">4.</span> <span class="nav-text">9. 超时定时器 timeout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-ARP%E5%8D%8F%E8%AE%AE"><span class="nav-number">5.</span> <span class="nav-text">10. ARP协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B9%E6%8D%AEIP%E5%9C%B0%E5%9D%80%EF%BC%8C%E9%80%9A%E8%BF%87%E5%B9%BF%E6%92%AD%EF%BC%8C%E8%8E%B7%E5%8F%96MAC%E5%9C%B0%E5%9D%80%EF%BC%8C%E5%AD%98%E5%85%A5ARP%E7%BC%93%E5%AD%98%E8%A1%A8"><span class="nav-number">5.1.</span> <span class="nav-text">根据IP地址，通过广播，获取MAC地址，存入ARP缓存表</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#arp%E8%AF%B7%E6%B1%82%E5%8C%85%E5%8F%91%E9%80%81-etharp-output"><span class="nav-number">5.1.1.</span> <span class="nav-text">arp请求包发送 etharp_output</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#arp%E5%BA%94%E7%AD%94%E5%8C%85%E6%8E%A5%E6%94%B6-etharp-input"><span class="nav-number">5.1.2.</span> <span class="nav-text">arp应答包接收 etharp_input</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-IP%E5%8D%8F%E8%AE%AE-IP%E6%8A%A5%E6%96%87-hdr-x3D-20B"><span class="nav-number">6.</span> <span class="nav-text">11. IP协议 - IP报文 hdr&#x3D;20B</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#IP%E5%AF%BB%E5%9D%80%E3%80%81%E8%B7%AF%E7%94%B1%E9%80%89%E6%8B%A9%E3%80%81%E6%95%B0%E6%8D%AE%E5%8C%85%E5%88%86%E7%89%87%E3%80%81%E6%95%B0%E6%8D%AE%E5%8C%85%E9%87%8D%E7%BB%84"><span class="nav-number">6.1.</span> <span class="nav-text">IP寻址、路由选择、数据包分片、数据包重组</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-ICMP%E5%8D%8F%E8%AE%AE"><span class="nav-number">7.</span> <span class="nav-text">12. ICMP协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9IP%E5%8D%8F%E8%AE%AE%E4%B8%8D%E6%94%AF%E6%8C%81%E5%B7%AE%E9%94%99%E6%8A%A5%E5%91%8A%E3%80%81%E5%B7%AE%E9%94%99%E6%8E%A7%E5%88%B6%E3%80%81%E4%B8%BB%E6%9C%BA%E7%AE%A1%E7%90%86%E6%9F%A5%E8%AF%A2%E7%9A%84%E6%9C%BA%E5%88%B6%E7%9A%84%E8%A1%A5%E5%85%85"><span class="nav-number">7.1.</span> <span class="nav-text">对IP协议不支持差错报告、差错控制、主机管理查询的机制的补充</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ICMP%E5%B7%AE%E9%94%99%E6%8A%A5%E6%96%87"><span class="nav-number">7.2.</span> <span class="nav-text">ICMP差错报文</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E7%9A%84%E4%B8%8D%E5%8F%AF%E8%BE%BE"><span class="nav-number">7.2.1.</span> <span class="nav-text">目的不可达</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BA%90%E7%AB%99%E6%8A%91%E5%88%B6"><span class="nav-number">7.2.2.</span> <span class="nav-text">源站抑制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91"><span class="nav-number">7.2.3.</span> <span class="nav-text">重定向</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B6%85%E6%97%B6"><span class="nav-number">7.2.4.</span> <span class="nav-text">超时</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E9%94%99%E8%AF%AF"><span class="nav-number">7.2.5.</span> <span class="nav-text">参数错误</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ICMP%E8%AF%A2%E9%97%AE%E6%8A%A5%E6%96%87"><span class="nav-number">7.3.</span> <span class="nav-text">ICMP询问报文</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%9E%E9%80%81%E8%AF%B7%E6%B1%82-%E5%BA%94%E7%AD%94"><span class="nav-number">7.3.1.</span> <span class="nav-text">回送请求\应答</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E6%88%B3%E8%AF%B7%E6%B1%82-%E5%BA%94%E7%AD%94"><span class="nav-number">7.3.2.</span> <span class="nav-text">时间戳请求\应答</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%99%A8%E6%9F%A5%E8%AF%A2-%E9%80%9A%E5%91%8A"><span class="nav-number">7.3.3.</span> <span class="nav-text">路由器查询\通告</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E8%AF%B7%E6%B1%82-%E5%BA%94%E7%AD%94"><span class="nav-number">7.3.4.</span> <span class="nav-text">信息请求\应答</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%B0%E5%9D%80%E6%8E%A9%E7%A0%81%E8%AF%B7%E6%B1%82-%E5%BA%94%E7%AD%94"><span class="nav-number">7.3.5.</span> <span class="nav-text">地址掩码请求\应答</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-%E4%BC%A0%E8%BE%93%E5%B1%82"><span class="nav-number">8.</span> <span class="nav-text">13. 传输层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-TCP%E6%8A%A5%E6%96%87-hdr-x3D-20B"><span class="nav-number">8.1.</span> <span class="nav-text">TCP - TCP报文 hdr&#x3D;20B</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B"><span class="nav-number">8.1.1.</span> <span class="nav-text">三次握手</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%EF%BC%88%E5%81%9C%E7%AD%89%E5%8D%8F%E8%AE%AE-x2F-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E5%8D%8F%E8%AE%AE%EF%BC%89"><span class="nav-number">8.1.2.</span> <span class="nav-text">数据传输（停等协议&#x2F;滑动窗口协议）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B"><span class="nav-number">8.1.3.</span> <span class="nav-text">四次挥手</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UDP-UDP%E6%8A%A5%E6%96%87-hdr-x3D-8B"><span class="nav-number">8.2.</span> <span class="nav-text">UDP - UDP报文 hdr&#x3D;8B</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#UDP%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93PBUF%E7%9A%84hdr-x3D-54B"><span class="nav-number">8.2.1.</span> <span class="nav-text">UDP数据传输PBUF的hdr&#x3D;54B</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#UDP-hdr-8B"><span class="nav-number">8.2.1.1.</span> <span class="nav-text">UDP-hdr-8B+</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#IP-hdr-20B"><span class="nav-number">8.2.1.2.</span> <span class="nav-text">IP-hdr-20B+</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#MAC-hdr-18B"><span class="nav-number">8.2.1.3.</span> <span class="nav-text">MAC-hdr-18B+</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#PHY-hdr-8B"><span class="nav-number">8.2.1.4.</span> <span class="nav-text">PHY-hdr-8B</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-WebServer"><span class="nav-number">9.</span> <span class="nav-text">14. WebServer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#httpd"><span class="nav-number">9.1.</span> <span class="nav-text">httpd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CGI"><span class="nav-number">9.2.</span> <span class="nav-text">CGI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSI"><span class="nav-number">9.3.</span> <span class="nav-text">SSI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E9%A1%B5%E6%95%B0%E7%BB%84%E5%88%B6%E4%BD%9C"><span class="nav-number">9.4.</span> <span class="nav-text">网页数组制作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-netconn"><span class="nav-number">10.</span> <span class="nav-text">15. netconn</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-Socket"><span class="nav-number">11.</span> <span class="nav-text">16. Socket</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#17-NTP-%E8%8E%B7%E5%8F%96%E5%AE%9E%E6%97%B6%E6%97%B6%E9%97%B4-gt-NTP%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87"><span class="nav-number">12.</span> <span class="nav-text">17. NTP - 获取实时时间 -&gt;NTP请求报文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#18-IPERF-gt-JPERF-LWIP%E7%9A%84TCP-x2F-UDP%E7%BD%91%E7%BB%9C%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B"><span class="nav-number">13.</span> <span class="nav-text">18. IPERF-&gt;JPERF - LWIP的TCP&#x2F;UDP网络质量检测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#19-MQTT"><span class="nav-number">14.</span> <span class="nav-text">19. MQTT</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A2%E9%98%85-x2F-%E5%8F%91%E5%B8%83%E3%80%81Qos"><span class="nav-number">14.1.</span> <span class="nav-text">订阅&#x2F;发布、Qos</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/12/09/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E6%A0%88/%E6%AD%A3%E7%82%B9%E5%8E%9F%E5%AD%90/lwip/lwip%E5%8E%9F%E7%90%86-03/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="嵌入式通信之Lwip(三)：Lwip原理分析 | Hexo">
+      <meta itemprop="description" content="嵌入式的通信协议，Lwip的各种基础原理">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          嵌入式通信之Lwip(三)：Lwip原理分析
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-12-09 16:51:33" itemprop="dateCreated datePublished" datetime="2024-12-09T16:51:33+08:00">2024-12-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-12-23 18:00:00" itemprop="dateModified" datetime="2024-12-23T18:00:00+08:00">2024-12-23</time>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">嵌入式的通信协议，Lwip的各种基础原理</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="6-内存管理"><a href="#6-内存管理" class="headerlink" title="6. 内存管理"></a>6. 内存管理</h2><h3 id="内存堆-按需分配"><a href="#内存堆-按需分配" class="headerlink" title="内存堆 - 按需分配"></a>内存堆 - 按需分配</h3><p>首次拟合：从低地址空间向高地址空间查找，查找到第一个满足条件的空间后，切割满足大小的空间返回，剩余的空间会进行合并，减少（不能避免）内存碎片</p>
+<h3 id="内存池-固定大小，可多不可少"><a href="#内存池-固定大小，可多不可少" class="headerlink" title="内存池 - 固定大小，可多不可少"></a>内存池 - 固定大小，可多不可少</h3><h3 id="C动态分配"><a href="#C动态分配" class="headerlink" title="C动态分配"></a>C动态分配</h3><h2 id="7-网络接口-netif"><a href="#7-网络接口-netif" class="headerlink" title="7. 网络接口 netif"></a>7. 网络接口 netif</h2><h2 id="8-网络数据包-pbuf"><a href="#8-网络数据包-pbuf" class="headerlink" title="8. 网络数据包 pbuf"></a>8. 网络数据包 pbuf</h2><h2 id="9-超时定时器-timeout"><a href="#9-超时定时器-timeout" class="headerlink" title="9. 超时定时器 timeout"></a>9. 超时定时器 timeout</h2><h2 id="10-ARP协议"><a href="#10-ARP协议" class="headerlink" title="10. ARP协议"></a>10. ARP协议</h2><h3 id="根据IP地址，通过广播，获取MAC地址，存入ARP缓存表"><a href="#根据IP地址，通过广播，获取MAC地址，存入ARP缓存表" class="headerlink" title="根据IP地址，通过广播，获取MAC地址，存入ARP缓存表"></a>根据IP地址，通过广播，获取MAC地址，存入ARP缓存表</h3><img src="/2024/12/09/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E6%A0%88/%E6%AD%A3%E7%82%B9%E5%8E%9F%E5%AD%90/lwip/lwip%E5%8E%9F%E7%90%86-03/image-20241209172249483.png" class="" title="image-20241209172249483">
+
+<h4 id="arp请求包发送-etharp-output"><a href="#arp请求包发送-etharp-output" class="headerlink" title="arp请求包发送 etharp_output"></a>arp请求包发送 etharp_output</h4><img src="/2024/12/09/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E6%A0%88/%E6%AD%A3%E7%82%B9%E5%8E%9F%E5%AD%90/lwip/lwip%E5%8E%9F%E7%90%86-03/image-20241209170807213.png" class="" title="image-20241209170807213">
+
+<h4 id="arp应答包接收-etharp-input"><a href="#arp应答包接收-etharp-input" class="headerlink" title="arp应答包接收 etharp_input"></a>arp应答包接收 etharp_input</h4><img src="/2024/12/09/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E6%A0%88/%E6%AD%A3%E7%82%B9%E5%8E%9F%E5%AD%90/lwip/lwip%E5%8E%9F%E7%90%86-03/image-20241209171844450.png" class="" title="image-20241209171844450">
+
+<h2 id="11-IP协议-IP报文-hdr-x3D-20B"><a href="#11-IP协议-IP报文-hdr-x3D-20B" class="headerlink" title="11. IP协议 - IP报文 hdr&#x3D;20B"></a>11. IP协议 - IP报文 hdr&#x3D;20B</h2><h3 id="IP寻址、路由选择、数据包分片、数据包重组"><a href="#IP寻址、路由选择、数据包分片、数据包重组" class="headerlink" title="IP寻址、路由选择、数据包分片、数据包重组"></a>IP寻址、路由选择、数据包分片、数据包重组</h3><h2 id="12-ICMP协议"><a href="#12-ICMP协议" class="headerlink" title="12. ICMP协议"></a>12. ICMP协议</h2><h3 id="对IP协议不支持差错报告、差错控制、主机管理查询的机制的补充"><a href="#对IP协议不支持差错报告、差错控制、主机管理查询的机制的补充" class="headerlink" title="对IP协议不支持差错报告、差错控制、主机管理查询的机制的补充"></a>对IP协议不支持差错报告、差错控制、主机管理查询的机制的补充</h3><h3 id="ICMP差错报文"><a href="#ICMP差错报文" class="headerlink" title="ICMP差错报文"></a>ICMP差错报文</h3><h4 id="目的不可达"><a href="#目的不可达" class="headerlink" title="目的不可达"></a>目的不可达</h4><h4 id="源站抑制"><a href="#源站抑制" class="headerlink" title="源站抑制"></a>源站抑制</h4><h4 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h4><h4 id="超时"><a href="#超时" class="headerlink" title="超时"></a>超时</h4><h4 id="参数错误"><a href="#参数错误" class="headerlink" title="参数错误"></a>参数错误</h4><h3 id="ICMP询问报文"><a href="#ICMP询问报文" class="headerlink" title="ICMP询问报文"></a>ICMP询问报文</h3><h4 id="回送请求-应答"><a href="#回送请求-应答" class="headerlink" title="回送请求\应答"></a>回送请求\应答</h4><h4 id="时间戳请求-应答"><a href="#时间戳请求-应答" class="headerlink" title="时间戳请求\应答"></a>时间戳请求\应答</h4><h4 id="路由器查询-通告"><a href="#路由器查询-通告" class="headerlink" title="路由器查询\通告"></a>路由器查询\通告</h4><h4 id="信息请求-应答"><a href="#信息请求-应答" class="headerlink" title="信息请求\应答"></a>信息请求\应答</h4><h4 id="地址掩码请求-应答"><a href="#地址掩码请求-应答" class="headerlink" title="地址掩码请求\应答"></a>地址掩码请求\应答</h4><h2 id="13-传输层"><a href="#13-传输层" class="headerlink" title="13. 传输层"></a>13. 传输层</h2><h3 id="TCP-TCP报文-hdr-x3D-20B"><a href="#TCP-TCP报文-hdr-x3D-20B" class="headerlink" title="TCP - TCP报文 hdr&#x3D;20B"></a>TCP - TCP报文 hdr&#x3D;20B</h3><h4 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h4><h4 id="数据传输（停等协议-x2F-滑动窗口协议）"><a href="#数据传输（停等协议-x2F-滑动窗口协议）" class="headerlink" title="数据传输（停等协议&#x2F;滑动窗口协议）"></a>数据传输（停等协议&#x2F;滑动窗口协议）</h4><h4 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h4><h3 id="UDP-UDP报文-hdr-x3D-8B"><a href="#UDP-UDP报文-hdr-x3D-8B" class="headerlink" title="UDP - UDP报文 hdr&#x3D;8B"></a>UDP - UDP报文 hdr&#x3D;8B</h3><h4 id="UDP数据传输PBUF的hdr-x3D-54B"><a href="#UDP数据传输PBUF的hdr-x3D-54B" class="headerlink" title="UDP数据传输PBUF的hdr&#x3D;54B"></a>UDP数据传输PBUF的hdr&#x3D;54B</h4><h5 id="UDP-hdr-8B"><a href="#UDP-hdr-8B" class="headerlink" title="UDP-hdr-8B+"></a>UDP-hdr-8B+</h5><h5 id="IP-hdr-20B"><a href="#IP-hdr-20B" class="headerlink" title="IP-hdr-20B+"></a>IP-hdr-20B+</h5><h5 id="MAC-hdr-18B"><a href="#MAC-hdr-18B" class="headerlink" title="MAC-hdr-18B+"></a>MAC-hdr-18B+</h5><h5 id="PHY-hdr-8B"><a href="#PHY-hdr-8B" class="headerlink" title="PHY-hdr-8B"></a>PHY-hdr-8B</h5><h2 id="14-WebServer"><a href="#14-WebServer" class="headerlink" title="14. WebServer"></a>14. WebServer</h2><h3 id="httpd"><a href="#httpd" class="headerlink" title="httpd"></a>httpd</h3><h3 id="CGI"><a href="#CGI" class="headerlink" title="CGI"></a>CGI</h3><h3 id="SSI"><a href="#SSI" class="headerlink" title="SSI"></a>SSI</h3><h3 id="网页数组制作"><a href="#网页数组制作" class="headerlink" title="网页数组制作"></a>网页数组制作</h3><h2 id="15-netconn"><a href="#15-netconn" class="headerlink" title="15. netconn"></a>15. netconn</h2><h2 id="16-Socket"><a href="#16-Socket" class="headerlink" title="16. Socket"></a>16. Socket</h2><h2 id="17-NTP-获取实时时间-gt-NTP请求报文"><a href="#17-NTP-获取实时时间-gt-NTP请求报文" class="headerlink" title="17. NTP - 获取实时时间 -&gt;NTP请求报文"></a>17. NTP - 获取实时时间 -&gt;NTP请求报文</h2><h2 id="18-IPERF-gt-JPERF-LWIP的TCP-x2F-UDP网络质量检测"><a href="#18-IPERF-gt-JPERF-LWIP的TCP-x2F-UDP网络质量检测" class="headerlink" title="18. IPERF-&gt;JPERF - LWIP的TCP&#x2F;UDP网络质量检测"></a>18. IPERF-&gt;JPERF - LWIP的TCP&#x2F;UDP网络质量检测</h2><h2 id="19-MQTT"><a href="#19-MQTT" class="headerlink" title="19. MQTT"></a>19. MQTT</h2><h3 id="订阅-x2F-发布、Qos"><a href="#订阅-x2F-发布、Qos" class="headerlink" title="订阅&#x2F;发布、Qos"></a>订阅&#x2F;发布、Qos</h3>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/10/04/%E5%B5%8C%E5%85%A5%E5%BC%8F/keil_mdk%E6%B3%A8%E5%86%8C%E6%9C%BA/" rel="prev" title="keil_mdk注册机">
+                  <i class="fa fa-chevron-left"></i> keil_mdk注册机
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/12/24/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%B7%A5%E5%85%B7%E9%93%BE/cmake/" rel="next" title="cmake的基础使用">
+                  cmake的基础使用 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://example.com/2024/12/09/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E6%A0%88/%E6%AD%A3%E7%82%B9%E5%8E%9F%E5%AD%90/lwip/lwip%E5%8E%9F%E7%90%86-03/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>

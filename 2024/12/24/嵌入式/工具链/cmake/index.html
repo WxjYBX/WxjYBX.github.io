@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha256-/4UQcSmErDzPCMAiuOiWPVVsNN2s3ZY/NsmXNcj0IFc=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="使用cmake的基础语法，完成大部分简单cmakelist.txt文件的编辑，参考链接：[CMake 保姆级教程（上） | 爱编程的大丙](https:&#x2F;&#x2F;subingwen.cn&#x2F;cmake&#x2F;CMake-primer&#x2F;)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cmake的基础使用">
+<meta property="og:url" content="http://example.com/2024/12/24/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%B7%A5%E5%85%B7%E9%93%BE/cmake/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="使用cmake的基础语法，完成大部分简单cmakelist.txt文件的编辑，参考链接：[CMake 保姆级教程（上） | 爱编程的大丙](https:&#x2F;&#x2F;subingwen.cn&#x2F;cmake&#x2F;CMake-primer&#x2F;)">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2024/12/24/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%B7%A5%E5%85%B7%E9%93%BE/cmake/image-20241226104039404.png">
+<meta property="og:image" content="http://example.com/2024/12/24/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%B7%A5%E5%85%B7%E9%93%BE/cmake/image-20241226103856908.png">
+<meta property="og:image" content="http://example.com/2024/12/24/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%B7%A5%E5%85%B7%E9%93%BE/cmake/image-20241226180045723.png">
+<meta property="og:image" content="http://example.com/2024/12/24/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%B7%A5%E5%85%B7%E9%93%BE/cmake/image-20241227135929201.png">
+<meta property="article:published_time" content="2024-12-24T10:20:43.920Z">
+<meta property="article:modified_time" content="2024-12-27T06:03:03.701Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/12/24/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%B7%A5%E5%85%B7%E9%93%BE/cmake/image-20241226104039404.png">
+
+
+<link rel="canonical" href="http://example.com/2024/12/24/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%B7%A5%E5%85%B7%E9%93%BE/cmake/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2024/12/24/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%B7%A5%E5%85%B7%E9%93%BE/cmake/","path":"2024/12/24/嵌入式/工具链/cmake/","title":"cmake的基础使用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>cmake的基础使用 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%9C%80%E5%B0%8F%E6%A0%87%E5%87%86%E5%8D%95%E5%85%83"><span class="nav-number">1.</span> <span class="nav-text">1. 最小标准单元</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-set"><span class="nav-number">2.</span> <span class="nav-text">2. set</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%96%87%E4%BB%B6%E6%90%9C%E7%B4%A2"><span class="nav-number">3.</span> <span class="nav-text">3. 文件搜索</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%A5%E9%94%991"><span class="nav-number">3.1.</span> <span class="nav-text">报错1</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E6%9E%90"><span class="nav-number">3.1.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A3%E7%A1%AE%E8%AF%AD%E5%8F%A5"><span class="nav-number">3.1.2.</span> <span class="nav-text">正确语句</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E6%8C%87%E5%AE%9A%E5%A4%B4%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84"><span class="nav-number">4.</span> <span class="nav-text">4. 指定头文件路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%88%B6%E4%BD%9C%E5%BA%93%E6%96%87%E4%BB%B6"><span class="nav-number">5.</span> <span class="nav-text">5. 制作库文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%93%E6%96%87%E4%BB%B6%E4%B8%80%E8%88%AC%E4%BD%BF%E7%94%A8%E4%BE%9D%E6%8D%AE"><span class="nav-number">5.1.</span> <span class="nav-text">库文件一般使用依据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%93%E6%96%87%E4%BB%B6%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">5.2.</span> <span class="nav-text">库文件使用方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E9%93%BE%E6%8E%A5%E5%BA%93%E6%96%87%E4%BB%B6"><span class="nav-number">6.</span> <span class="nav-text">6. 链接库文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E5%BA%93"><span class="nav-number">6.1.</span> <span class="nav-text">静态库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E5%BA%93"><span class="nav-number">6.2.</span> <span class="nav-text">动态库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E6%97%A5%E5%BF%97"><span class="nav-number">7.</span> <span class="nav-text">7. 日志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C-cmake%E4%B8%AD%E6%89%80%E6%9C%89%E6%95%B0%E6%8D%AE%E9%83%BD%E6%98%AF%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">8.</span> <span class="nav-text">8. 字符串操作(cmake中所有数据都是字符串)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%E5%AE%8F%E5%AE%9A%E4%B9%89-%E9%9D%9EC"><span class="nav-number">9.</span> <span class="nav-text">9. 宏定义(非C)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-%E5%B5%8C%E5%A5%97CMakeLists-txt"><span class="nav-number">10.</span> <span class="nav-text">10. 嵌套CMakeLists.txt</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#x2F-CMakeLists-txt"><span class="nav-number">10.1.</span> <span class="nav-text">.&#x2F;CMakeLists.txt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x2F-calc-src-x2F-CMakeLists-txt"><span class="nav-number">10.2.</span> <span class="nav-text">.&#x2F;calc_src&#x2F;CMakeLists.txt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x2F-calc-x2F-CMakeLists-txt"><span class="nav-number">10.3.</span> <span class="nav-text">.&#x2F;calc&#x2F;CMakeLists.txt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x2F-sort-src-x2F-CMakeLists-txt"><span class="nav-number">10.4.</span> <span class="nav-text">.&#x2F;sort_src&#x2F;CMakeLists.txt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x2F-sort-x2F-CMakeLists-txt"><span class="nav-number">10.5.</span> <span class="nav-text">.&#x2F;sort&#x2F;CMakeLists.txt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B5%8C%E5%A5%97%E7%94%A8%E6%B3%95"><span class="nav-number">10.6.</span> <span class="nav-text">嵌套用法</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/12/24/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%B7%A5%E5%85%B7%E9%93%BE/cmake/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="cmake的基础使用 | Hexo">
+      <meta itemprop="description" content="使用cmake的基础语法，完成大部分简单cmakelist.txt文件的编辑，参考链接：[CMake 保姆级教程（上） | 爱编程的大丙](https://subingwen.cn/cmake/CMake-primer/)">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          cmake的基础使用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-12-24 18:20:43" itemprop="dateCreated datePublished" datetime="2024-12-24T18:20:43+08:00">2024-12-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-12-27 14:03:03" itemprop="dateModified" datetime="2024-12-27T14:03:03+08:00">2024-12-27</time>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">使用cmake的基础语法，完成大部分简单cmakelist.txt文件的编辑，参考链接：[CMake 保姆级教程（上） | 爱编程的大丙](https://subingwen.cn/cmake/CMake-primer/)</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="1-最小标准单元"><a href="#1-最小标准单元" class="headerlink" title="1. 最小标准单元"></a>1. 最小标准单元</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 这是单行注释</span></span><br><span class="line"><span class="comment">#[[</span></span><br><span class="line"><span class="comment">    这是多行注释</span></span><br><span class="line"><span class="comment">]]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定当前cmake所需要的最低版本</span></span><br><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.22</span>.<span class="number">1</span>)</span><br><span class="line"><span class="comment"># 指定要执行的项目名称 - 与项目文件夹名称无关</span></span><br><span class="line"><span class="keyword">project</span>(CALC)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加生成可执行文件的源文件</span></span><br><span class="line"><span class="keyword">add_executable</span>(calcAPP add.cpp sub.cpp mul.cpp div.cpp main.cpp)</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-set"><a href="#2-set" class="headerlink" title="2. set"></a>2. set</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#[[ 设置变量值 </span></span><br><span class="line"><span class="comment">    set(A a b):将a和b合并后赋值给A</span></span><br><span class="line"><span class="comment">]]</span></span><br><span class="line"><span class="keyword">set</span>(SRC_FILES add.cpp sub.cpp mul.cpp div.cpp main.cpp)</span><br><span class="line"><span class="comment"># 设置可执行文件生成目录</span></span><br><span class="line"><span class="keyword">set</span>(EXECUTABLE_OUTPUT_PATH /home/vboxuser/cmake_test_projects/<span class="number">01</span>-calc)</span><br><span class="line"><span class="comment"># 设置进行编译时使用的C++标准</span></span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD <span class="number">11</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加生成可执行文件的源文件 </span></span><br><span class="line"><span class="keyword">add_executable</span>(calcAPP <span class="variable">$&#123;SRC_FILES&#125;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-文件搜索"><a href="#3-文件搜索" class="headerlink" title="3. 文件搜索"></a>3. 文件搜索</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_33726635/article/details/121896681">CMAKE常用内置变量解释：CMAKE_SOURCE_DIR&#x2F;EXECUTABLE_OUTPUT_PATH&#x2F;CMAKE_EXPORT_COMPILE_COMMANDS_cmake dir-CSDN博客</a></p>
+<img src="/2024/12/24/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%B7%A5%E5%85%B7%E9%93%BE/cmake/image-20241226104039404.png" class="" title="image-20241226104039404">
+
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#[[ 搜索指定目录下的所有源文件并且赋值给指定变量（不支持递归）</span></span><br><span class="line"><span class="comment">    aux_source_directory(path A): 将path目录下的所有源文件获取之后，赋值给A</span></span><br><span class="line"><span class="comment">    PROJECT_SOURCE_DIR: 最接近根目录的cmakelists.txt文件所在的目录</span></span><br><span class="line"><span class="comment">]]</span></span><br><span class="line"><span class="keyword">aux_source_directory</span>(<span class="variable">$&#123;PROJECT_SOURCE_DIR&#125;</span> SRC_FILES)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#[[ 搜索指定目录下的源文件并赋值给指定变量</span></span><br><span class="line"><span class="comment">    file(GLOB/GLOB_RECURSE A path): 将path目录下的所有源文件获取之后，赋值给A</span></span><br><span class="line"><span class="comment">    GLOB: 不递归获取子文件夹</span></span><br><span class="line"><span class="comment">    GLOB_RECURSE: 递归获取子文件夹</span></span><br><span class="line"><span class="comment">    CMAKE_CURRENT_SOURCE_DIR: 距离当前文件最近的cmakelists.txt文件所在的目录</span></span><br><span class="line"><span class="comment">]]</span></span><br><span class="line"><span class="keyword">file</span>(GLOB SRC_FILES <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/*.cpp)</span><br></pre></td></tr></table></figure>
+
+<h3 id="报错1"><a href="#报错1" class="headerlink" title="报错1"></a>报错1</h3><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">报错语句：file(GLOB SRC_FILES $&#123;CMAKE_CURRENT_SOURCE_DIR&#125;)</span><br><span class="line"></span><br><span class="line">CMake Error: Cannot determine link language for target &quot;calcAPP&quot;.</span><br><span class="line">CMake Error: CMake can not determine linker language for target: calcAPP</span><br></pre></td></tr></table></figure>
+
+<h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">产生原因为未指定要进行链接的语言，需要在进行链接的文件上增加编译文件的格式</span><br></pre></td></tr></table></figure>
+
+<h4 id="正确语句"><a href="#正确语句" class="headerlink" title="正确语句"></a>正确语句</h4><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">file</span>(GLOB SRC_FILES <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/*.cpp)</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-指定头文件路径"><a href="#4-指定头文件路径" class="headerlink" title="4. 指定头文件路径"></a>4. 指定头文件路径</h2><img src="/2024/12/24/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%B7%A5%E5%85%B7%E9%93%BE/cmake/image-20241226103856908.png" class="" title="image-20241226103856908">
+
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 更新项目结构后，由于头文件与源文件不在同一目录下，会找不到头文件，需要指定头文件目录</span></span><br><span class="line"><span class="keyword">include_directories</span>(<span class="variable">$&#123;PROJECT_SOURCE_DIR&#125;</span>/<span class="keyword">include</span>)</span><br><span class="line"><span class="keyword">file</span>(GLOB SRC_FILES <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/src/*.cpp)</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-制作库文件"><a href="#5-制作库文件" class="headerlink" title="5. 制作库文件"></a>5. 制作库文件</h2><h3 id="库文件一般使用依据"><a href="#库文件一般使用依据" class="headerlink" title="库文件一般使用依据"></a>库文件一般使用依据</h3><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">静态库：源文件较少-每个静态库编译时就会占用内存，会被打包到程序内部</span><br><span class="line">动态库：源文件很多-每个动态库编译结束运行时才动态调用，不会被打包到程序内部</span><br></pre></td></tr></table></figure>
+
+<h3 id="库文件使用方法"><a href="#库文件使用方法" class="headerlink" title="库文件使用方法"></a>库文件使用方法</h3><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">发布内容包含两部分：</span><br><span class="line">1. include中的头文件 - 之所以需要这个，是因为在生成的库文件如果单独发布，没有人知道里面有什么函数方法</span><br><span class="line">2. 动态库/静态库文件</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.22</span>.<span class="number">1</span>)</span><br><span class="line"><span class="keyword">project</span>(MAKELIB)</span><br><span class="line"><span class="keyword">include_directories</span>(<span class="variable">$&#123;PROJECT_SOURCE_DIR&#125;</span>/<span class="keyword">include</span>)</span><br><span class="line"><span class="keyword">file</span>(GLOB SRC_FILES <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/src/*.cpp)</span><br><span class="line"><span class="comment"># 指定库文件输出路径</span></span><br><span class="line"><span class="keyword">set</span>(LIBRARY_OUTPUT_PATH <span class="variable">$&#123;PROJECT_SOURCE_DIR&#125;</span>/lib)</span><br><span class="line"><span class="comment">#[[ 制作库文件</span></span><br><span class="line"><span class="comment">    add_library(name STATIC/SHARED a b): 将源文件a、b合并为静态库/动态库，名字为name</span></span><br><span class="line"><span class="comment">    STATIC: 静态库</span></span><br><span class="line"><span class="comment">    SHARED: 动态库</span></span><br><span class="line"><span class="comment">    linux库名称: </span></span><br><span class="line"><span class="comment">        静态库 lib+name+.a</span></span><br><span class="line"><span class="comment">        动态库 lib+name+.so</span></span><br><span class="line"><span class="comment">    windows库名称:</span></span><br><span class="line"><span class="comment">        静态库</span></span><br><span class="line"><span class="comment">            MinGW: lib+name+.dll.a</span></span><br><span class="line"><span class="comment">            MSVC:  lib+name+.lib</span></span><br><span class="line"><span class="comment">        动态库 lib+name+.dll</span></span><br><span class="line"><span class="comment">]]</span></span><br><span class="line"><span class="keyword">add_library</span>(calc SHARED <span class="variable">$&#123;SRC_FILES&#125;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-链接库文件"><a href="#6-链接库文件" class="headerlink" title="6. 链接库文件"></a>6. 链接库文件</h2><img src="/2024/12/24/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%B7%A5%E5%85%B7%E9%93%BE/cmake/image-20241226180045723.png" class="" title="image-20241226180045723">
+
+<h3 id="静态库"><a href="#静态库" class="headerlink" title="静态库"></a>静态库</h3><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 包含库文件所在目录 - 静态库与动态库均可</span></span><br><span class="line"><span class="keyword">link_directories</span>(<span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/staticLib)</span><br><span class="line"><span class="comment"># 包含库文件 - 只能包含静态库，但可以包含多个静态库, 库名称可以写全lib+name+后缀，也可以只写name</span></span><br><span class="line"><span class="keyword">link_libraries</span>(calc)</span><br></pre></td></tr></table></figure>
+
+<h3 id="动态库"><a href="#动态库" class="headerlink" title="动态库"></a>动态库</h3><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#[[ 动态库的链接要在可执行程序生成之后进行，因为链接对象在此之前不存在</span></span><br><span class="line"><span class="comment">    动态库可以使用public、private、interface三种修饰符，默认为public</span></span><br><span class="line"><span class="comment">    public: 允许传递链接</span></span><br><span class="line"><span class="comment">    private: 不允许传递链接</span></span><br><span class="line"><span class="comment">    interface: 不进行链接，只允许访问调用</span></span><br><span class="line"><span class="comment">]]</span></span><br><span class="line"><span class="keyword">target_link_libraries</span>(calcAPP calc)</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-日志"><a href="#7-日志" class="headerlink" title="7. 日志"></a>7. 日志</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">message</span>(msg_level msg_content)</span><br></pre></td></tr></table></figure>
+
+<h2 id="8-字符串操作-cmake中所有数据都是字符串"><a href="#8-字符串操作-cmake中所有数据都是字符串" class="headerlink" title="8. 字符串操作(cmake中所有数据都是字符串)"></a>8. 字符串操作(cmake中所有数据都是字符串)</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 拼接</span></span><br><span class="line"><span class="keyword">set</span>()</span><br><span class="line"><span class="comment"># 追加/删除/长度/按索引取值/指定连接符...具体用法不一</span></span><br><span class="line"><span class="keyword">list</span>(APPEND/REMOVW_ITEM/LENGTH/GET/JOIN...)</span><br></pre></td></tr></table></figure>
+
+<h2 id="9-宏定义-非C"><a href="#9-宏定义-非C" class="headerlink" title="9. 宏定义(非C)"></a>9. 宏定义(非C)</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#[[ 增加宏定义</span></span><br><span class="line"><span class="comment">    add_definitions(-Ddname)    增加名称为dname的宏定义</span></span><br><span class="line"><span class="comment">]]</span></span><br><span class="line"><span class="keyword">add_definitions</span>(-DDEBUG)</span><br></pre></td></tr></table></figure>
+
+<h2 id="10-嵌套CMakeLists-txt"><a href="#10-嵌套CMakeLists-txt" class="headerlink" title="10. 嵌套CMakeLists.txt"></a>10. 嵌套CMakeLists.txt</h2><img src="/2024/12/24/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%B7%A5%E5%85%B7%E9%93%BE/cmake/image-20241227135929201.png" class="" title="image-20241227135929201">
+
+<h3 id="x2F-CMakeLists-txt"><a href="#x2F-CMakeLists-txt" class="headerlink" title=".&#x2F;CMakeLists.txt"></a>.&#x2F;CMakeLists.txt</h3><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.22</span>.<span class="number">1</span>)</span><br><span class="line"><span class="keyword">project</span>(nextCmakelists)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义子CMakeLists.txt可能会使用到的变量</span></span><br><span class="line"><span class="comment">## 静态库的存储路径</span></span><br><span class="line"><span class="keyword">set</span>(LIBPATH <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/lib)</span><br><span class="line"><span class="comment">## 可执行程序的存储路径</span></span><br><span class="line"><span class="keyword">set</span>(EXECPATH <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/bin)</span><br><span class="line"><span class="comment">## 头文件的存储路径</span></span><br><span class="line"><span class="keyword">set</span>(HEADPATH <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/<span class="keyword">include</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">## 库文件名称</span></span><br><span class="line"><span class="keyword">set</span>(CALCLIB calc)</span><br><span class="line"><span class="keyword">set</span>(SORTLIB sort)</span><br><span class="line"><span class="comment">## 可执行程序名称</span></span><br><span class="line"><span class="keyword">set</span>(APPNAME1 app1)</span><br><span class="line"><span class="keyword">set</span>(APPNAME2 app2)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 给当前节点添加子节点目录</span></span><br><span class="line"><span class="keyword">add_subdirectory</span>(calc)</span><br><span class="line"><span class="keyword">add_subdirectory</span>(calc_src)</span><br><span class="line"><span class="keyword">add_subdirectory</span>(sort)</span><br><span class="line"><span class="keyword">add_subdirectory</span>(sort_src)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="x2F-calc-src-x2F-CMakeLists-txt"><a href="#x2F-calc-src-x2F-CMakeLists-txt" class="headerlink" title=".&#x2F;calc_src&#x2F;CMakeLists.txt"></a>.&#x2F;calc_src&#x2F;CMakeLists.txt</h3><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.22</span>.<span class="number">1</span>)</span><br><span class="line"><span class="keyword">project</span>(calc)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 搜索源文件-当前目录下所有cpp文件</span></span><br><span class="line"><span class="keyword">aux_source_directory</span>(./ SRC_FILES)</span><br><span class="line"><span class="comment"># 设置头文件路径 - 如果没有找不到的.h文件，就不需要设置</span></span><br><span class="line"><span class="keyword">include_directories</span>(<span class="variable">$&#123;HEADPATH&#125;</span>)</span><br><span class="line"><span class="comment"># 设置库文件输出路径</span></span><br><span class="line"><span class="keyword">set</span>(LIBRARY_OUTPUT_PATH <span class="variable">$&#123;LIBPATH&#125;</span>)</span><br><span class="line"><span class="comment"># 生成静态库</span></span><br><span class="line"><span class="keyword">add_library</span>(<span class="variable">$&#123;CALCLIB&#125;</span> STATIC <span class="variable">$&#123;SRC_FILES&#125;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="x2F-calc-x2F-CMakeLists-txt"><a href="#x2F-calc-x2F-CMakeLists-txt" class="headerlink" title=".&#x2F;calc&#x2F;CMakeLists.txt"></a>.&#x2F;calc&#x2F;CMakeLists.txt</h3><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.22</span>.<span class="number">1</span>)</span><br><span class="line"><span class="keyword">project</span>(calcTest)</span><br><span class="line"></span><br><span class="line"><span class="keyword">aux_source_directory</span>(./ SRC_FILES)</span><br><span class="line"><span class="keyword">include_directories</span>(<span class="variable">$&#123;HEADPATH&#125;</span>)</span><br><span class="line"><span class="keyword">link_directories</span>(<span class="variable">$&#123;LIBPATH&#125;</span>)</span><br><span class="line"><span class="keyword">link_libraries</span>(<span class="variable">$&#123;CALCLIB&#125;</span>)</span><br><span class="line"><span class="keyword">set</span>(EXECUTABLE_OUTPUT_PATH <span class="variable">$&#123;EXECPATH&#125;</span>)</span><br><span class="line"><span class="keyword">add_executable</span>(<span class="variable">$&#123;APPNAME1&#125;</span> <span class="variable">$&#123;SRC_FILES&#125;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="x2F-sort-src-x2F-CMakeLists-txt"><a href="#x2F-sort-src-x2F-CMakeLists-txt" class="headerlink" title=".&#x2F;sort_src&#x2F;CMakeLists.txt"></a>.&#x2F;sort_src&#x2F;CMakeLists.txt</h3><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.22</span>.<span class="number">1</span>)</span><br><span class="line"><span class="keyword">project</span>(sort)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 搜索源文件-当前目录下所有cpp文件</span></span><br><span class="line"><span class="keyword">aux_source_directory</span>(./ SRC_FILES)</span><br><span class="line"><span class="comment"># 设置头文件路径 - 如果没有找不到的.h文件，就不需要设置</span></span><br><span class="line"><span class="keyword">include_directories</span>(<span class="variable">$&#123;HEADPATH&#125;</span>)</span><br><span class="line"><span class="comment"># 设置库文件输出路径</span></span><br><span class="line"><span class="keyword">set</span>(LIBRARY_OUTPUT_PATH <span class="variable">$&#123;LIBPATH&#125;</span>)</span><br><span class="line"><span class="comment"># 生成静态库</span></span><br><span class="line"><span class="keyword">add_library</span>(<span class="variable">$&#123;SORTLIB&#125;</span> STATIC <span class="variable">$&#123;SRC_FILES&#125;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="x2F-sort-x2F-CMakeLists-txt"><a href="#x2F-sort-x2F-CMakeLists-txt" class="headerlink" title=".&#x2F;sort&#x2F;CMakeLists.txt"></a>.&#x2F;sort&#x2F;CMakeLists.txt</h3><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.22</span>.<span class="number">1</span>)</span><br><span class="line"><span class="keyword">project</span>(sortTest)</span><br><span class="line"></span><br><span class="line"><span class="keyword">aux_source_directory</span>(./ SRC_FILES)</span><br><span class="line"><span class="keyword">include_directories</span>(<span class="variable">$&#123;HEADPATH&#125;</span>)</span><br><span class="line"><span class="keyword">link_directories</span>(<span class="variable">$&#123;LIBPATH&#125;</span>)</span><br><span class="line"><span class="keyword">link_libraries</span>(<span class="variable">$&#123;SORTLIB&#125;</span>)</span><br><span class="line"><span class="keyword">set</span>(EXECUTABLE_OUTPUT_PATH <span class="variable">$&#123;EXECPATH&#125;</span>)</span><br><span class="line"><span class="keyword">add_executable</span>(<span class="variable">$&#123;APPNAME2&#125;</span> <span class="variable">$&#123;SRC_FILES&#125;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="嵌套用法"><a href="#嵌套用法" class="headerlink" title="嵌套用法"></a>嵌套用法</h3><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 给当前节点添加子节点目录</span></span><br><span class="line"><span class="keyword">add_subdirectory</span>(calc)</span><br><span class="line"><span class="keyword">add_subdirectory</span>(calc_src)</span><br><span class="line"><span class="keyword">add_subdirectory</span>(sort)</span><br><span class="line"><span class="keyword">add_subdirectory</span>(sort_src)</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/12/09/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E6%A0%88/%E6%AD%A3%E7%82%B9%E5%8E%9F%E5%AD%90/lwip/lwip%E5%8E%9F%E7%90%86-03/" rel="prev" title="嵌入式通信之Lwip(三)：Lwip原理分析">
+                  <i class="fa fa-chevron-left"></i> 嵌入式通信之Lwip(三)：Lwip原理分析
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/12/24/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/vscode%E6%8F%92%E4%BB%B6/%E8%87%AA%E5%8A%A8%E6%B3%A8%E9%87%8A/" rel="next" title="注释插件">
+                  注释插件 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://example.com/2024/12/24/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%B7%A5%E5%85%B7%E9%93%BE/cmake/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>

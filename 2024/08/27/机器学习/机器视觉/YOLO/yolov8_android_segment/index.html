@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha256-/4UQcSmErDzPCMAiuOiWPVVsNN2s3ZY/NsmXNcj0IFc=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="使用原生python+yolov8+cuda+cudnn进行yolov8的安卓部署">
+<meta property="og:type" content="article">
+<meta property="og:title" content="yolov8部署在安卓设备上">
+<meta property="og:url" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="使用原生python+yolov8+cuda+cudnn进行yolov8的安卓部署">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240827145637927.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240827145728945.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240827150803907.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240827150842015.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240827150902899.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240827150542749.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240827151136206.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240827151837726.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240827153224740.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240903222753415.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240903222623915.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904003137914.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904002340119.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904002941475.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904002804470.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904011446397.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904014545909.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904015039052.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904015603390.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904015621812.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904015635169.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904012818863.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904022640357.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904022653273.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904022903099.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904024418932.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904025233912.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904025644213.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904025744790.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904030702817.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904042145435.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904042206267.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240917115739468.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240917125925929.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240917130026810.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240917130856613.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240917204418282.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240917204734108.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240917205416072.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240917212107948.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240917212151851.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240917212414670.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240917212814120.png">
+<meta property="og:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240917213653879.png">
+<meta property="article:published_time" content="2024-08-27T06:51:15.505Z">
+<meta property="article:modified_time" content="2024-09-17T13:38:23.148Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240827145637927.png">
+
+
+<link rel="canonical" href="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/","path":"2024/08/27/机器学习/机器视觉/YOLO/yolov8_android_segment/","title":"yolov8部署在安卓设备上"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>yolov8部署在安卓设备上 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">1. 环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-cuda-cudnn"><span class="nav-number">1.1.</span> <span class="nav-text">1.1. cuda+cudnn</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-pytorch"><span class="nav-number">1.2.</span> <span class="nav-text">1.2. pytorch</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#pip%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.1.</span> <span class="nav-text">pip安装</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-yolov8%E4%B8%BB%E9%A1%B5-Ultralytics-YOLO-%E6%96%87%E6%A1%A3"><span class="nav-number">1.3.</span> <span class="nav-text">1.3. yolov8主页 -Ultralytics YOLO 文档</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85"><span class="nav-number">1.3.1.</span> <span class="nav-text">下载安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9D%83%E9%87%8D%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8E%E6%9D%83%E9%87%8D%E6%96%87%E4%BB%B6Ultralytics-YOLOv8-Tasks-Ultralytics-YOLO-Docs"><span class="nav-number">1.3.2.</span> <span class="nav-text">权重文件夹与权重文件Ultralytics YOLOv8 Tasks - Ultralytics YOLO Docs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%BE%E7%89%87%E8%AF%86%E5%88%AB"><span class="nav-number">1.3.3.</span> <span class="nav-text">图片识别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%91%84%E5%83%8F%E5%A4%B4%E8%B0%83%E7%94%A8"><span class="nav-number">1.3.4.</span> <span class="nav-text">摄像头调用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#onnx%E6%A8%A1%E5%9E%8B%E7%94%9F%E6%88%90"><span class="nav-number">1.3.5.</span> <span class="nav-text">onnx模型生成</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%88%90%E5%8A%9F%E7%89%88%E6%9C%AC%E7%9B%AE%E5%BD%95"><span class="nav-number">1.3.5.1.</span> <span class="nav-text">参考成功版本目录</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85ultralytics"><span class="nav-number">1.3.5.2.</span> <span class="nav-text">安装ultralytics</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#onnx%E5%AE%89%E8%A3%85"><span class="nav-number">1.3.5.3.</span> <span class="nav-text">onnx安装</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#pt%E8%BD%AConnx"><span class="nav-number">1.3.5.4.</span> <span class="nav-text">pt转onnx</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#DLL%E9%93%BE%E6%8E%A5%E9%94%99%E8%AF%AF"><span class="nav-number">1.3.5.4.1.</span> <span class="nav-text">DLL链接错误</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%9B%B4%E6%8D%A2onnx%E7%89%88%E6%9C%AC"><span class="nav-number">1.3.5.4.2.</span> <span class="nav-text">更换onnx版本</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E6%88%90%E5%8A%9F"><span class="nav-number">1.3.5.4.3.</span> <span class="nav-text">生成成功</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ncnn%E6%A8%A1%E5%9E%8B%E7%94%9F%E6%88%90"><span class="nav-number">1.3.6.</span> <span class="nav-text">ncnn模型生成</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85ncnn"><span class="nav-number">1.3.6.1.</span> <span class="nav-text">安装ncnn</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%94%9F%E6%88%90ncnn%E6%96%87%E4%BB%B6"><span class="nav-number">1.3.6.2.</span> <span class="nav-text">生成ncnn文件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-android-studio"><span class="nav-number">1.4.</span> <span class="nav-text">1.4. android studio</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SDK%E4%B8%8B%E8%BD%BD"><span class="nav-number">1.4.1.</span> <span class="nav-text">SDK下载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE"><span class="nav-number">1.4.2.</span> <span class="nav-text">项目配置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#build-gradle"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">build.gradle</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#local-properties"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">local.properties</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.5.</span> <span class="nav-text">1.5. 示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E4%B8%8B%E8%BD%BD"><span class="nav-number">1.5.1.</span> <span class="nav-text">代码下载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GitHub-Digital2Slave-x2F-ncnn-android-yolov8-seg-a-sample-yolov8-object-segment-android-project-based-on-ncnn-and-opencv"><span class="nav-number">1.5.2.</span> <span class="nav-text">GitHub - Digital2Slave&#x2F;ncnn-android-yolov8-seg: a sample yolov8 object segment android project based on ncnn and opencv.</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E8%BF%90%E8%A1%8C"><span class="nav-number">1.5.3.</span> <span class="nav-text">项目运行</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#ncnn%E9%85%8D%E7%BD%AE-%E4%B8%A4%E4%BB%BDn-x2F-s%E7%9A%84ncnn%E6%96%87%E4%BB%B6%E9%83%BD%E5%AD%98%E5%9C%A8%E8%BF%99%E4%B8%AA%E8%B7%AF%E7%BB%8F"><span class="nav-number">1.5.3.1.</span> <span class="nav-text">ncnn配置 - 两份n&#x2F;s的ncnn文件都存在这个路经</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ncnn%E5%AE%89%E5%8D%93%E6%96%87%E4%BB%B6"><span class="nav-number">1.5.3.2.</span> <span class="nav-text">ncnn安卓文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#opencv%E5%AE%89%E5%8D%93%E6%96%87%E4%BB%B6"><span class="nav-number">1.5.3.3.</span> <span class="nav-text">opencv安卓文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BC%96%E8%BE%91CmakeLists-txt"><span class="nav-number">1.5.3.4.</span> <span class="nav-text">编辑CmakeLists.txt</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E6%8A%A5%E9%94%99%E6%9B%B4%E6%94%B9Android-Studio%E4%B8%AD%E7%9A%84JDK%E7%89%88%E6%9C%AC-android-studio-4-1-%E5%88%87%E6%8D%A2gradle-jdk-%E7%89%88%E6%9C%AC-CSDN%E5%8D%9A%E5%AE%A2"><span class="nav-number">1.5.3.5.</span> <span class="nav-text">编译报错更改Android Studio中的JDK版本_android studio 4.1 切换gradle jdk 版本-CSDN博客</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E8%A7%A3%E5%86%B3"><span class="nav-number">1.5.3.6.</span> <span class="nav-text">最终解决</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">2. 代码解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-yolov8%E6%A8%A1%E5%9E%8B%E5%8A%A0%E8%BD%BD%EF%BC%88yolov8ncnn-cpp%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. yolov8模型加载（yolov8ncnn.cpp）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E7%9B%B8%E6%9C%BA%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. 相机相关操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%9B%B8%E6%9C%BA%E5%AF%B9%E8%B1%A1%EF%BC%88yolov8ncnn-cpp%EF%BC%89"><span class="nav-number">2.2.1.</span> <span class="nav-text">创建相机对象（yolov8ncnn.cpp）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E7%9B%B8%E6%9C%BA%EF%BC%88yolov8ncnn-cpp%EF%BC%89"><span class="nav-number">2.2.2.</span> <span class="nav-text">打开相机（yolov8ncnn.cpp）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E9%97%AD%E7%9B%B8%E6%9C%BA%EF%BC%88yolov8ncnn-cpp%EF%BC%89"><span class="nav-number">2.2.3.</span> <span class="nav-text">关闭相机（yolov8ncnn.cpp）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E7%9B%B8%E6%9C%BA%E8%BE%93%E5%87%BA%E6%98%BE%E7%A4%BA%E7%AA%97%E5%8F%A3%EF%BC%88yolov8ncnn-cpp%EF%BC%89"><span class="nav-number">2.2.4.</span> <span class="nav-text">设置相机输出显示窗口（yolov8ncnn.cpp）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E7%89%A9%E4%BD%93%E8%AF%86%E5%88%AB"><span class="nav-number">2.3.</span> <span class="nav-text">2.3. 物体识别</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#yolo%E8%AF%86%E5%88%AB%EF%BC%88yolov8ncnn-cpp%EF%BC%89"><span class="nav-number">2.3.1.</span> <span class="nav-text">yolo识别（yolov8ncnn.cpp）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B0%83%E7%94%A8%EF%BC%88ndkcamera-cpp%EF%BC%89"><span class="nav-number">2.3.2.</span> <span class="nav-text">调用（ndkcamera.cpp）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E9%9B%86%E6%88%90%E5%88%B0%E9%A1%B9%E7%9B%AE%E4%B8%ADAndroid%E7%AB%AF%E9%9B%86%E6%88%90NCNN-Yolov8-OpenCV-android-ncnn-CSDN%E5%8D%9A%E5%AE%A2"><span class="nav-number">3.</span> <span class="nav-text">3. 集成到项目中Android端集成NCNN+Yolov8+OpenCV_android ncnn-CSDN博客</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7%E9%93%BE%E9%85%8D%E7%BD%AE-%E2%80%93-%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5%E7%9B%B4%E6%8E%A5%E5%88%9B%E5%BB%BAc-%E9%A1%B9%E7%9B%AE%EF%BC%8C%E8%B7%B3%E8%BF%87%E4%BA%86%E8%BF%99%E4%B8%80%E6%AD%A5"><span class="nav-number">3.1.</span> <span class="nav-text">3.1. 交叉编译工具链配置 – 参考链接直接创建c++项目，跳过了这一步</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#cmake%E5%B7%A5%E5%85%B7%E4%B8%8B%E8%BD%BDIndex-of-x2F-files-cmake-org"><span class="nav-number">3.1.1.</span> <span class="nav-text">cmake工具下载Index of &#x2F;files (cmake.org)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E8%84%9A%E6%9C%AC%E7%A4%BA%E4%BE%8B"><span class="nav-number">3.1.2.</span> <span class="nav-text">编译脚本示例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E9%A1%B9%E7%9B%AE%E6%96%87%E4%BB%B6%E4%BF%AE%E6%94%B9-%E2%80%93-%E5%85%B7%E4%BD%93%E6%9F%A5%E7%9C%8B%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number">3.2.</span> <span class="nav-text">3.2. 项目文件修改 – 具体查看参考链接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#build-gradle-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">build.gradle</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E6%96%B0%E5%BB%BAnative-library"><span class="nav-number">3.3.</span> <span class="nav-text">3.3. 新建native library</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-%E6%B7%BB%E5%8A%A0%E5%BA%93%E4%BE%9D%E8%B5%96"><span class="nav-number">3.4.</span> <span class="nav-text">3.4. 添加库依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-%E6%B7%BB%E5%8A%A0yolov8%E9%A1%B9%E7%9B%AE%E4%BE%9D%E8%B5%96%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">3.5.</span> <span class="nav-text">3.5. 添加yolov8项目依赖文件夹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-%E6%96%87%E4%BB%B6%E7%BC%96%E8%BE%91"><span class="nav-number">3.6.</span> <span class="nav-text">3.6. 文件编辑</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="yolov8部署在安卓设备上 | Hexo">
+      <meta itemprop="description" content="使用原生python+yolov8+cuda+cudnn进行yolov8的安卓部署">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          yolov8部署在安卓设备上
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-08-27 14:51:15" itemprop="dateCreated datePublished" datetime="2024-08-27T14:51:15+08:00">2024-08-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-09-17 21:38:23" itemprop="dateModified" datetime="2024-09-17T21:38:23+08:00">2024-09-17</time>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">使用原生python+yolov8+cuda+cudnn进行yolov8的安卓部署</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="1-环境配置"><a href="#1-环境配置" class="headerlink" title="1. 环境配置"></a>1. 环境配置</h2><h3 id="1-1-cuda-cudnn"><a href="#1-1-cuda-cudnn" class="headerlink" title="1.1. cuda+cudnn"></a>1.1. cuda+cudnn</h3><h3 id="1-2-pytorch"><a href="#1-2-pytorch" class="headerlink" title="1.2. pytorch"></a>1.2. pytorch</h3><h4 id="pip安装"><a href="#pip安装" class="headerlink" title="pip安装"></a>pip安装</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu111 -i https://pypi.tuna.tsinghua.edu.cn/simple</span><br></pre></td></tr></table></figure>
+
+<img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240827145637927.png" class="" title="image-20240827145637927">
+
+<h3 id="1-3-yolov8主页-Ultralytics-YOLO-文档"><a href="#1-3-yolov8主页-Ultralytics-YOLO-文档" class="headerlink" title="1.3. yolov8主页 -Ultralytics YOLO 文档"></a>1.3. yolov8<a target="_blank" rel="noopener" href="https://docs.ultralytics.com/zh">主页 -Ultralytics YOLO 文档</a></h3><h4 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/ultralytics/ultralytics.git</span><br><span class="line">cd ultralytics</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置ultralytics</span></span><br><span class="line">pip install -e .</span><br></pre></td></tr></table></figure>
+
+<img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240827145728945.png" class="" title="image-20240827145728945">
+
+<img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240827150803907.png" class="" title="image-20240827150803907">
+
+<img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240827150842015.png" class="" title="image-20240827150842015">
+
+<img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240827150902899.png" class="" title="image-20240827150902899">
+
+<h4 id="权重文件夹与权重文件Ultralytics-YOLOv8-Tasks-Ultralytics-YOLO-Docs"><a href="#权重文件夹与权重文件Ultralytics-YOLOv8-Tasks-Ultralytics-YOLO-Docs" class="headerlink" title="权重文件夹与权重文件Ultralytics YOLOv8 Tasks - Ultralytics YOLO Docs"></a>权重文件夹与权重文件<a target="_blank" rel="noopener" href="https://docs.ultralytics.com/tasks/">Ultralytics YOLOv8 Tasks - Ultralytics YOLO Docs</a></h4><img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240827150542749.png" class="" title="image-20240827150542749">
+
+<img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240827151136206.png" class="" title="image-20240827151136206">
+
+<h4 id="图片识别"><a href="#图片识别" class="headerlink" title="图片识别"></a>图片识别</h4><img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240827151837726.png" class="" title="image-20240827151837726">
+
+<img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240827153224740.png" class="" title="image-20240827153224740">
+
+<h4 id="摄像头调用"><a href="#摄像头调用" class="headerlink" title="摄像头调用"></a>摄像头调用</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yolo segment predicrt model=D:/1zzdd/projs/myyolo/ultralytics/ultralytics/weights/yolov8s-seg.pt source=0 show</span><br></pre></td></tr></table></figure>
+
+<img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240903222753415.png" class="" title="image-20240903222753415">
+
+<img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240903222623915.png" class="" title="image-20240903222623915">
+
+<h4 id="onnx模型生成"><a href="#onnx模型生成" class="headerlink" title="onnx模型生成"></a>onnx模型生成</h4><h5 id="参考成功版本目录"><a href="#参考成功版本目录" class="headerlink" title="参考成功版本目录"></a>参考成功版本目录</h5><img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904003137914.png" class="" title="image-20240904003137914">
+
+<h5 id="安装ultralytics"><a href="#安装ultralytics" class="headerlink" title="安装ultralytics"></a>安装ultralytics</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Install the required package <span class="keyword">for</span> YOLOv8</span></span><br><span class="line">pip install ultralytics</span><br></pre></td></tr></table></figure>
+
+<h5 id="onnx安装"><a href="#onnx安装" class="headerlink" title="onnx安装"></a>onnx安装</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -i https://pypi.tuna.tsinghua.edu.cn/simple onnx=1.16.1</span><br></pre></td></tr></table></figure>
+
+<h5 id="pt转onnx"><a href="#pt转onnx" class="headerlink" title="pt转onnx"></a>pt转onnx</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> ultralytics <span class="keyword">import</span> YOLO</span><br><span class="line"></span><br><span class="line"><span class="comment"># Load a model</span></span><br><span class="line">model = YOLO(<span class="string">&quot;yolov8n.pt&quot;</span>)  <span class="comment"># load an official model</span></span><br><span class="line">model = YOLO(<span class="string">&quot;../ultralytics/ultralytics/weights/yolov8s-seg.pt&quot;</span>)  <span class="comment"># load a custom trained model</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Export the model</span></span><br><span class="line">model.export(<span class="built_in">format</span>=<span class="string">&quot;onnx&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h6 id="DLL链接错误"><a href="#DLL链接错误" class="headerlink" title="DLL链接错误"></a>DLL链接错误</h6><img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904002340119.png" class="" title="image-20240904002340119">
+
+<h6 id="更换onnx版本"><a href="#更换onnx版本" class="headerlink" title="更换onnx版本"></a>更换onnx版本</h6><img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904002941475.png" class="" title="image-20240904002941475">
+
+<h6 id="生成成功"><a href="#生成成功" class="headerlink" title="生成成功"></a>生成成功</h6><img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904002804470.png" class="" title="image-20240904002804470">
+
+<h4 id="ncnn模型生成"><a href="#ncnn模型生成" class="headerlink" title="ncnn模型生成"></a>ncnn模型生成</h4><h5 id="安装ncnn"><a href="#安装ncnn" class="headerlink" title="安装ncnn"></a>安装ncnn</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install ncnn</span><br></pre></td></tr></table></figure>
+
+<h5 id="生成ncnn文件"><a href="#生成ncnn文件" class="headerlink" title="生成ncnn文件"></a>生成ncnn文件</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> ultralytics <span class="keyword">import</span> YOLO</span><br><span class="line"></span><br><span class="line"><span class="comment"># Load a model</span></span><br><span class="line">model = YOLO(<span class="string">&quot;yolov8n.pt&quot;</span>)  <span class="comment"># load an official model</span></span><br><span class="line">model = YOLO(<span class="string">&quot;../ultralytics/ultralytics/weights/yolov8s-seg.pt&quot;</span>)  <span class="comment"># s权重文件</span></span><br><span class="line"><span class="comment"># model = YOLO(&quot;../ultralytics/ultralytics/weights/yolov8s-seg.pt&quot;)  # n权重文件，两个都要生成一次</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Export the model</span></span><br><span class="line">model.export(<span class="built_in">format</span>=<span class="string">&quot;ncnn&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904011446397.png" class="" title="image-20240904011446397">
+
+<h3 id="1-4-android-studio"><a href="#1-4-android-studio" class="headerlink" title="1.4. android studio"></a>1.4. android studio</h3><h4 id="SDK下载"><a href="#SDK下载" class="headerlink" title="SDK下载"></a>SDK下载</h4><img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904014545909.png" class="" title="image-20240904014545909">
+
+<img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904015039052.png" class="" title="image-20240904015039052">
+
+<img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904015603390.png" class="" title="image-20240904015603390">
+
+<img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904015621812.png" class="" title="image-20240904015621812">
+
+<img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904015635169.png" class="" title="image-20240904015635169">
+
+<img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904012818863.png" class="" title="image-20240904012818863">
+
+<h4 id="项目配置"><a href="#项目配置" class="headerlink" title="项目配置"></a>项目配置</h4><h5 id="build-gradle"><a href="#build-gradle" class="headerlink" title="build.gradle"></a>build.gradle</h5><img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904022640357.png" class="" title="image-20240904022640357">
+
+
+
+<img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904022653273.png" class="" title="image-20240904022653273">
+
+<h5 id="local-properties"><a href="#local-properties" class="headerlink" title="local.properties"></a>local.properties</h5><img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904022903099.png" class="" title="image-20240904022903099">
+
+<h3 id="1-5-示例"><a href="#1-5-示例" class="headerlink" title="1.5. 示例"></a>1.5. 示例</h3><h4 id="代码下载"><a href="#代码下载" class="headerlink" title="代码下载"></a>代码下载</h4><h4 id="GitHub-Digital2Slave-x2F-ncnn-android-yolov8-seg-a-sample-yolov8-object-segment-android-project-based-on-ncnn-and-opencv"><a href="#GitHub-Digital2Slave-x2F-ncnn-android-yolov8-seg-a-sample-yolov8-object-segment-android-project-based-on-ncnn-and-opencv" class="headerlink" title="GitHub - Digital2Slave&#x2F;ncnn-android-yolov8-seg: a sample yolov8 object segment android project based on ncnn and opencv."></a><a target="_blank" rel="noopener" href="https://github.com/Digital2Slave/ncnn-android-yolov8-seg">GitHub - Digital2Slave&#x2F;ncnn-android-yolov8-seg: a sample yolov8 object segment android project based on ncnn and opencv.</a></h4><h4 id="项目运行"><a href="#项目运行" class="headerlink" title="项目运行"></a>项目运行</h4><h5 id="ncnn配置-两份n-x2F-s的ncnn文件都存在这个路经"><a href="#ncnn配置-两份n-x2F-s的ncnn文件都存在这个路经" class="headerlink" title="ncnn配置 - 两份n&#x2F;s的ncnn文件都存在这个路经"></a>ncnn配置 - 两份n&#x2F;s的ncnn文件都存在这个路经</h5><p>……&#x2F;ncnn-android-yolov8-seg&#x2F;app&#x2F;src&#x2F;main&#x2F;assets下面</p>
+<img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904024418932.png" class="" title="image-20240904024418932">
+
+<h5 id="ncnn安卓文件"><a href="#ncnn安卓文件" class="headerlink" title="ncnn安卓文件"></a>ncnn安卓文件</h5><h5 id="opencv安卓文件"><a href="#opencv安卓文件" class="headerlink" title="opencv安卓文件"></a>opencv安卓文件</h5><img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904025233912.png" class="" title="image-20240904025233912">
+
+<h5 id="编辑CmakeLists-txt"><a href="#编辑CmakeLists-txt" class="headerlink" title="编辑CmakeLists.txt"></a>编辑CmakeLists.txt</h5><img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904025644213.png" class="" title="image-20240904025644213">
+
+<img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904025744790.png" class="" title="image-20240904025744790">
+
+<h5 id="编译报错更改Android-Studio中的JDK版本-android-studio-4-1-切换gradle-jdk-版本-CSDN博客"><a href="#编译报错更改Android-Studio中的JDK版本-android-studio-4-1-切换gradle-jdk-版本-CSDN博客" class="headerlink" title="编译报错更改Android Studio中的JDK版本_android studio 4.1 切换gradle jdk 版本-CSDN博客"></a>编译报错<a target="_blank" rel="noopener" href="https://blog.csdn.net/Redmoon955331/article/details/121761220">更改Android Studio中的JDK版本_android studio 4.1 切换gradle jdk 版本-CSDN博客</a></h5><img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904030702817.png" class="" title="image-20240904030702817">
+
+<h5 id="最终解决"><a href="#最终解决" class="headerlink" title="最终解决"></a>最终解决</h5><img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904042145435.png" class="" title="image-20240904042145435">
+
+<img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240904042206267.png" class="" title="image-20240904042206267">
+
+<h2 id="2-代码解析"><a href="#2-代码解析" class="headerlink" title="2. 代码解析"></a>2. 代码解析</h2><h3 id="2-1-yolov8模型加载（yolov8ncnn-cpp）"><a href="#2-1-yolov8模型加载（yolov8ncnn-cpp）" class="headerlink" title="2.1. yolov8模型加载（yolov8ncnn.cpp）"></a>2.1. yolov8模型加载（yolov8ncnn.cpp）</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将Java代码与C/C++代码连接起来，使得Java代码可以调用C/C++代码中的功能</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">	JNIEXPORT jboolean: 布尔值（jboolean），表示操作是否成功</span></span><br><span class="line"><span class="comment">    JNICALL: 这是一个宏，指示函数的调用约定，确保它能正确地被 JNI 调用。</span></span><br><span class="line"><span class="comment">    Java_com_tencent_yolov8ncnn_Yolov8Ncnn_loadModel: 这是函数的名字，遵循 JNI 的命名规则，表示这是一个 Java 类 com.tencent.yolov8ncnn.Yolov8Ncnn 中名为 loadModel 的本地方法。</span></span><br><span class="line"><span class="comment">    JNIEnv* env: 这是一个指向 JNI 环境的指针，用于与 Java 虚拟机交互，调用 JNI 提供的各种函数。</span></span><br><span class="line"><span class="comment">    jobject thiz: 这是调用此 JNI 方法的 Java 对象的引用。它允许本地代码访问 Java 对象的字段和调用其方法。</span></span><br><span class="line"><span class="comment">	加载一个机器学习模型到指定的计算设备上（CPU 或 GPU），并可能使用 AssetManager 来访问模型文件</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function">JNIEXPORT jboolean JNICALL <span class="title">Java_com_tencent_yolov8ncnn_Yolov8Ncnn_loadModel</span><span class="params">(JNIEnv* env, jobject thiz, jobject assetManager, jint modelid, jint cpugpu)</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//jint modelid: 这是一个整型参数，通常用于指定要加载的模型的 ID，在yoolov8项目中指定的模型ID只有0/1，分别取n/s</span></span><br><span class="line"><span class="type">const</span> <span class="type">char</span>* modeltypes[] =</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;n&quot;</span>,</span><br><span class="line">    <span class="string">&quot;s&quot;</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// jint cpugpu: 用于指定计算使用的设备类型，可能是 CPU-0 或 GPU-1。</span></span><br><span class="line"><span class="type">bool</span> use_gpu = (<span class="type">int</span>)cpugpu == <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 模型加载</span></span><br><span class="line"><span class="comment">// jobject assetManager:  Java 的 AssetManager 对象，通常用于访问应用程序的资源。</span></span><br><span class="line">AAssetManager* mgr = <span class="built_in">AAssetManager_fromJava</span>(env, assetManager);</span><br><span class="line">g_yolo-&gt;<span class="built_in">load</span>(mgr, modeltype, target_size, mean_vals[(<span class="type">int</span>)modelid], norm_vals[(<span class="type">int</span>)modelid], use_gpu);</span><br></pre></td></tr></table></figure>
+
+<p>注：物体识别模型有很多，yolov8自己也分为好多种，基本评判标准就是mAP和FLOPs，FLOPs越低表明速度越快，mAP越大性能越强，一般而言两个是相反的，做题目越快，出错的概率就越大，越慢，出错的概率就越低</p>
+<img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240917115739468.png" class="" title="image-20240917115739468">
+
+<h3 id="2-2-相机相关操作"><a href="#2-2-相机相关操作" class="headerlink" title="2.2. 相机相关操作"></a>2.2. 相机相关操作</h3><h4 id="创建相机对象（yolov8ncnn-cpp）"><a href="#创建相机对象（yolov8ncnn-cpp）" class="headerlink" title="创建相机对象（yolov8ncnn.cpp）"></a>创建相机对象（yolov8ncnn.cpp）</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在 Java 虚拟机 (JVM) 加载一个本地库时进行初始化</span></span><br><span class="line"><span class="function">JNIEXPORT jint <span class="title">JNI_OnLoad</span><span class="params">(JavaVM* vm, <span class="type">void</span>* reserved)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    __android_log_print(ANDROID_LOG_DEBUG, <span class="string">&quot;ncnn&quot;</span>, <span class="string">&quot;JNI_OnLoad&quot;</span>);</span><br><span class="line"></span><br><span class="line">    g_camera = <span class="keyword">new</span> MyNdkCamera;	<span class="comment">// 初始化一个相机对象</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> JNI_VERSION_1_4; <span class="comment">// JNI 1.4 版本</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="打开相机（yolov8ncnn-cpp）"><a href="#打开相机（yolov8ncnn-cpp）" class="headerlink" title="打开相机（yolov8ncnn.cpp）"></a>打开相机（yolov8ncnn.cpp）</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">JNIEXPORT jboolean JNICALL <span class="title">Java_com_tencent_yolov8ncnn_Yolov8Ncnn_openCamera</span><span class="params">(JNIEnv* env, jobject thiz, jint facing)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (facing &lt; <span class="number">0</span> || facing &gt; <span class="number">1</span>)	<span class="comment">//jint facing: 相机的朝向（通常 0 表示前置摄像头，1 表示后置摄像头）</span></span><br><span class="line">        <span class="keyword">return</span> JNI_FALSE;</span><br><span class="line"></span><br><span class="line">    __android_log_print(ANDROID_LOG_DEBUG, <span class="string">&quot;ncnn&quot;</span>, <span class="string">&quot;openCamera %d&quot;</span>, facing);</span><br><span class="line"></span><br><span class="line">    g_camera-&gt;<span class="built_in">open</span>((<span class="type">int</span>)facing);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> JNI_TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="关闭相机（yolov8ncnn-cpp）"><a href="#关闭相机（yolov8ncnn-cpp）" class="headerlink" title="关闭相机（yolov8ncnn.cpp）"></a>关闭相机（yolov8ncnn.cpp）</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">JNIEXPORT jboolean JNICALL <span class="title">Java_com_tencent_yolov8ncnn_Yolov8Ncnn_closeCamera</span><span class="params">(JNIEnv* env, jobject thiz)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    __android_log_print(ANDROID_LOG_DEBUG, <span class="string">&quot;ncnn&quot;</span>, <span class="string">&quot;closeCamera&quot;</span>);</span><br><span class="line"></span><br><span class="line">    g_camera-&gt;<span class="built_in">close</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> JNI_TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="设置相机输出显示窗口（yolov8ncnn-cpp）"><a href="#设置相机输出显示窗口（yolov8ncnn-cpp）" class="headerlink" title="设置相机输出显示窗口（yolov8ncnn.cpp）"></a>设置相机输出显示窗口（yolov8ncnn.cpp）</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">JNIEXPORT jboolean JNICALL <span class="title">Java_com_tencent_yolov8ncnn_Yolov8Ncnn_setOutputWindow</span><span class="params">(JNIEnv* env, jobject thiz, jobject surface)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ANativeWindow* win = <span class="built_in">ANativeWindow_fromSurface</span>(env, surface);</span><br><span class="line"></span><br><span class="line">    __android_log_print(ANDROID_LOG_DEBUG, <span class="string">&quot;ncnn&quot;</span>, <span class="string">&quot;setOutputWindow %p&quot;</span>, win);</span><br><span class="line"></span><br><span class="line">    g_camera-&gt;<span class="built_in">set_window</span>(win);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> JNI_TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-物体识别"><a href="#2-3-物体识别" class="headerlink" title="2.3. 物体识别"></a>2.3. 物体识别</h3><h4 id="yolo识别（yolov8ncnn-cpp）"><a href="#yolo识别（yolov8ncnn-cpp）" class="headerlink" title="yolo识别（yolov8ncnn.cpp）"></a>yolo识别（yolov8ncnn.cpp）</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">MyNdkCamera::on_image_render</span><span class="params">(cv::Mat&amp; rgb)</span> <span class="type">const</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// nanodet</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function">ncnn::MutexLockGuard <span class="title">g</span><span class="params">(lock)</span></span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (g_yolo)</span><br><span class="line">        &#123;</span><br><span class="line">            std::vector&lt;Object&gt; objects;</span><br><span class="line">            g_yolo-&gt;<span class="built_in">detect</span>(rgb, objects);	<span class="comment">//物体检测</span></span><br><span class="line"></span><br><span class="line">            g_yolo-&gt;<span class="built_in">draw</span>(rgb, objects);	<span class="comment">// 结果绘制</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">draw_unsupported</span>(rgb);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">draw_fps</span>(rgb);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="调用（ndkcamera-cpp）"><a href="#调用（ndkcamera-cpp）" class="headerlink" title="调用（ndkcamera.cpp）"></a>调用（ndkcamera.cpp）</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 原理不明，推测是该函数自动继承了yolov8ncnn.cpp中的on_image_render函数</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">NdkCameraWindow::on_image_render</span><span class="params">(cv::Mat&amp; rgb)</span> <span class="type">const</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 间接或直接的调用yolov8ncnn.cpp中的on_image_render函数</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">NdkCameraWindow::on_image</span><span class="params">(<span class="type">const</span> <span class="type">unsigned</span> <span class="type">char</span>* nv21, <span class="type">int</span> nv21_width, <span class="type">int</span> nv21_height)</span> <span class="type">const</span></span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-集成到项目中Android端集成NCNN-Yolov8-OpenCV-android-ncnn-CSDN博客"><a href="#3-集成到项目中Android端集成NCNN-Yolov8-OpenCV-android-ncnn-CSDN博客" class="headerlink" title="3. 集成到项目中Android端集成NCNN+Yolov8+OpenCV_android ncnn-CSDN博客"></a>3. 集成到项目中<a target="_blank" rel="noopener" href="https://blog.csdn.net/DoraemonCat520/article/details/139472947">Android端集成NCNN+Yolov8+OpenCV_android ncnn-CSDN博客</a></h2><h3 id="3-1-交叉编译工具链配置-–-参考链接直接创建c-项目，跳过了这一步"><a href="#3-1-交叉编译工具链配置-–-参考链接直接创建c-项目，跳过了这一步" class="headerlink" title="3.1. 交叉编译工具链配置 – 参考链接直接创建c++项目，跳过了这一步"></a>3.1. 交叉编译工具链配置 – 参考链接直接创建c++项目，跳过了这一步</h3><h4 id="cmake工具下载Index-of-x2F-files-cmake-org"><a href="#cmake工具下载Index-of-x2F-files-cmake-org" class="headerlink" title="cmake工具下载Index of &#x2F;files (cmake.org)"></a>cmake工具下载<a target="_blank" rel="noopener" href="https://cmake.org/files/">Index of &#x2F;files (cmake.org)</a></h4><p>推荐使用cmake 3.22.1，因为参考链接使用的这个编译的yolov8成功了，而且使用的参考项目就是我上面看的那个，选择能用的工具链</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">我的示例项目使用的是3.10.2的android studio自带的cmake，所以按道理来说，3.10.2-3.22.1这一段里面的cmake应该都是确保支持的，但是3.10.2会需要修改很多地方的版本，可能会出问题，推荐使用默认的3.22.1</span><br></pre></td></tr></table></figure>
+
+<img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240917125925929.png" class="" title="image-20240917125925929">
+
+<img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240917130026810.png" class="" title="image-20240917130026810">
+
+<h4 id="编译脚本示例"><a href="#编译脚本示例" class="headerlink" title="编译脚本示例"></a>编译脚本示例</h4><img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240917130856613.png" class="" title="image-20240917130856613">
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">/bin/bash</span></span><br><span class="line"></span><br><span class="line">export ANDROID_NDK=/opt/env/android-ndk-r14b	# ndk版本应该是我使用的ndk24</span><br><span class="line"></span><br><span class="line">rm -r build</span><br><span class="line">mkdir build &amp;&amp; cd build </span><br><span class="line"></span><br><span class="line">cmake -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK/build/cmake/android.toolchain.cmake \	# 工具链文件</span><br><span class="line">	-DANDROID_ABI=&quot;armeabi-v7a&quot; \	# CPU架构，参考使用的cpu</span><br><span class="line">	-DANDROID_NDK=$ANDROID_NDK \	# NDK的根目录</span><br><span class="line">	-DANDROID_PLATFORM=android-22 \ # 支持的最低Android平台，我们的项目应该是android-7</span><br><span class="line">	..</span><br><span class="line"></span><br><span class="line">make &amp;&amp; make install</span><br><span class="line"></span><br><span class="line">cd ..</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-项目文件修改-–-具体查看参考链接"><a href="#3-2-项目文件修改-–-具体查看参考链接" class="headerlink" title="3.2. 项目文件修改 – 具体查看参考链接"></a>3.2. 项目文件修改 – 具体查看参考链接</h3><h4 id="build-gradle-1"><a href="#build-gradle-1" class="headerlink" title="build.gradle"></a>build.gradle</h4><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">	</span><br><span class="line">    ...</span><br><span class="line">    </span><br><span class="line">    externalNativeBuild &#123;</span><br><span class="line">        cmake &#123;</span><br><span class="line">            path <span class="keyword">file</span>(<span class="string">&#x27;src/main/cpp/CMakeLists.txt&#x27;</span>)</span><br><span class="line">            version <span class="string">&#x27;3.22.1&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-新建native-library"><a href="#3-3-新建native-library" class="headerlink" title="3.3. 新建native library"></a>3.3. 新建native library</h3><p>File-&gt;New Module-&gt;Android Native Library</p>
+<p>注意：不使用kotlin进行编程的情况下，不要选择配置文件为kotlin，以免出现未知问题</p>
+<img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240917204418282.png" class="" title="image-20240917204418282">
+
+<img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240917204734108.png" class="" title="image-20240917204734108">
+
+<h3 id="3-4-添加库依赖"><a href="#3-4-添加库依赖" class="headerlink" title="3.4. 添加库依赖"></a>3.4. 添加库依赖</h3><p>注意：groovy中的写法与kotlin不同，老版本请使用groovy写法，.kt文件中才使用kotlin</p>
+<img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240917205416072.png" class="" title="image-20240917205416072">
+
+<h3 id="3-5-添加yolov8项目依赖文件夹"><a href="#3-5-添加yolov8项目依赖文件夹" class="headerlink" title="3.5. 添加yolov8项目依赖文件夹"></a>3.5. 添加yolov8项目依赖文件夹</h3><img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240917212107948.png" class="" title="image-20240917212107948">
+
+
+
+<img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240917212151851.png" class="" title="image-20240917212151851">
+
+<img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240917212414670.png" class="" title="image-20240917212414670">
+
+<h3 id="3-6-文件编辑"><a href="#3-6-文件编辑" class="headerlink" title="3.6. 文件编辑"></a>3.6. 文件编辑</h3><p>这里就是搬运了，把示例代码搬运进来，但是我的安卓水平相当有限，根本搬不动</p>
+<img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240917212814120.png" class="" title="image-20240917212814120">
+
+<img src="/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/image-20240917213653879.png" class="" title="image-20240917213653879">
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/08/17/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%B8%97%E9%80%8F%E6%8A%93%E5%8C%85/01-WireShark/" rel="prev" title="wireshark抓包修改教程">
+                  <i class="fa fa-chevron-left"></i> wireshark抓包修改教程
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/13/01-%E6%B8%B8%E6%88%8F%E6%8E%A2%E7%A9%B6%E9%A1%B9%E7%9B%AE/LAYA/01-laya%E5%9F%BA%E7%A1%80/" rel="next" title="layaair2版本引擎学习-01">
+                  layaair2版本引擎学习-01 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://example.com/2024/08/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolov8_android_segment/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>

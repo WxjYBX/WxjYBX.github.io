@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha256-/4UQcSmErDzPCMAiuOiWPVVsNN2s3ZY/NsmXNcj0IFc=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="零声教育-linux内核启动流程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux内核源码分析01-内核启动流程">
+<meta property="og:url" content="http://example.com/2024/06/13/linux/linux%E5%86%85%E6%A0%B8/01-linux%E5%86%85%E6%A0%B8%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="零声教育-linux内核启动流程">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-06-13T14:49:13.366Z">
+<meta property="article:modified_time" content="2024-06-13T15:26:29.381Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2024/06/13/linux/linux%E5%86%85%E6%A0%B8/01-linux%E5%86%85%E6%A0%B8%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2024/06/13/linux/linux%E5%86%85%E6%A0%B8/01-linux%E5%86%85%E6%A0%B8%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/","path":"2024/06/13/linux/linux内核/01-linux内核启动流程/","title":"linux内核源码分析01-内核启动流程"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>linux内核源码分析01-内核启动流程 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E7%94%B5%E6%BA%90%E5%90%AF%E5%8A%A8%E5%88%B0BIOS"><span class="nav-number">1.</span> <span class="nav-text">从电源启动到BIOS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%88%86%E7%95%8C%E7%BA%BF"><span class="nav-number">1.1.</span> <span class="nav-text">操作系统分界线</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E6%80%81%E2%80%94%E2%80%94%E5%86%85%E6%A0%B8%E6%80%81"><span class="nav-number">1.1.1.</span> <span class="nav-text">用户态——内核态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.1.2.</span> <span class="nav-text">实模式——保护模式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%9E%E6%A8%A1%E5%BC%8F-linux%E5%90%AF%E5%8A%A8%E6%97%B6%E7%9A%84%E7%9F%AD%E6%9A%82%E6%97%B6%E9%97%B4%E6%AE%B5%E4%B8%BA%E5%AE%9E%E6%A8%A1%E5%BC%8F%EF%BC%8C%E4%B9%8B%E5%90%8E%E5%85%A8%E9%83%A8%E9%83%BD%E6%98%AF%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">实模式	-	linux启动时的短暂时间段为实模式，之后全部都是保护模式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F-%E5%AE%89%E5%85%A8%EF%BC%8C%E6%89%A9%E5%B1%95%E6%80%A7%E3%80%81%E7%81%B5%E6%B4%BB%E6%80%A7%E2%86%91"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">保护模式	-	安全，扩展性、灵活性↑</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B"><span class="nav-number">1.2.</span> <span class="nav-text">系统启动流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8EBIOS%E5%88%B0bootloader"><span class="nav-number">2.</span> <span class="nav-text">从BIOS到bootloader</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bootloader%E5%B7%A5%E4%BD%9C%E5%8A%A0%E8%BD%BD%E6%B5%81%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">bootloader工作加载流程</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/06/13/linux/linux%E5%86%85%E6%A0%B8/01-linux%E5%86%85%E6%A0%B8%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="linux内核源码分析01-内核启动流程 | Hexo">
+      <meta itemprop="description" content="零声教育-linux内核启动流程">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          linux内核源码分析01-内核启动流程
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-06-13 22:49:13 / Modified: 23:26:29" itemprop="dateCreated datePublished" datetime="2024-06-13T22:49:13+08:00">2024-06-13</time>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">零声教育-linux内核启动流程</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="从电源启动到BIOS"><a href="#从电源启动到BIOS" class="headerlink" title="从电源启动到BIOS"></a>从电源启动到BIOS</h2><h3 id="操作系统分界线"><a href="#操作系统分界线" class="headerlink" title="操作系统分界线"></a>操作系统分界线</h3><h4 id="用户态——内核态"><a href="#用户态——内核态" class="headerlink" title="用户态——内核态"></a>用户态——内核态</h4><h4 id="实模式——保护模式"><a href="#实模式——保护模式" class="headerlink" title="实模式——保护模式"></a>实模式——保护模式</h4><h5 id="实模式-linux启动时的短暂时间段为实模式，之后全部都是保护模式"><a href="#实模式-linux启动时的短暂时间段为实模式，之后全部都是保护模式" class="headerlink" title="实模式	-	linux启动时的短暂时间段为实模式，之后全部都是保护模式"></a>实模式	-	linux启动时的短暂时间段为实模式，之后全部都是保护模式</h5><p><em><strong>特点：</strong></em>地址访问-&gt;真实地址，软件可不受限地操纵所有地址的空间和设备</p>
+<p>32位系统中：实模式下，只能寻址1M，每个段最多64K</p>
+<p><em><strong>存在原因：</strong></em>linux操作系统为了兼容旧的处理器（8086&#x2F;8088）<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44270855/article/details/105092119">详细概括：8086&#x2F;8088CPU内部寄存器_8086 内部存储器-CSDN博客</a></p>
+<ol>
+<li><strong>旧处理器的寄存器大小为16位</strong>，通过寄存器的寻址空间只有2^16&#x3D;64K</li>
+<li><strong>旧处理器的CPU地址总线有20位</strong>，通过CPU的寻址空间是2^20&#x3D;1M</li>
+<li>引入段地址、偏移地址，1M&#x2F;64K&#x3D;16，<strong>将CPU的1M的存储空间划分为16个寄存器能够寻址的64K存储空间</strong>，使用段地址+偏移地址，就能够访问1M内任意空间</li>
+<li><strong>段地址的获取</strong>：在汇编代码中，将某个变量的所在的段地址，存入DX寄存器（用于存放间接寻址的地址）</li>
+</ol>
+<h5 id="保护模式-安全，扩展性、灵活性↑"><a href="#保护模式-安全，扩展性、灵活性↑" class="headerlink" title="保护模式	-	安全，扩展性、灵活性↑"></a>保护模式	-	安全，扩展性、灵活性↑</h5><p><em><strong>特点：</strong></em>使用虚拟内存、页等机制保护内存</p>
+<p>32位系统中：保护模式下，能够寻址4G</p>
+<h3 id="系统启动流程"><a href="#系统启动流程" class="headerlink" title="系统启动流程"></a>系统启动流程</h3><p>按下电源-&gt;主板接收到按键发出的信号-&gt;主板向电源组发信号-&gt;电源组产生电压，唤醒系统。</p>
+<p>主板收到电源启动的信号时，主板启动并重置初始化CPU（CPU中的所有寄存器）</p>
+<h2 id="从BIOS到bootloader"><a href="#从BIOS到bootloader" class="headerlink" title="从BIOS到bootloader"></a>从BIOS到bootloader</h2><h2 id="bootloader工作加载流程"><a href="#bootloader工作加载流程" class="headerlink" title="bootloader工作加载流程"></a>bootloader工作加载流程</h2>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/06/10/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/freertos/%E9%9F%A6%E4%B8%9C%E5%B1%B1/01-%E7%B3%BB%E7%BB%9F%E8%B0%83%E5%BA%A6/" rel="prev" title="freeRTOS任务调度">
+                  <i class="fa fa-chevron-left"></i> freeRTOS任务调度
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/06/22/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/YOLO/yolo-01/" rel="next" title="yolov1-v9的学习-01">
+                  yolov1-v9的学习-01 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://example.com/2024/06/13/linux/linux%E5%86%85%E6%A0%B8/01-linux%E5%86%85%E6%A0%B8%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>

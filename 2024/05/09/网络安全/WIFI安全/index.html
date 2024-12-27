@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha256-/4UQcSmErDzPCMAiuOiWPVVsNN2s3ZY/NsmXNcj0IFc=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="通过网络安全攻击学习WIFI安全">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WIFI的安全攻击">
+<meta property="og:url" content="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="通过网络安全攻击学习WIFI安全">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509203202768.png">
+<meta property="og:image" content="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509203538114.png">
+<meta property="og:image" content="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509203619450.png">
+<meta property="og:image" content="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509203628238.png">
+<meta property="og:image" content="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509203637545.png">
+<meta property="og:image" content="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509203650133.png">
+<meta property="og:image" content="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509203845574.png">
+<meta property="og:image" content="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509203901470.png">
+<meta property="og:image" content="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509203919677.png">
+<meta property="og:image" content="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509203945783.png">
+<meta property="og:image" content="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509204910827.png">
+<meta property="og:image" content="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509205157273.png">
+<meta property="og:image" content="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509205452202.png">
+<meta property="og:image" content="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509211139696.png">
+<meta property="og:image" content="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509220536385.png">
+<meta property="og:image" content="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509221250841.png">
+<meta property="og:image" content="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509221543030.png">
+<meta property="og:image" content="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240518101354650.png">
+<meta property="og:image" content="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240518101456002.png">
+<meta property="og:image" content="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240518101619625-17159985811051.png">
+<meta property="og:image" content="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509222143143.png">
+<meta property="og:image" content="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509222248445.png">
+<meta property="og:image" content="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240510214547537.png">
+<meta property="og:image" content="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240510215419934.png">
+<meta property="og:image" content="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240510224349121.png">
+<meta property="og:image" content="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240510224900241.png">
+<meta property="og:image" content="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240510225613487.png">
+<meta property="og:image" content="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240512115653762.png">
+<meta property="og:image" content="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240512120210013.png">
+<meta property="og:image" content="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240512120424318.png">
+<meta property="og:image" content="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240512121848433.png">
+<meta property="og:image" content="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240512163554015.png">
+<meta property="article:published_time" content="2024-05-09T12:23:27.697Z">
+<meta property="article:modified_time" content="2024-05-18T02:16:24.891Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509203202768.png">
+
+
+<link rel="canonical" href="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/","path":"2024/05/09/网络安全/WIFI安全/","title":"WIFI的安全攻击"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>WIFI的安全攻击 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80-2-4G%E4%B8%8E5G"><span class="nav-number">1.</span> <span class="nav-text">1. 无线网络基础-2.4G与5G</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-SSID"><span class="nav-number">1.1.</span> <span class="nav-text">1.1. SSID</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-WAP"><span class="nav-number">1.2.</span> <span class="nav-text">1.2. WAP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-AP"><span class="nav-number">1.3.</span> <span class="nav-text">1.3. AP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-WEP"><span class="nav-number">1.4.</span> <span class="nav-text">1.4. WEP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-WPA"><span class="nav-number">1.5.</span> <span class="nav-text">1.5. WPA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-%E7%AB%99%E7%82%B9"><span class="nav-number">1.6.</span> <span class="nav-text">1.6. 站点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-7-BSSID"><span class="nav-number">1.7.</span> <span class="nav-text">1.7. BSSID</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-8-%E4%BF%A1%E9%81%93"><span class="nav-number">1.8.</span> <span class="nav-text">1.8. 信道</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E8%B7%AF%E7%94%B1%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">2. 路由器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E8%B0%83%E5%88%B6%E8%A7%A3%E8%B0%83%E5%99%A8ADSL"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. 调制解调器ADSL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-DHCP"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. DHCP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E5%9F%BA%E6%9C%AC%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.3.</span> <span class="nav-text">2.3. 基本设置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E4%BD%BF%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">3. 无线网卡使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E5%AE%9E%E6%88%98"><span class="nav-number">3.1.</span> <span class="nav-text">3.2. 实战</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3%E5%AD%97%E5%85%B8%E7%9A%84%E5%87%86%E5%A4%87"><span class="nav-number">4.</span> <span class="nav-text">4. 密码破解字典的准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E8%87%AA%E8%A1%8C%E5%88%B6%E4%BD%9C"><span class="nav-number">4.1.</span> <span class="nav-text">4.1. 自行制作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E5%85%B6%E4%BB%96%E9%80%94%E5%BE%84%E8%8E%B7%E5%8F%96%E7%9A%84%E5%AD%97%E5%85%B8"><span class="nav-number">4.2.</span> <span class="nav-text">4.2. 其他途径获取的字典</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-WEP%E7%A0%B4%E8%A7%A3"><span class="nav-number">5.</span> <span class="nav-text">5. WEP破解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-WPA2-PSK"><span class="nav-number">6.</span> <span class="nav-text">6. WPA2-PSK</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">6.1.</span> <span class="nav-text">6.1. 基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-%E7%A0%B4%E8%A7%A3%E6%95%99%E7%A8%8B-%E6%8A%93%E5%8F%96%E6%8F%A1%E6%89%8B%E5%8C%85"><span class="nav-number">6.2.</span> <span class="nav-text">6.2. 破解教程-抓取握手包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-%E7%A0%B4%E8%A7%A3%E6%95%99%E7%A8%8B-%E7%A0%B4%E8%A7%A3%E6%8F%A1%E6%89%8B%E5%8C%85"><span class="nav-number">6.3.</span> <span class="nav-text">6.3. 破解教程-破解握手包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-WPS"><span class="nav-number">7.</span> <span class="nav-text">7. WPS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E7%AA%81%E7%A0%B4MAC%E8%BF%87%E6%BB%A4"><span class="nav-number">8.</span> <span class="nav-text">8. 突破MAC过滤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%E8%8E%B7%E5%8F%96%E6%9C%AA%E5%B9%BF%E6%92%AD%E7%9A%84SSID-ESSID-%E7%94%A8%E6%88%B7%E5%8F%96%E5%90%8D%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AFBSSID"><span class="nav-number">9.</span> <span class="nav-text">9. 获取未广播的SSID(ESSID-用户取名，而不是BSSID)</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="WIFI的安全攻击 | Hexo">
+      <meta itemprop="description" content="通过网络安全攻击学习WIFI安全">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          WIFI的安全攻击
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-05-09 20:23:27" itemprop="dateCreated datePublished" datetime="2024-05-09T20:23:27+08:00">2024-05-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-05-18 10:16:24" itemprop="dateModified" datetime="2024-05-18T10:16:24+08:00">2024-05-18</time>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">通过网络安全攻击学习WIFI安全</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="1-无线网络基础-2-4G与5G"><a href="#1-无线网络基础-2-4G与5G" class="headerlink" title="1. 无线网络基础-2.4G与5G"></a>1. 无线网络基础-2.4G与5G</h2><p>频段越低，抗干扰能力越强，信号广度越广</p>
+<img src="/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509203202768.png" class="" title="image-20240509203202768">
+
+<h3 id="1-1-SSID"><a href="#1-1-SSID" class="headerlink" title="1.1. SSID"></a>1.1. SSID</h3><img src="/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509203538114.png" class="" title="image-20240509203538114">
+
+<h3 id="1-2-WAP"><a href="#1-2-WAP" class="headerlink" title="1.2. WAP"></a>1.2. WAP</h3><img src="/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509203619450.png" class="" title="image-20240509203619450">
+
+<h3 id="1-3-AP"><a href="#1-3-AP" class="headerlink" title="1.3. AP"></a>1.3. AP</h3><img src="/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509203628238.png" class="" title="image-20240509203628238">
+
+<h3 id="1-4-WEP"><a href="#1-4-WEP" class="headerlink" title="1.4. WEP"></a>1.4. WEP</h3><img src="/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509203637545.png" class="" title="image-20240509203637545">
+
+<h3 id="1-5-WPA"><a href="#1-5-WPA" class="headerlink" title="1.5. WPA"></a>1.5. WPA</h3><img src="/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509203650133.png" class="" title="image-20240509203650133">
+
+<h3 id="1-6-站点"><a href="#1-6-站点" class="headerlink" title="1.6. 站点"></a>1.6. 站点</h3><img src="/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509203845574.png" class="" title="image-20240509203845574">
+
+<h3 id="1-7-BSSID"><a href="#1-7-BSSID" class="headerlink" title="1.7. BSSID"></a>1.7. BSSID</h3><img src="/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509203901470.png" class="" title="image-20240509203901470">
+
+<h3 id="1-8-信道"><a href="#1-8-信道" class="headerlink" title="1.8. 信道"></a>1.8. 信道</h3><img src="/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509203919677.png" class="" title="image-20240509203919677">
+
+<img src="/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509203945783.png" class="" title="image-20240509203945783">
+
+<h2 id="2-路由器"><a href="#2-路由器" class="headerlink" title="2. 路由器"></a>2. 路由器</h2><h3 id="2-1-调制解调器ADSL"><a href="#2-1-调制解调器ADSL" class="headerlink" title="2.1. 调制解调器ADSL"></a>2.1. 调制解调器ADSL</h3><img src="/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509204910827.png" class="" title="image-20240509204910827">
+
+<h3 id="2-2-DHCP"><a href="#2-2-DHCP" class="headerlink" title="2.2. DHCP"></a>2.2. DHCP</h3><img src="/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509205157273.png" class="" title="image-20240509205157273">
+
+<h3 id="2-3-基本设置"><a href="#2-3-基本设置" class="headerlink" title="2.3. 基本设置"></a>2.3. 基本设置</h3><img src="/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509205452202.png" class="" title="image-20240509205452202">
+
+<img src="/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509211139696.png" class="" title="image-20240509211139696">
+
+<h2 id="3-无线网卡使用"><a href="#3-无线网卡使用" class="headerlink" title="3. 无线网卡使用"></a>3. 无线网卡使用</h2><p><strong>kali linux中大部分命令都需要root用户权限，所以最好使用root用户登录，或者使用 sudo -i进入root</strong></p>
+<img src="/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509220536385.png" class="" title="image-20240509220536385">
+
+<img src="/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509221250841.png" class="" title="image-20240509221250841">
+
+<img src="/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509221543030.png" class="" title="image-20240509221543030">
+
+<h3 id="3-2-实战"><a href="#3-2-实战" class="headerlink" title="3.2. 实战"></a>3.2. 实战</h3><img src="/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240518101354650.png" class="" title="image-20240518101354650">
+
+<img src="/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240518101456002.png" class="" title="image-20240518101456002">
+
+<img src="/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240518101619625-17159985811051.png" class="" title="image-20240518101619625">
+
+<h2 id="4-密码破解字典的准备"><a href="#4-密码破解字典的准备" class="headerlink" title="4. 密码破解字典的准备"></a>4. 密码破解字典的准备</h2><h3 id="4-1-自行制作"><a href="#4-1-自行制作" class="headerlink" title="4.1. 自行制作"></a>4.1. 自行制作</h3><img src="/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509222143143.png" class="" title="image-20240509222143143">
+
+<h3 id="4-2-其他途径获取的字典"><a href="#4-2-其他途径获取的字典" class="headerlink" title="4.2. 其他途径获取的字典"></a>4.2. 其他途径获取的字典</h3><img src="/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240509222248445.png" class="" title="image-20240509222248445">
+
+<h2 id="5-WEP破解"><a href="#5-WEP破解" class="headerlink" title="5. WEP破解"></a>5. WEP破解</h2><img src="/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240510214547537.png" class="" title="image-20240510214547537">
+
+<img src="/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240510215419934.png" class="" title="image-20240510215419934">
+
+<h2 id="6-WPA2-PSK"><a href="#6-WPA2-PSK" class="headerlink" title="6. WPA2-PSK"></a>6. WPA2-PSK</h2><h3 id="6-1-基本概念"><a href="#6-1-基本概念" class="headerlink" title="6.1. 基本概念"></a>6.1. 基本概念</h3><img src="/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240510224349121.png" class="" title="image-20240510224349121">
+
+<h3 id="6-2-破解教程-抓取握手包"><a href="#6-2-破解教程-抓取握手包" class="headerlink" title="6.2. 破解教程-抓取握手包"></a>6.2. 破解教程-抓取握手包</h3><img src="/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240510224900241.png" class="" title="image-20240510224900241">
+
+<h3 id="6-3-破解教程-破解握手包"><a href="#6-3-破解教程-破解握手包" class="headerlink" title="6.3. 破解教程-破解握手包"></a>6.3. 破解教程-破解握手包</h3><img src="/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240510225613487.png" class="" title="image-20240510225613487">
+
+<h2 id="7-WPS"><a href="#7-WPS" class="headerlink" title="7. WPS"></a>7. WPS</h2><img src="/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240512115653762.png" class="" title="image-20240512115653762">
+
+<p>PIN码破解一定要慢</p>
+<img src="/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240512120210013.png" class="" title="image-20240512120210013">
+
+<img src="/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240512120424318.png" class="" title="image-20240512120424318">
+
+<img src="/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240512121848433.png" class="" title="image-20240512121848433">
+
+<h2 id="8-突破MAC过滤"><a href="#8-突破MAC过滤" class="headerlink" title="8. 突破MAC过滤"></a>8. 突破MAC过滤</h2><img src="/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/image-20240512163554015.png" class="" title="image-20240512163554015">
+
+<h2 id="9-获取未广播的SSID-ESSID-用户取名，而不是BSSID"><a href="#9-获取未广播的SSID-ESSID-用户取名，而不是BSSID" class="headerlink" title="9. 获取未广播的SSID(ESSID-用户取名，而不是BSSID)"></a>9. 获取未广播的SSID(ESSID-用户取名，而不是BSSID)</h2>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/05/09/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/rk3288/%E5%B1%8F%E5%B9%95%E9%80%89%E6%8B%A9/%E9%A9%B1%E5%8A%A8%E6%8E%A5%E5%8F%A3/" rel="prev" title="挑选屏幕时需要考虑的驱动接口">
+                  <i class="fa fa-chevron-left"></i> 挑选屏幕时需要考虑的驱动接口
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/06/10/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/freertos/%E9%9F%A6%E4%B8%9C%E5%B1%B1/01-%E7%B3%BB%E7%BB%9F%E8%B0%83%E5%BA%A6/" rel="next" title="freeRTOS任务调度">
+                  freeRTOS任务调度 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://example.com/2024/05/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/WIFI%E5%AE%89%E5%85%A8/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>
